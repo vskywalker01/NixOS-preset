@@ -15,7 +15,6 @@
     canTouchEfiVariables = true;
     #efiSysMountPoint="/boot/efi";
   };
-  
   fileSystems = {
     "/".options=["compress=zstd"];
     "/home".options=["compress=zstd"];

@@ -29,36 +29,37 @@ with lib;
       };
     };
     config = {
-      home.packages = with pkgs; 
+      home.packages = []
+        ++ 
         lib.optionals (!cfg.excludeCADs) [
-          eagle
-          kicad
-          freecad
-          #curaengine
+          pkgs.eagle
+          pkgs.kicad
+          pkgs.freecad
+          #pkgs.curaengine
         ]
         ++ 
         lib.optionals (!cfg.excludeGaming) [
-          discord    
-          r2modman
+          pkgs.discord    
+          pkgs.r2modman
         ]
         ++
      
         lib.optionals (!cfg.excludeOptionals) [
-          bottles
-          remmina 
-          calibre
-          filezilla
-          termius
-          onlyoffice-desktopeditors
-          rnote
+          pkgs.bottles
+          pkgs.remmina 
+          pkgs.calibre
+          pkgs.filezilla
+          pkgs.termius
+          pkgs.onlyoffice-desktopeditors
+          pkgs.rnote
         ]
         ++
         lib.optionals (!cfg.excludeVideoEditing) [
-          obs-studio
-          audacity
-          lightworks
-          handbrake
-          vlc
+          pkgs.obs-studio
+          pkgs.audacity
+          pkgs.lightworks
+          pkgs.handbrake
+          pkgs.vlc
         ];
       
       services.flatpak.packages = lib.optionals (!cfg.excludeVideoEditing) [
@@ -68,16 +69,15 @@ with lib;
       programs.vscode = {
       enable = lib.mkDefault true;
       extensions = with pkgs.vscode-extensions; [
-          #ms-python.python
-          #ms-python.vscode-pylance
-          #ms-python.debugpy
-          #ms-vscode.cpptools
-          #ms-vscode-remote.remote-ssh
-          #ms-vscode-remote.remote-ssh-edit
-          #firefox-devtools.vscode-firefox-debug
-          #james-yu.latex-workshop
-          #jnoortheen.nix-ide
-
+          ms-python.python
+          ms-python.vscode-pylance
+          ms-python.debugpy
+          ms-vscode.cpptools
+          ms-vscode-remote.remote-ssh
+          ms-vscode-remote.remote-ssh-edit
+          firefox-devtools.vscode-firefox-debug
+          james-yu.latex-workshop
+          jnoortheen.nix-ide
         ];
       };
     };
