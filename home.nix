@@ -1,12 +1,21 @@
-{ config, pkgs, ...}:
+{ config, pkgs, flake-inputs, lib, ...}:
 
 {
+  imports = [
+    flake-inputs.nix-flatpak.homeManagerModules.nix-flatpak
+    ./applications/applications.nix
+    ./modules/modules-home.nix
+  ];
+  #applications.excludeVideoEditing = true;
+  #applications.excludeGaming = true;
+  #applications.excludeCADs = true;
+  
   home.username = "vittorio";
   home.homeDirectory = "/home/vittorio";
   home.packages = with pkgs; [
     neofetch
-    
   ];
+
   programs.git = {
     enable = true;
     userName = "vittorio01";
