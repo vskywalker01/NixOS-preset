@@ -6,10 +6,10 @@
     ./applications/applications.nix
     ./modules/modules-home.nix
   ];
+  gnome-home-nvidiaExtensions.enable = true;
   #applications.excludeVideoEditing = true;
   #applications.excludeGaming = true;
   #applications.excludeCADs = true;
-  
   home.username = "vittorio";
   home.homeDirectory = "/home/vittorio";
   home.packages = with pkgs; [

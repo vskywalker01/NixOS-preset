@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./gnome-home-nvidiaExtensions.nix
+    
   ];
   dconf = {
     enable = true;
@@ -16,7 +16,7 @@
           fullscreen-avoider.extensionUuid
           top-bar-organizer.extensionUuid
           appindicator.extensionUuid
-    
+          user-themes.extensionUuid
         ];
       };
       "org/gnome/shell/extensions/blur-my-shell/applications" = {
@@ -41,11 +41,13 @@
         left-box-order = ["activities" "freonMenu" "places-menu"];
       };
       
+      "org/gnome/desktop/wm/preferences/interface".theme = "WhiteSur-Dark";
       "org/gnome/desktop/interface".color-scheme = "prefer-dark";
       "org/gnome/shell/extensions/user-theme".name = "WhiteSur-Dark";
       "org/gnome/desktop/interface" = {
         icon-theme = "WhiteSur-dark";
         gtk-theme = "WhiteSur-dark";
+        key-theme = "WhiteSur-dark";
       };
     };
   };

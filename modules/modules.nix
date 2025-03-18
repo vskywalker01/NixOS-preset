@@ -19,12 +19,14 @@ in {
       ./ssh.nix
       ./virtualbox.nix
       ./flatpacks.nix
+      ./ollama.nix
     ];
   config = {
     flatpacks.enable = lib.mkForce (cfg.includeDE);
     gnome.enable = lib.mkForce (cfg.includeDE);
-    pipewire.enable = lib.mkForce (!cfg.includeDE);
-    steam.enable = lib.mkForce (!cfg.includeDE);
-    virtualbox.enable = lib.mkForce (!cfg.includeDE);
+    pipewire.enable = lib.mkForce (cfg.includeDE);
+    steam.enable = lib.mkForce (cfg.includeDE);
+    virtualbox.enable = lib.mkForce (cfg.includeDE);
+    qemu.enable = lib.mkForce (cfg.includeDE);
   };
 }

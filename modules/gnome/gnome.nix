@@ -15,7 +15,7 @@ in {
     services.xserver.enable = lib.mkDefault true;
     services.xserver.displayManager.gdm.enable = lib.mkDefault true;
     services.xserver.desktopManager.gnome.enable = lib.mkDefault true;
-  
+    services.printing.enable = true;
     environment.gnome.excludePackages = with pkgs; [
       orca
       evince
@@ -74,10 +74,12 @@ in {
       gnomeExtensions.freon
       gnomeExtensions.fullscreen-avoider 
       gnomeExtensions.top-bar-organizer
+      gnomeExtensions.gpu-supergfxctl-switch
       gnome-tweaks
       whitesur-icon-theme
       whitesur-gtk-theme
       lm_sensors
+      mission-center
     ];    
   };
 }

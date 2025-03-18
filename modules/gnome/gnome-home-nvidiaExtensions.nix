@@ -17,6 +17,7 @@ in {
         "org/gnome/shell" = { 
           enabled-extensions = with pkgs.gnomeExtensions; [
             gpu-supergfxctl-switch.extensionUuid
+            freon.extensionUuid
           ];
         };
         "org/gnome/shell/extensions/freon" = {

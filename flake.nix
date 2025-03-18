@@ -43,6 +43,7 @@
         ./hardware/fa507nu.nix
         ./configuration.nix
         ./modules/modules.nix
+        ({config, lib, pkgs, ...}: {ollama.enable = true;})
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
