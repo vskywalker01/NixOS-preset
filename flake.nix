@@ -9,19 +9,29 @@
     };
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
   };
-  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, nix-flatpak, nixos-hardware}: {
+  nixConfig = {
+    extra-substituters = [
+      "https://nix-community.cachix.org"
+      "https://cuda-maintainers.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
+    ];
+  };
+  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, nix-flatpak, nixos-hardware, cachix}: {
     nixosConfigurations.skywalker-vm = nixpkgs.lib.nixosSystem {
       specialArgs = {
         inherit inputs;
-
       };
       system = "x86_64-linux";
       modules = [ 
         nix-flatpak.nixosModules.nix-flatpak
         ./configuration.nix
         ./hardware/qemu.nix
-        ./modules/modules.nix
+        ./modules.nix
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
@@ -52,10 +62,10 @@
         nixos-hardware.nixosModules.asus-fa507nv
         ./hardware/fa507nu.nix
         ./configuration.nix
-        ./modules/modules.nix
-        ({config, lib, pkgs, ...}: {ollama.enable = true;})
+        ./modules.nix
         home-manager.nixosModules.home-manager
         {
+          ollama.enable = true;
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.users.vittorio = {

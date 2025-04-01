@@ -2,8 +2,9 @@
 {
   imports = [
     flake-inputs.nix-flatpak.homeManagerModules.nix-flatpak
-    ./applications/applications.nix
-    ./modules/modules-home.nix
+    ./applications.nix
+    ./modules/gnome/gnome-home-configuration.nix
+    ./modules/gnome/gnome-home-nvidiaExtensions.nix
   ];
   home.packages = with pkgs; [
       neofetch

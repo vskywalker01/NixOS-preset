@@ -5,7 +5,7 @@ with lib;
     unstable = flake-inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
   in {
     imports = [
-      ./megasync/megasync.nix
+      ./applications/megasync/megasync.nix
     ];
     options.applications = {
       excludeVideoEditing = mkOption {
@@ -31,7 +31,7 @@ with lib;
     };
     config = {
       home.packages = [
-          pkgs.corefonts
+
         ]
         ++ 
         lib.optionals (!cfg.excludeCADs) [
@@ -39,7 +39,6 @@ with lib;
           pkgs.kicad
           pkgs.freecad
           pkgs.blender
-          #pkgs.curaengine
         ]
         ++ 
         lib.optionals (!cfg.excludeGaming) [
@@ -51,7 +50,7 @@ with lib;
         lib.optionals (!cfg.excludeOptionals) [
           pkgs.bottles
           pkgs.remmina 
-          pkgs.calibre
+          unstable.calibre
           pkgs.filezilla
           pkgs.termius
           pkgs.onlyoffice-desktopeditors
@@ -67,9 +66,17 @@ with lib;
           pkgs.vlc
         ];
       
-      services.flatpak.packages = lib.optionals (!cfg.excludeVideoEditing) [
+      services.flatpak.packages = [
+      ]
+        ++
+      lib.optionals (!cfg.excludeVideoEditing) [
         "com.github.wwmm.easyeffects"
+      ]
+      ++
+      lib.optionals (!cfg.excludeCADs) [
+        "com.ultimaker.cura"
       ];
+
 
       programs.vscode = {
       enable = lib.mkDefault true;
@@ -83,6 +90,7 @@ with lib;
           firefox-devtools.vscode-firefox-debug
           james-yu.latex-workshop
           jnoortheen.nix-ide
+          continue.continue
         ];
       };
     };

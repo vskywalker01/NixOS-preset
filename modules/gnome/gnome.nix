@@ -1,8 +1,9 @@
-{config, lib, pkgs, ...}:
+{config, lib, pkgs, inputs, ...}:
 
 with lib;
 let 
   cfg = config.gnome;
+  unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
 in {
   options.gnome = {
     enable = mkOption {
@@ -67,20 +68,22 @@ in {
       yelp
       gnome-software
     ];
-    environment.systemPackages = with pkgs; [
-      gnomeExtensions.blur-my-shell
-      gnomeExtensions.appindicator
-      gnomeExtensions.caffeine
-      gnomeExtensions.freon
-      gnomeExtensions.fullscreen-avoider 
-      gnomeExtensions.top-bar-organizer
-      gnomeExtensions.gpu-supergfxctl-switch
-      gnomeExtensions.gamemode-shell-extension
-      gnome-tweaks
-      whitesur-icon-theme
-      whitesur-gtk-theme
-      lm_sensors
-      mission-center
+    environment.systemPackages =  [
+      pkgs.gnomeExtensions.blur-my-shell
+      pkgs.gnomeExtensions.appindicator
+      pkgs.gnomeExtensions.caffeine
+      pkgs.gnomeExtensions.freon
+      pkgs.gnomeExtensions.fullscreen-avoider 
+      pkgs.gnomeExtensions.top-bar-organizer
+      pkgs.gnomeExtensions.gpu-supergfxctl-switch
+      pkgs.gnomeExtensions.gamemode-shell-extension
+      pkgs.gnome-tweaks
+      unstable.whitesur-icon-theme
+      unstable.nordzy-icon-theme
+      unstable.whitesur-gtk-theme
+      pkgs.lm_sensors
+      unstable.mission-center
+      pkgs.corefonts
     ];    
   };
 }

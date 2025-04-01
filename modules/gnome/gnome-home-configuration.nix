@@ -45,7 +45,7 @@
       "org/gnome/desktop/interface".color-scheme = "prefer-dark";
       "org/gnome/shell/extensions/user-theme".name = "WhiteSur-Dark";
       "org/gnome/desktop/interface" = {
-        icon-theme = "WhiteSur-dark";
+        icon-theme = "Nordzy-cyan-black";
         gtk-theme = "WhiteSur-dark";
         key-theme = "WhiteSur-dark";
       };

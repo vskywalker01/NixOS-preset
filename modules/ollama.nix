@@ -12,13 +12,16 @@ in {
     };
   };
   config = mkIf cfg.enable {
-    services.open-webui = {
-      enable = lib.mkDefault true;
-    };
+    #services.open-webui.enable = true;
+    #environment.systemPackages = [
+    #  pkgs.alpaca
+    #];
     services.ollama = {
       enable = lib.mkDefault true;
       loadModels = [
         "qwen2.5-coder"
+        "deepseek-r1:8b"
+        
       ];
     };
   };
