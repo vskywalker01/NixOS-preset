@@ -26,7 +26,17 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.vittorio = import ./home.nix;
+          home-manager.users.vittorio = {
+            imports = [./home.nix];
+            home.username = "vittorio";
+            home.homeDirectory = "/home/vittorio";
+            #gnome-home-nvidiaExtensions.enable = true;
+            #applications.excludeVideoEditing = true;
+            #applications.excludeGaming = true;
+            #applications.excludeCADs = true;
+            home.stateVersion = "24.11";
+            programs.home-manager.enable = true;
+          };
           home-manager.extraSpecialArgs.flake-inputs = inputs;
         }
       ];
@@ -48,7 +58,17 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.vittorio = import ./home.nix;
+          home-manager.users.vittorio = {
+            imports = [./home.nix];
+            home.username = "vittorio";
+            home.homeDirectory = "/home/vittorio";
+            gnome-home-nvidiaExtensions.enable = true;
+            #applications.excludeVideoEditing = true;
+            #applications.excludeGaming = true;
+            #applications.excludeCADs = true;
+            home.stateVersion = "24.11";
+            programs.home-manager.enable = true;
+          };
           home-manager.extraSpecialArgs.flake-inputs = inputs;
         }
       ];

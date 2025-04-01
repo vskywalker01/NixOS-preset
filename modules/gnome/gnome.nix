@@ -75,6 +75,7 @@ in {
       gnomeExtensions.fullscreen-avoider 
       gnomeExtensions.top-bar-organizer
       gnomeExtensions.gpu-supergfxctl-switch
+      gnomeExtensions.gamemode-shell-extension
       gnome-tweaks
       whitesur-icon-theme
       whitesur-gtk-theme

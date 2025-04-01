@@ -1,7 +1,8 @@
-{config, lib, pkgs, ...}:
+{config, lib, pkgs,flake-inputs, ...}:
 with lib;
   let 
     cfg = config.applications;
+    unstable = flake-inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
   in {
     imports = [
       ./megasync/megasync.nix
@@ -35,15 +36,16 @@ with lib;
           pkgs.eagle
           pkgs.kicad
           pkgs.freecad
+          pkgs.blender
           #pkgs.curaengine
         ]
         ++ 
         lib.optionals (!cfg.excludeGaming) [
           pkgs.discord    
           pkgs.r2modman
+          unstable.suyu
         ]
         ++
-     
         lib.optionals (!cfg.excludeOptionals) [
           pkgs.bottles
           pkgs.remmina 
@@ -52,6 +54,7 @@ with lib;
           pkgs.termius
           pkgs.onlyoffice-desktopeditors
           pkgs.rnote
+          pkgs.gimp 
         ]
         ++
         lib.optionals (!cfg.excludeVideoEditing) [

@@ -15,7 +15,7 @@ in {
       ./pipewire.nix
       ./gnome/gnome.nix
       ./qemu.nix
-      ./steam.nix
+      ./steam/steam.nix
       ./ssh.nix
       ./virtualbox.nix
       ./flatpacks.nix
