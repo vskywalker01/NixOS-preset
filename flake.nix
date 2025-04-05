@@ -29,58 +29,90 @@
       system = "x86_64-linux";
       modules = [ 
         nix-flatpak.nixosModules.nix-flatpak
+        ./modules/hardware/hardware.nix
         ./configuration.nix
-        ./hardware/qemu.nix
-        ./modules.nix
+        ./modules/system/modules.nix
         home-manager.nixosModules.home-manager
+        (
+        {config,lib,...}:
         {
+          hardware.hardware-profile="QEMU";
+          services.openssh.enable=true;
+          services.flatpak.enable=true;
+          services.xserver.desktopManager.gnome.enable=true;
+
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.users.vittorio = {
-            imports = [./home.nix];
+            imports = [./modules/home/home.nix];
             home.username = "vittorio";
             home.homeDirectory = "/home/vittorio";
-            #gnome-home-nvidiaExtensions.enable = true;
-            #applications.excludeVideoEditing = true;
-            #applications.excludeGaming = true;
-            #applications.excludeCADs = true;
+
+            applications.CADs=true;
+            applications.gaming=false;
+            applications.misc=true;
+            applications.videoEditing=false;
+            applications.programming=true;
+
             home.stateVersion = "24.11";
             programs.home-manager.enable = true;
           };
-          home-manager.extraSpecialArgs.flake-inputs = inputs;
+          home-manager.extraSpecialArgs = {
+            flake-inputs = inputs;
+            systemConfig = config;
+          };
         }
+        )
       ];
     };
     nixosConfigurations.skywalker-tuf = nixpkgs.lib.nixosSystem {
       specialArgs = {
         inherit inputs;
-
       };
       system = "x86_64-linux";
       modules = [ 
         nix-flatpak.nixosModules.nix-flatpak
         nixos-hardware.nixosModules.asus-fa507nv
-        ./hardware/fa507nu.nix
+        ./modules/hardware/hardware.nix
         ./configuration.nix
-        ./modules.nix
+        ./modules/system/modules.nix
         home-manager.nixosModules.home-manager
+        (
+        {config,lib,...}:
         {
-          ollama.enable = true;
+          hardware.hardware-profile="FA507NU";
+          virtualisation.virtualbox.host.enable=true;
+          services.openssh.enable=true;
+          virtualisation.libvirtd.enable=true;
+          services.ollama.enable=true;
+          services.flatpak.enable=true;
+          virtualisation.docker.enable=true;
+          programs.steam.enable=true;
+
+          services.xserver.desktopManager.gnome.enable=true;
+
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.users.vittorio = {
-            imports = [./home.nix];
+            imports = [./modules/home/home.nix];
             home.username = "vittorio";
             home.homeDirectory = "/home/vittorio";
-            gnome-home-nvidiaExtensions.enable = true;
-            #applications.excludeVideoEditing = true;
-            #applications.excludeGaming = true;
-            #applications.excludeCADs = true;
+
+            applications.CADs=true;
+            applications.gaming=true;
+            applications.misc=true;
+            applications.videoEditing=true;
+            applications.programming=true;
+
             home.stateVersion = "24.11";
             programs.home-manager.enable = true;
           };
-          home-manager.extraSpecialArgs.flake-inputs = inputs;
+          home-manager.extraSpecialArgs = {
+            flake-inputs = inputs;
+            systemConfig = config;
+          };
         }
+        )
       ];
     };
   };

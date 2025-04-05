@@ -1,22 +1,11 @@
 {config, lib, pkgs, inputs, ...}:
-
-with lib;
 let 
-  cfg = config.gnome;
   unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
 in {
-  options.gnome = {
-    enable = mkOption {
-      type = types.bool;
-      default = true;
-      description = "include gnome DE in configuration";
-    };
-  };
-  config = mkIf cfg.enable {
+  config = lib.mkIf (config.services.xserver.desktopManager.gnome.enable) {
     services.xserver.enable = lib.mkDefault true;
     services.xserver.displayManager.gdm.enable = lib.mkDefault true;
-    services.xserver.desktopManager.gnome.enable = lib.mkDefault true;
-    services.printing.enable = true;
+    services.printing.enable = lib.mkDefault true;
     environment.gnome.excludePackages = with pkgs; [
       orca
       evince
@@ -82,8 +71,10 @@ in {
       unstable.nordzy-icon-theme
       unstable.whitesur-gtk-theme
       pkgs.lm_sensors
-      unstable.mission-center
+      pkgs.mission-center
       pkgs.corefonts
+      pkgs.vlc
+      pkgs.remmina
     ];    
   };
 }

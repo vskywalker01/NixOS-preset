@@ -1,19 +1,8 @@
 {config, pkgs, lib, ... }:
 
-with lib;
-let 
-  cfg = config.qemu;
-in {
-  options.qemu = {
-    enable = mkOption {
-      type = types.bool;
-      default = true;
-      description = "include qemu virtualization tools in configuration";
-    };
-  };
-  config = mkIf cfg.enable {
+{
+  config = lib.mkIf (config.virtualisation.libvirtd.enable) {
     programs.dconf.enable = lib.mkDefault true;
-  
     #users.users.gcis.extraGroups = [ "libvirtd" ];
     users.extraGroups.libvirtd.members = [ "gcis" ];
     environment.systemPackages = with pkgs; [
@@ -26,18 +15,16 @@ in {
       win-spice
       adwaita-icon-theme
     ];
-  
     virtualisation = {
       libvirtd = {
-        enable = true;
         qemu = {
-          swtpm.enable = true;
-          ovmf.enable = true;
+          swtpm.enable = lib.mkDefault true;
+          ovmf.enable = lib.mkDefault true;
           ovmf.packages = [ pkgs.OVMFFull.fd ];
         };
       };
-      spiceUSBRedirection.enable = true;
+      spiceUSBRedirection.enable = lib.mkDefault true;
     };
-    services.spice-vdagentd.enable = true;
+    services.spice-vdagentd.enable = lib.mkDefault true;
   };
 }

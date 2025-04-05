@@ -1,10 +1,7 @@
-{config, lib, pkgs, ...}:
+{config, lib, pkgs, systemConfig ? {}, ...}:
 
 {
-  imports = [
-    
-  ];
-  dconf = {
+  dconf = lib.mkIf (systemConfig.services.xserver.desktopManager.gnome.enable) {
     enable = true;
     settings = {
       "org/gnome/shell" = {
@@ -12,13 +9,26 @@
         enabled-extensions = with pkgs.gnomeExtensions; [
           blur-my-shell.extensionUuid
           caffeine.extensionUuid
-          #freon.extensionUuid
           fullscreen-avoider.extensionUuid
           top-bar-organizer.extensionUuid
           appindicator.extensionUuid
-          user-themes.extensionUuid
+          user-themes.extensionUuid 
+        ]
+        ++
+        lib.optionals (systemConfig.programs.gamemode.enable) 
+        [
+          gamemode-shell-extension.extensionUuid
         ];
       };
+
+      "org/gnome/shell/extensions/gamemodeshellextension" = lib.mkIf (systemConfig.programs.gamemode.enable) {
+        show-icon-only-when-active = true;
+      };
+
+      "org/gnome/mutter" = {
+            experimental-features = ["variable-refresh-rate"];
+      }; 
+
       "org/gnome/shell/extensions/blur-my-shell/applications" = {
         blur = true;
         blur-on-overwiev = false;
@@ -42,12 +52,13 @@
       };
       
       "org/gnome/desktop/wm/preferences/interface".theme = "WhiteSur-Dark";
-      "org/gnome/desktop/interface".color-scheme = "prefer-dark";
       "org/gnome/shell/extensions/user-theme".name = "WhiteSur-Dark";
       "org/gnome/desktop/interface" = {
-        icon-theme = "Nordzy-cyan-black";
-        gtk-theme = "WhiteSur-dark";
-        key-theme = "WhiteSur-dark";
+        color-scheme = "prefer-dark";
+        icon-theme = "Nordzy-cyan-dark";
+        gtk-theme = "WhiteSur-Dark";
+        key-theme = "WhiteSur-Dark";
+        show-battery-percentage = true;
       };
     };
   };
