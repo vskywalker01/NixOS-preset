@@ -36,7 +36,7 @@
         enable-all = true;
         opacity = 195;
         sigma = 65;
-        blacklist = ["Plank" "com.desktop.ding" "Conky" "firefox" "War Thunder (Vulkan, 64bit)" "com.github.flxzt.rnote" "eeschema" "steam_app_1966720" "virt-manager"];
+        blacklist = ["Plank" "com.desktop.ding" "Conky" "firefox" "War Thunder (Vulkan, 64bit)" "com.github.flxzt.rnote" "eeschema" "steam_app_1966720" "virt-manager" "steam_app_548430"];
   
       };
       "org/gnome/shell/extensions/blur-my-shell/panel" = {

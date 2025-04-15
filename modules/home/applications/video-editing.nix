@@ -1,7 +1,12 @@
 {config, lib, pkgs,flake-inputs, systemConfig ? {} ,...}:
 
 let 
-  unstable = flake-inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
+  unstable = import flake-inputs.nixpkgs-unstable {
+    system = pkgs.system;
+    config = {
+      allowUnfree = true;
+    };
+  };
 in {
   options.applications = {
     videoEditing = lib.mkOption {
@@ -11,14 +16,15 @@ in {
     };
   };
   config = lib.mkIf (config.applications.videoEditing) {
+    
     home.packages = [
       pkgs.obs-studio
       pkgs.audacity
-      pkgs.lightworks
+      unstable.lightworks
       pkgs.handbrake
     ];
     services.flatpak.packages = lib.mkIf (systemConfig.services.flatpak.enable || false) [
-      "com.ultimaker.cura"
+      "com.github.wwmm.easyeffects"
     ];
   };
 }

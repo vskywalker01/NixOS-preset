@@ -2,6 +2,7 @@
 {
   imports = [
     ./megasync/megasync.nix
+    ./rog-control-center/rog-control-center.nix
     ./cads.nix
     ./gaming.nix
     ./misc.nix

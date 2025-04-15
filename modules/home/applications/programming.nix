@@ -13,8 +13,8 @@ in {
   config = lib.mkIf (config.applications.programming) {
     programs.vscode = {
       enable = lib.mkDefault true;
-      enableUpdateCheck = lib.mkDefault false;
-      enableExtensionUpdateCheck = lib.mkDefault false;
+      #enableUpdateCheck = lib.mkDefault false;
+      #enableExtensionUpdateCheck = lib.mkDefault false;
       extensions = with pkgs.vscode-extensions; [
         ms-python.python
         ms-python.vscode-pylance

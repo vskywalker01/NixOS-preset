@@ -1,5 +1,7 @@
-{ config, pkgs, lib, ... }: 
-{
+{ config, pkgs, lib, inputs, ... }: 
+let 
+  unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
+in {
   config = lib.mkIf (config.hardware.hardware-profile == "FA507NU") {
     #NVIDIA PRIME
     #Sets the correct PCI ID for the AMD GPU
@@ -22,11 +24,15 @@
     hardware.nvidia-container-toolkit = lib.mkIf (config.virtualisation.docker.enable) {
       enable = lib.mkDefault true;
     };
-    
+    virtualisation.docker.rootless.daemon.settings.features = lib.mkIf (config.virtualisation.docker.enable) {
+        cdi= lib.mkForce true;
+    };
+
     #THERMAL CONTROL
     #Installs ryzenadj for setting temperature limit on the cpu
     environment.systemPackages = with pkgs; [
       ryzenadj
+      nvtopPackages.full
     ];
     systemd.services.ryzenadj = {
       description = "RyzenAdj";
@@ -44,7 +50,8 @@
     #ASUSD CONFIGURATION
     #adding specific fan configuration for asusd
     services.asusd = lib.mkIf (config.services.asusd.enable) {
-      asusdConfig = builtins.readFile ./asusd/asusd.ron;
+      #package=unstable.asusctl;
+      #asusdConfig = builtins.readFile ./asusd/asusd.ron;
       fanCurvesConfig = builtins.readFile ./asusd/fan_curves.ron;
     };
   };

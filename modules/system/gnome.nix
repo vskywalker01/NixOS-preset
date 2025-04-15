@@ -73,7 +73,7 @@ in {
       pkgs.lm_sensors
       pkgs.mission-center
       pkgs.corefonts
-      pkgs.vlc
+      unstable.vlc
       pkgs.remmina
     ];    
   };

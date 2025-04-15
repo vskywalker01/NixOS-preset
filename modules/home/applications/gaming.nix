@@ -11,6 +11,7 @@ in {
     };
   };
   config = lib.mkIf (config.applications.gaming) {
+    nixpkgs.config.allowUnfree = lib.mkForce true;
     home.packages = [
       pkgs.discord    
       pkgs.r2modman
