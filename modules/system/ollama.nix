@@ -1,5 +1,12 @@
 {config, pkgs, lib, inputs, ...}:
 {
+  options.ollama = {
+    enable = lib.mkOption {
+      type = lib.types.bool; 
+      default = false;
+      description = "Enable ollama and open-webui";
+    };
+  };
   config = {
     #services.ollama = {
     #  loadModels = [
@@ -8,7 +15,7 @@
     #    "codegemma"
     #  ];
     #};
-    virtualisation.oci-containers = {
+    virtualisation.oci-containers = lib.mkIf (config.ollama.enable) {
       backend = "docker";
       containers = {
         open-webui = {
@@ -28,6 +35,5 @@
         };
       };
     };
-
   };
 }

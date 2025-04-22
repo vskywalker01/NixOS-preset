@@ -75,6 +75,7 @@ in {
       pkgs.corefonts
       unstable.vlc
       pkgs.remmina
+      pkgs.gutenprintBin
     ];    
   };
 }

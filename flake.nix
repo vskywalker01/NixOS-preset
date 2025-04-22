@@ -84,7 +84,7 @@
           virtualisation.virtualbox.host.enable=true;
           services.openssh.enable=true;
           virtualisation.libvirtd.enable=true;
-          
+          ollama.enable = true;
           services.flatpak.enable=true;
           virtualisation.docker.enable=true;
           programs.steam.enable=true;
@@ -113,6 +113,53 @@
           };
         }
         )
+      ];
+    };
+nixosConfigurations.skywalker-r3 = nixpkgs.lib.nixosSystem {
+      specialArgs = {
+        inherit inputs;
+      };
+      system = "x86_64-linux";
+      modules = [ 
+        nix-flatpak.nixosModules.nix-flatpak
+        ./modules/hardware/hardware.nix
+        ./configuration.nix
+        ./modules/system/modules.nix
+        home-manager.nixosModules.home-manager
+        (
+        {config,lib,...}:
+        {
+          hardware.hardware-profile="R3";
+          virtualisation.virtualbox.host.enable=true;
+          services.openssh.enable=true;
+          virtualisation.libvirtd.enable=true;
+          services.flatpak.enable=true;
+          virtualisation.docker.enable=true;
+          programs.steam.enable=true;
+
+          services.xserver.desktopManager.gnome.enable=true;
+
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.vittorio = {
+            imports = [./modules/home/home.nix];
+            home.username = "vittorio";
+            home.homeDirectory = "/home/vittorio";
+
+            applications.CADs=true;
+            applications.gaming=true;
+            applications.misc=true;
+            applications.videoEditing=true;
+            applications.programming=true;
+
+            home.stateVersion = "24.11";
+            programs.home-manager.enable = true;
+          };
+          home-manager.extraSpecialArgs = {
+            flake-inputs = inputs;
+            systemConfig = config;
+          };
+        })
       ];
     };
   };

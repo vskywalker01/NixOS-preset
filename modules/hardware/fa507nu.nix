@@ -17,7 +17,8 @@ in {
     };
   
     #disable nixos-hardware battery charge control script
-    hardware.asus.battery.enableChargeUptoScript = lib.mkForce false;
+    #hardware.asus.battery.enableChargeUptoScript = lib.mkForce false;
+   
 
     #enable Cuda support and GPU passtrough for Nvidia GPU on docker 
     nixpkgs.config.cudaSupport = lib.mkDefault true;  
