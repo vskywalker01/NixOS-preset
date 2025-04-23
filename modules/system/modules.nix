@@ -10,5 +10,6 @@
     ./virtualbox.nix
     ./flatpacks.nix
     ./ollama.nix
+    ./cups.nix
   ];
 }

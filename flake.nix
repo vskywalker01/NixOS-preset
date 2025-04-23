@@ -88,6 +88,9 @@
           services.flatpak.enable=true;
           virtualisation.docker.enable=true;
           programs.steam.enable=true;
+          hardware.asus.battery.enableChargeUptoScript = true;
+          hardware.asus.battery.chargeUpto = 80;
+
 
           services.xserver.desktopManager.gnome.enable=true;
 

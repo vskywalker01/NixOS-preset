@@ -20,7 +20,7 @@ in {
     home.packages = [
       pkgs.obs-studio
       pkgs.audacity
-      unstable.lightworks
+      pkgs.shotcut
       pkgs.handbrake
     ];
     services.flatpak.packages = lib.mkIf (systemConfig.services.flatpak.enable || false) [

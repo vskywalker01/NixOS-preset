@@ -15,9 +15,6 @@ in {
       settingsSha256 = "sha256-9rtqh64TyhDF5fFAYiWl3oDHzKJqyOW3abpcf2iNRT8=";
       usePersistenced = false;
     };
-  
-    #disable nixos-hardware battery charge control script
-    #hardware.asus.battery.enableChargeUptoScript = lib.mkForce false;
    
 
     #enable Cuda support and GPU passtrough for Nvidia GPU on docker 
