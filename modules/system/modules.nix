@@ -11,5 +11,7 @@
     ./flatpacks.nix
     ./ollama.nix
     ./cups.nix
+    ./samba.nix
+    ./launchpad.nix
   ];
 }

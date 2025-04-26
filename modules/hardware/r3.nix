@@ -33,5 +33,15 @@ in {
       enable = true;
       enable32Bit = true;
     };
+
+    fileSystems."/run/media/hddraid" = {
+      device = "/dev/disk/by-uuid/a4a8fac9-9bbd-47b6-b984-0668f4ae4244";
+      fsType = "btrfs";
+      options = [
+        "defaults" 
+        "compress=zstd"
+      ];
+    };
+
   };  
 }
