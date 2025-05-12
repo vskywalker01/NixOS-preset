@@ -95,6 +95,8 @@
 
           services.xserver.desktopManager.gnome.enable=true;
 
+          development.latex.enable=true;
+
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.users.vittorio = {

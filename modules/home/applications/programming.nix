@@ -10,6 +10,7 @@ in {
       description = "Include programming IDEs in home configuration";
     };
   };
+  
   config = lib.mkIf (config.applications.programming) {
     programs.vscode = {
       enable = lib.mkDefault true;
@@ -23,12 +24,15 @@ in {
         ms-vscode-remote.remote-ssh
         ms-vscode-remote.remote-ssh-edit
         firefox-devtools.vscode-firefox-debug
-        james-yu.latex-workshop
         jnoortheen.nix-ide
       ] 
-      ++ lib.optionals (systemConfig.services.ollama.enable) [
+      ++ lib.optionals (systemConfig.ollama.enable) [
         continue.continue
+      ]
+      ++ lib.optionals (systemConfig.development.latex.enable) [
+        james-yu.latex-workshop
       ];
+
     };
   };
 }

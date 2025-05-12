@@ -76,8 +76,9 @@ in {
       unstable.vlc
       pkgs.remmina
       pkgs.timeshift
+      pkgs.gnome-remote-desktop 
     ];   
-    
+    services.gnome.gnome-remote-desktop.enable = true;
   };
 }
 

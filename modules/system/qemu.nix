@@ -14,6 +14,7 @@
       win-virtio
       win-spice
       adwaita-icon-theme
+      looking-glass-client
     ];
     virtualisation = {
       libvirtd = {

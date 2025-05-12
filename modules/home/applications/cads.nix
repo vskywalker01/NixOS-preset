@@ -14,11 +14,11 @@ in {
     home.packages = [
       pkgs.eagle
       pkgs.kicad
-      pkgs.freecad
       pkgs.blender
     ];
     services.flatpak.packages = lib.mkIf (systemConfig.services.flatpak.enable || false) [
       "com.ultimaker.cura"
+      "flathub org.freecad.FreeCAD"
     ];
   };
 }

@@ -1,3 +1,5 @@
+#Use sudo systemctl start docker-open-webui to start the docker 
+
 {config, pkgs, lib, inputs, ...}:
 {
   options.ollama = {
@@ -20,18 +22,20 @@
       containers = {
         open-webui = {
           image = "ghcr.io/open-webui/open-webui:ollama";
-          ports = [
-            "8080:8080"
-          ];
+          #ports = [
+          #  "8080:8080"
+          #  "11434:11434"
+          #];
           extraOptions=[
             "--device=nvidia.com/gpu=all"
+            "--network=host"
           ];
           volumes = [
             "ollama:/root/.ollama"
             "open-webui:/app/backend/data"
           ];
           autoStart = false;
-
+          
         };
       };
     };
