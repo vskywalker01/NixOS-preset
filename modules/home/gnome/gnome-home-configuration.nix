@@ -10,9 +10,10 @@
           blur-my-shell.extensionUuid
           caffeine.extensionUuid
           fullscreen-avoider.extensionUuid
-          top-bar-organizer.extensionUuid
+          #top-bar-organizer.extensionUuid
           appindicator.extensionUuid
           user-themes.extensionUuid 
+          cronomix.extensionUuid
         ]
         ++
         lib.optionals (systemConfig.programs.gamemode.enable) 

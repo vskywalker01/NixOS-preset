@@ -5,9 +5,11 @@
     ./applications/applications.nix
     ./gnome/gnome-home-configuration.nix
     ./gnome/gnome-home-configuration-nvidia.nix
+    ./gnome/gnome-home-configuration-ollama.nix
   ];
-  home.packages = with pkgs; [
-      neofetch
+  home.packages = [
+      pkgs.neofetch
+      flake-inputs.nix-alien.packages.${pkgs.system}.nix-alien
     ];
   programs.git = {
     enable = true;
@@ -16,7 +18,12 @@
   };
   programs.fish = {
     enable = true;
-    shellInit = "neofetch";
+    shellInit = ''
+      if status is-interactive
+        neofetch
+      end
+    '';
   };
+
 }
 

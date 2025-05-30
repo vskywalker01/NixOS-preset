@@ -1,5 +1,5 @@
 { config, pkgs, lib, inputs, ... }: 
-let 
+let
   unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
 in {
   config = lib.mkIf (config.hardware.hardware-profile == "FA507NU") {
@@ -70,9 +70,13 @@ in {
     #ASUSD CONFIGURATION
     #adding specific fan configuration for asusd
     services.asusd = lib.mkIf (config.services.asusd.enable) {
-      #package=unstable.asusctl;
       #asusdConfig = builtins.readFile ./asusd/asusd.ron;
-      fanCurvesConfig = builtins.readFile ./asusd/fan_curves.ron;
+      fanCurvesConfig.source = ./asusd/fan_curves.ron;
+    };
+
+    boot = {
+      kernelParams = [ "amd_iommu=on" ];
+      kernelModules = [ "kvm-amd" "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" ];
     };
   };
 }

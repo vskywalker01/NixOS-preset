@@ -66,7 +66,10 @@ in {
       pkgs.gnomeExtensions.top-bar-organizer
       pkgs.gnomeExtensions.gpu-supergfxctl-switch
       pkgs.gnomeExtensions.gamemode-shell-extension
+      pkgs.gnomeExtensions.custom-command-toggle
+      pkgs.gnomeExtensions.user-themes
       pkgs.gnome-tweaks
+      pkgs.gnomeExtensions.cronomix
       unstable.whitesur-icon-theme
       unstable.nordzy-icon-theme
       unstable.whitesur-gtk-theme

@@ -19,6 +19,7 @@ in {
       pkgs.onlyoffice-desktopeditors
       pkgs.rnote
       pkgs.gimp 
+      pkgs.drawio
     ];
   };
 

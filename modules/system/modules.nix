@@ -4,7 +4,7 @@
     ./docker.nix
     ./pipewire.nix
     ./gnome.nix
-    ./qemu.nix
+    ./qemu/qemu.nix
     ./steam/steam.nix
     ./ssh.nix
     ./virtualbox.nix

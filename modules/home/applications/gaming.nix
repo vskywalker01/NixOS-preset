@@ -15,7 +15,6 @@ in {
     home.packages = [
       pkgs.discord    
       pkgs.r2modman
-      unstable.suyu
     ];
     services.flatpak.packages = lib.mkIf (systemConfig.services.flatpak.enable || false) [
       "io.github.unknownskl.greenlight"
