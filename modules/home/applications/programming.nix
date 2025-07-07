@@ -31,6 +31,9 @@ in {
       ]
       ++ lib.optionals (systemConfig.development.latex.enable) [
         james-yu.latex-workshop
+      ]
+      ++ lib.optionals (systemConfig.virtualisation.docker.enable) [
+        ms-vscode-remote.remote-containers
       ];
 
     };

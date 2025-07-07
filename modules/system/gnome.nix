@@ -75,7 +75,6 @@ in {
       unstable.whitesur-gtk-theme
       pkgs.lm_sensors
       pkgs.mission-center
-      pkgs.corefonts
       unstable.vlc
       pkgs.remmina
       pkgs.timeshift

@@ -90,7 +90,7 @@
           programs.steam.enable=true;
           hardware.asus.battery.enableChargeUptoScript = true;
           hardware.asus.battery.chargeUpto = 80;
-          users.users.vittorio.extraGroups = [ "audio" "realtime"];
+          users.users.vittorio.extraGroups = [ "docker" "audio" "realtime"];
           launchpad.enable=true;
 
           services.xserver.desktopManager.gnome.enable=true;
@@ -145,7 +145,7 @@ nixosConfigurations.skywalker-r3 = nixpkgs.lib.nixosSystem {
           services.samba.enable=true;
           launchpad.enable=true;
           services.xserver.desktopManager.gnome.enable=true;
-          users.users.vittorio.extraGroups = [ "audio" "realtime"];
+          users.users.vittorio.extraGroups = [ "docker ""audio" "realtime"];
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.users.vittorio = {

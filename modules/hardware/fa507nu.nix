@@ -74,9 +74,9 @@ in {
       fanCurvesConfig.source = ./asusd/fan_curves.ron;
     };
 
-    boot = {
-      kernelParams = [ "amd_iommu=on" ];
+    /*boot = {
+      kernelParams = [ "amd_iommu=on" "vfio-pci.reset=1" "vfio-pci.disable_idle_d3=1" "iommu=pt" "vfio-pci.verbose=1"];
       kernelModules = [ "kvm-amd" "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" ];
-    };
+    };*/
   };
 }

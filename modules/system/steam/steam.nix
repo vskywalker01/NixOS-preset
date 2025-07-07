@@ -13,5 +13,6 @@
       enableRenice = lib.mkDefault true;
       settings = import ./gamemode.nix;
     };
+    boot.kernelModules = [ "xpad" ];
   };
 }
