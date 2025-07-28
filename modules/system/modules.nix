@@ -14,5 +14,6 @@
     ./samba.nix
     ./launchpad.nix
     ./development/development.nix
+    ./cockpit.nix
   ];
 }

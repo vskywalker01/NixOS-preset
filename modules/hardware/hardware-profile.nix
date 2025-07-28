@@ -1,6 +1,6 @@
 { lib, ... }:
 let
-  profiles = lib.types.enum [ "FA507NU" "QEMU" "default" "R3"];
+  profiles = lib.types.enum [ "FA507NU" "QEMU" "default" "R3" "RPI3"];
 in
 {
   options.hardware = {

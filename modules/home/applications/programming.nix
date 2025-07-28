@@ -37,5 +37,8 @@ in {
       ];
 
     };
+    home.packages = with pkgs; [
+      gtkterm
+    ];
   };
 }

@@ -22,6 +22,54 @@
     ];
   };
   outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, nix-flatpak, nixos-hardware, cachix, nix-alien}: {
+    nixosConfigurations.skywalker-pi3 = nixpkgs.lib.nixosSystem {
+      specialArgs = {
+        inherit inputs;
+      };
+      system = "aarch64-linux";
+      modules = [ 
+        nix-flatpak.nixosModules.nix-flatpak
+        ./modules/hardware/hardware.nix
+        ./configuration.nix
+        ./modules/system/modules.nix
+        home-manager.nixosModules.home-manager
+        (
+        {config,lib,...}:
+        {
+          hardware.hardware-profile="RPI3";
+          services.openssh.enable=true;
+          services.flatpak.enable=false;
+          virtualisation.docker.enable=true;
+          services.cockpit.enable=true;
+          users.users.vittorio.extraGroups = [ "docker" "wheel"];
+
+          services.xserver.desktopManager.gnome.enable=false;
+
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.vittorio = {
+            imports = [./modules/home/home.nix];
+            home.username = "vittorio";
+            home.homeDirectory = "/home/vittorio";
+
+            applications.CADs=false;
+            applications.gaming=false;
+            applications.misc=false;
+            applications.videoEditing=false;
+            applications.programming=false;
+
+            home.stateVersion = "24.11";
+            programs.home-manager.enable = true;
+          };
+          home-manager.extraSpecialArgs = {
+            flake-inputs = inputs;
+            systemConfig = config;
+          };
+        }
+        )
+      ];
+    };
+    
     nixosConfigurations.skywalker-vm = nixpkgs.lib.nixosSystem {
       specialArgs = {
         inherit inputs;
