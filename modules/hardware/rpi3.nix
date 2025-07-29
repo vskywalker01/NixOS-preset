@@ -31,7 +31,6 @@
       ];
     };
     hardware.enableRedistributableFirmware = true;
-    networking.wireless.enable = true;
     networking.defaultGateway = "192.168.1.1";
     networking.nameservers = [ "192.168.1.1" "8.8.8.8" ];
   };
