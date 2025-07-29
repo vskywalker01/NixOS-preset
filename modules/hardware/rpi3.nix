@@ -3,7 +3,7 @@
   config = lib.mkIf (config.hardware.hardware-profile == "RPI3") {
     boot.loader.generic-extlinux-compatible.enable = true;
 
-    swapDevices = [ { device = "/swapfile"; size = 1024; } ];
+    swapDevices = [ { device = "/swap"; size = 4096; } ];
 
     environment.systemPackages = with pkgs; [
       libraspberrypi
@@ -12,13 +12,6 @@
       kernelParams = [
         "console=ttyS1,115200n8"
       ];
-      loader.raspberryPi = {
-        enable = true;
-        version = 3;
-        firmwareConfig = ''
-          core_freq=250
-        '';
-      };
     };
     systemd.services.btattach = {
       before = [ "bluetooth.service" ];
@@ -37,7 +30,8 @@
         }
       ];
     };
-
+    hardware.enableRedistributableFirmware = true;
+    networking.wireless.enable = true;
     networking.defaultGateway = "192.168.1.1";
     networking.nameservers = [ "192.168.1.1" "8.8.8.8" ];
   };

@@ -41,6 +41,7 @@
           services.flatpak.enable=false;
           virtualisation.docker.enable=true;
           services.cockpit.enable=true;
+          services.octoprint.enable=true;
           users.users.vittorio.extraGroups = [ "docker" "wheel"];
 
           services.xserver.desktopManager.gnome.enable=false;
@@ -57,6 +58,7 @@
             applications.misc=false;
             applications.videoEditing=false;
             applications.programming=false;
+            applications.megasync=false;
 
             home.stateVersion = "24.11";
             programs.home-manager.enable = true;
@@ -101,6 +103,7 @@
             applications.misc=true;
             applications.videoEditing=false;
             applications.programming=true;
+            applications.megasync=true;
 
             home.stateVersion = "24.11";
             programs.home-manager.enable = true;
@@ -157,6 +160,7 @@
             applications.misc=true;
             applications.videoEditing=true;
             applications.programming=true;
+            applications.megasync=true;
 
             home.stateVersion = "24.11";
             programs.home-manager.enable = true;
@@ -206,6 +210,7 @@ nixosConfigurations.skywalker-r3 = nixpkgs.lib.nixosSystem {
             applications.misc=true;
             applications.videoEditing=true;
             applications.programming=true;
+            applications.megasync=true;
 
             home.stateVersion = "24.11";
             programs.home-manager.enable = true;
