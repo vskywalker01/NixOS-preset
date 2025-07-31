@@ -2,7 +2,6 @@
 {
   config = lib.mkIf (config.hardware.hardware-profile == "RPI3") {
     boot.loader.generic-extlinux-compatible.enable = true;
-    boot.kernelPackages=pkgs.linuxPackages_rpi3;
     swapDevices = [ { device = "/swap"; size = 4096; } ];
 
     environment.systemPackages = with pkgs; [
