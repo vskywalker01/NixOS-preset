@@ -2,7 +2,6 @@
 {
   config = lib.mkIf (config.services.samba.enable) {
     services.samba = {
-      securityType = "user";
       openFirewall = lib.mkForce true;
       settings = {
         global = {
@@ -10,16 +9,12 @@
           "server string" = config.networking.hostName;
           "netbios name" = config.networking.hostName;
           "security" = "user";
-          "hosts allow" = "192.168.0. 127.0.0.1 localhost";
+          "hosts allow" = "192.168.1.0/24 127.0.0.1 localhost";
           "hosts deny" = "0.0.0.0/0";
-        };
-        "home" = {
-          "path" = "/home/";
-          "browseable" = "yes";
-          "read only" = "no";
-          "guest ok" = "no";
-          "create mask" = "0644";
-          "directory mask" = "0755";
+          "min protocol" = "SMB2";
+          "max protocol" = "SMB3";
+          "log level" = "3";
+
         };
       };
     };
@@ -29,5 +24,7 @@
     };
     networking.firewall.enable = lib.mkForce true;
     networking.firewall.allowPing = lib.mkForce true;
+    networking.firewall.allowedTCPPorts = [ 139 445 ];
+    networking.firewall.allowedUDPPorts = [ 137 138 ];
   };
 }

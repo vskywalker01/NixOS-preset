@@ -2,7 +2,7 @@
 {
   config = lib.mkIf (config.hardware.hardware-profile == "RPI3") {
     boot.loader.generic-extlinux-compatible.enable = true;
-
+    boot.kernelPackages=pkgs.linuxPackages_rpi3;
     swapDevices = [ { device = "/swap"; size = 4096; } ];
 
     environment.systemPackages = with pkgs; [
@@ -12,14 +12,6 @@
       kernelParams = [
         "console=ttyS1,115200n8"
       ];
-    };
-    systemd.services.btattach = {
-      before = [ "bluetooth.service" ];
-      after = [ "dev-ttyAMA0.device" ];
-      wantedBy = [ "multi-user.target" ];
-      serviceConfig = {
-        ExecStart = "${pkgs.bluez}/bin/btattach -B /dev/ttyAMA0 -P bcm -S 3000000";
-      };
     };
     networking.interfaces.eth0 = {
       useDHCP = false;

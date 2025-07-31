@@ -5,5 +5,6 @@
     ./fa507nu.nix
     ./qemu.nix
     ./rpi3.nix
+    ./r3.nix
   ];
 }
