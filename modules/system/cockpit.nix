@@ -2,7 +2,7 @@
 
 {
   config = lib.mkIf (config.services.cockpit.enable) {
-    networking.firewall.allowedTCPPorts = [ 9090 ];
+    networking.firewall.allowedTCPPorts = [ 443 ];
     security.polkit.enable = true;
     security.polkit.extraConfig = ''
       polkit.addAdminRule(function(action, subject) {
