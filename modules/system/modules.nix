@@ -15,5 +15,6 @@
     ./launchpad.nix
     ./development/development.nix
     ./cockpit.nix
+    ./octoprint.nix
   ];
 }
