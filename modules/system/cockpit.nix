@@ -10,7 +10,7 @@
       port = 9090;
       settings = {
         WebService = {
-          Address = "127.0.0.1";
+          Address = "0.0.0.0";
           AllowUnencrypted = true;
         };
       };
