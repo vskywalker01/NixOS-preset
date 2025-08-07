@@ -40,7 +40,6 @@
           services.openssh.enable=true;
           services.flatpak.enable=false;
           virtualisation.docker.enable=true;
-          services.cockpit.enable=true;
           services.octoprint.enable=true;
           users.users.vittorio.extraGroups = [ "docker" "wheel"];
 
