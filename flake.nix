@@ -42,6 +42,7 @@
           virtualisation.docker.enable=true;
           services.octoprint.enable=true;
           users.users.vittorio.extraGroups = [ "docker" "wheel"];
+          services.tailscale.enable = true;
 
           services.xserver.desktopManager.gnome.enable=false;
 
@@ -142,7 +143,7 @@
           hardware.asus.battery.chargeUpto = 80;
           users.users.vittorio.extraGroups = [ "docker" "audio" "realtime"];
           launchpad.enable=true;
-
+          services.tailscale.enable = true;
           services.xserver.desktopManager.gnome.enable=true;
 
           development.latex.enable=true;
