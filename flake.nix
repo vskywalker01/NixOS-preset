@@ -10,6 +10,7 @@
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nix-alien.url = "github:thiagokokada/nix-alien";
+    ngrok.url = "github:ngrok/ngrok-nix";
   };
   nixConfig = {
     extra-substituters = [
@@ -21,7 +22,7 @@
       "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
     ];
   };
-  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, nix-flatpak, nixos-hardware, cachix, nix-alien}: {
+  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, nix-flatpak, nixos-hardware, cachix, nix-alien,ngrok}: {
     nixosConfigurations.skywalker-pi3 = nixpkgs.lib.nixosSystem {
       specialArgs = {
         inherit inputs;
@@ -29,6 +30,7 @@
       system = "aarch64-linux";
       modules = [ 
         nix-flatpak.nixosModules.nix-flatpak
+        ngrok.nixosModules.ngrok
         ./modules/hardware/hardware.nix
         ./configuration.nix
         ./modules/system/modules.nix
@@ -42,7 +44,6 @@
           virtualisation.docker.enable=true;
           services.octoprint.enable=true;
           users.users.vittorio.extraGroups = [ "docker" "wheel"];
-          services.tailscale.enable = true;
 
           services.xserver.desktopManager.gnome.enable=false;
 
@@ -66,6 +67,19 @@
           home-manager.extraSpecialArgs = {
             flake-inputs = inputs;
             systemConfig = config;
+          };
+          nixpkgs.config.allowUnfree = true;
+          services.ngrok = {
+            enable = true;
+            extraConfigFiles = [
+              "/auth.yml"
+            ];
+            tunnels = {
+              ssh = {
+                proto = "tcp";
+                addr = 22;
+              };
+            };
           };
         }
         )
@@ -143,7 +157,6 @@
           hardware.asus.battery.chargeUpto = 80;
           users.users.vittorio.extraGroups = [ "docker" "audio" "realtime"];
           launchpad.enable=true;
-          services.tailscale.enable = true;
           services.xserver.desktopManager.gnome.enable=true;
 
           development.latex.enable=true;
