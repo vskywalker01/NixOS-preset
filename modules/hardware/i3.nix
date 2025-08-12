@@ -9,11 +9,6 @@ in {
       package = config.boot.kernelPackages.nvidiaPackages.legacy_470;
       modesetting.enable = true;
     };
-    hardware.opengl = {
-      enable = true;
-      driSupport = true;
-      driSupport32Bit = true;
-    };
     hardware.cpu.intel.updateMicrocode = true;
   };  
 }
