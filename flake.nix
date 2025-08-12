@@ -44,6 +44,7 @@
           virtualisation.docker.enable=true;
           services.octoprint.enable=true;
           users.users.vittorio.extraGroups = [ "docker" "wheel"];
+          netbootxyz.enable = true;
 
           services.xserver.desktopManager.gnome.enable=false;
 
