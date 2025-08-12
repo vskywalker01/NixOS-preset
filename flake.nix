@@ -186,7 +186,7 @@
         )
       ];
     };
-nixosConfigurations.skywalker-r3 = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.skywalker-r3 = nixpkgs.lib.nixosSystem {
       specialArgs = {
         inherit inputs;
       };
@@ -233,6 +233,52 @@ nixosConfigurations.skywalker-r3 = nixpkgs.lib.nixosSystem {
             systemConfig = config;
           };
         })
+      ];
+    };
+    nixosConfigurations.skywalker-i3 = nixpkgs.lib.nixosSystem {
+      specialArgs = {
+        inherit inputs;
+      };
+      system = "x86_64-linux";
+      modules = [ 
+        nix-flatpak.nixosModules.nix-flatpak
+        ./modules/hardware/hardware.nix
+        ./configuration.nix
+        ./modules/system/modules.nix
+        home-manager.nixosModules.home-manager
+        (
+        {config,lib,...}:
+        {
+          hardware.hardware-profile="I3";
+          services.openssh.enable=true;
+          services.flatpak.enable=true;
+          virtualisation.docker.enable=true;
+          users.users.vittorio.extraGroups = [ "docker" "audio" "realtime"];
+          services.xserver.desktopManager.gnome.enable=true;
+
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.vittorio = {
+            imports = [./modules/home/home.nix];
+            home.username = "vittorio";
+            home.homeDirectory = "/home/vittorio";
+
+            applications.CADs=true;
+            applications.gaming=false;
+            applications.misc=true;
+            applications.videoEditing=false;
+            applications.programming=true;
+            applications.megasync=true;
+
+            home.stateVersion = "24.11";
+            programs.home-manager.enable = true;
+          };
+          home-manager.extraSpecialArgs = {
+            flake-inputs = inputs;
+            systemConfig = config;
+          };
+        }
+        )
       ];
     };
   };

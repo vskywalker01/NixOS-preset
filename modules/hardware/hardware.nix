@@ -6,5 +6,6 @@
     ./qemu.nix
     ./rpi3.nix
     ./r3.nix
+    ./i3.nix
   ];
 }

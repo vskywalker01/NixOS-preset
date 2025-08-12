@@ -6,7 +6,10 @@ in {
     boot.kernelPackages = pkgs.linuxPackages_latest;
 
     environment.systemPackages = with pkgs; [ lact ];
-    systemd.packages = with pkgs; [ lact ];
+    systemd.packages = with pkgs; [ 
+      lact 
+      ethtool
+    ];
     systemd.services.lactd.wantedBy = ["multi-user.target"];
     hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     hardware.graphics = {
