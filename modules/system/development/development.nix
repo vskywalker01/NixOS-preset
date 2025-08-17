@@ -3,5 +3,6 @@
 {
   imports = [
     ./texlive.nix
+    ./embedded.nix
   ];
 }

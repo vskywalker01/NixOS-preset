@@ -34,6 +34,9 @@ in {
       ]
       ++ lib.optionals (systemConfig.virtualisation.docker.enable) [
         ms-vscode-remote.remote-containers
+      ]
+      ++ lib.optionals (systemConfig.development.embedded.enable) [
+        platformio.platformio-vscode-ide
       ];
 
     };

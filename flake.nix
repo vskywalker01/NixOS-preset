@@ -43,7 +43,7 @@
           services.flatpak.enable=false;
           virtualisation.docker.enable=true;
           services.octoprint.enable=true;
-          users.users.vittorio.extraGroups = [ "docker" "wheel"];
+          users.users.vittorio.extraGroups = [ "dialout" "docker" "wheel"];
           netbootxyz.enable = true;
 
           services.xserver.desktopManager.gnome.enable=false;
@@ -156,11 +156,12 @@
           programs.steam.enable=true;
           hardware.asus.battery.enableChargeUptoScript = true;
           hardware.asus.battery.chargeUpto = 80;
-          users.users.vittorio.extraGroups = [ "docker" "audio" "realtime"];
+          users.users.vittorio.extraGroups = [ "dialout" "docker" "audio" "realtime"];
           launchpad.enable=true;
           services.xserver.desktopManager.gnome.enable=true;
 
           development.latex.enable=true;
+          development.embedded.enable=true;
 
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
@@ -211,7 +212,10 @@
           services.samba.enable=true;
           launchpad.enable=true;
           services.xserver.desktopManager.gnome.enable=true;
-          users.users.vittorio.extraGroups = [ "docker " "audio" "realtime" "network" "systemd-journal"];
+          users.users.vittorio.extraGroups = [ "dialout" "docker " "audio" "realtime" "network" "systemd-journal"];
+
+          development.latex.enable=true;
+
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.users.vittorio = {
@@ -254,8 +258,10 @@
           services.openssh.enable=true;
           services.flatpak.enable=true;
           virtualisation.docker.enable=true;
-          users.users.vittorio.extraGroups = [ "docker" "audio" "realtime"];
+          users.users.vittorio.extraGroups = [ "dialout" "docker" "audio" "realtime"];
           services.xserver.desktopManager.gnome.enable=true;
+
+          development.latex.enable=true;
 
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
