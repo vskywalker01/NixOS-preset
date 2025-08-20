@@ -13,7 +13,6 @@
     ./cups.nix
     ./samba.nix
     ./launchpad.nix
-    ./development/development.nix
     ./octoprint.nix
     ./netbootxyz.nix
   ];

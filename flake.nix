@@ -11,6 +11,7 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nix-alien.url = "github:thiagokokada/nix-alien";
     ngrok.url = "github:ngrok/ngrok-nix";
+
   };
   nixConfig = {
     extra-substituters = [
@@ -160,9 +161,6 @@
           launchpad.enable=true;
           services.xserver.desktopManager.gnome.enable=true;
 
-          development.latex.enable=true;
-          development.embedded.enable=true;
-
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.users.vittorio = {
@@ -214,8 +212,6 @@
           services.xserver.desktopManager.gnome.enable=true;
           users.users.vittorio.extraGroups = [ "dialout" "docker " "audio" "realtime" "network" "systemd-journal"];
 
-          development.latex.enable=true;
-
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.users.vittorio = {
@@ -260,8 +256,6 @@
           virtualisation.docker.enable=true;
           users.users.vittorio.extraGroups = [ "dialout" "docker" "audio" "realtime"];
           services.xserver.desktopManager.gnome.enable=true;
-
-          development.latex.enable=true;
 
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;

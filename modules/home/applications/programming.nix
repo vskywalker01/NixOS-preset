@@ -25,18 +25,13 @@ in {
         ms-vscode-remote.remote-ssh-edit
         firefox-devtools.vscode-firefox-debug
         jnoortheen.nix-ide
+        james-yu.latex-workshop
       ] 
       ++ lib.optionals (systemConfig.ollama.enable) [
         continue.continue
       ]
-      ++ lib.optionals (systemConfig.development.latex.enable) [
-        james-yu.latex-workshop
-      ]
       ++ lib.optionals (systemConfig.virtualisation.docker.enable) [
         ms-vscode-remote.remote-containers
-      ]
-      ++ lib.optionals (systemConfig.development.embedded.enable) [
-        platformio.platformio-vscode-ide
       ];
 
     };
