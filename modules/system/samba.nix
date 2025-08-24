@@ -3,6 +3,7 @@
   config = lib.mkIf (config.services.samba.enable) {
     services.samba = {
       openFirewall = lib.mkForce true;
+      package = pkgs.sambaFull;
       settings = {
         global = {
           "workgroup" = "WORKGROUP";
@@ -14,7 +15,9 @@
           "min protocol" = "SMB2";
           "max protocol" = "SMB3";
           "log level" = "3";
-
+          "load printers" = "yes";
+          "printing" = "cups";
+          "printcap name" = "cups";
         };
       };
     };

@@ -19,6 +19,7 @@ in {
 
     systemd.tmpfiles.rules = [
       "d /srv/hddraid 0755 root root -"
+      "d /var/spool/samba 1777 root root -"
     ];
 
     fileSystems."/srv/hddraid" = {
@@ -39,6 +40,16 @@ in {
         "valid users" = [ "vittorio" ];
         "create mask" = "0644";
         "directory mask" = "0755";
+      };
+      "printers" = {
+        "comment" = "Printers";
+        "path" = "/var/spool/samba";
+        "public" = "yes";
+        "browseable" = "yes";
+        "guest ok" = "yes";
+        "writable" = "no";
+        "printable" = "yes";
+        "create mode" = 0700;
       };
     }; 
 
