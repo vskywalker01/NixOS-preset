@@ -81,6 +81,12 @@ in {
       pkgs.gnome-remote-desktop 
     ];   
     services.gnome.gnome-remote-desktop.enable = true;
+    systemd.services.gnome-remote-desktop = {
+      wantedBy = [ "graphical.target" ];
+    };
+    networking.firewall.allowedTCPPorts = [ 3389 ];
+    services.displayManager.autoLogin.enable = lib.mkForce false;
+    services.getty.autologinUser = lib.mkForce null;
   };
 }
 
