@@ -1,7 +1,7 @@
 {config, lib, pkgs, ...}:
 {
   imports = [
-    ./docker.nix
+    ./docker/docker.nix
     ./pipewire.nix
     ./gnome.nix
     ./qemu/qemu.nix
@@ -9,11 +9,8 @@
     ./ssh.nix
     ./virtualbox.nix
     ./flatpacks.nix
-    ./ollama.nix
     ./cups.nix
     ./samba.nix
     ./launchpad.nix
-    ./octoprint.nix
-    ./netbootxyz.nix
   ];
 }

@@ -43,9 +43,10 @@
           services.openssh.enable=true;
           services.flatpak.enable=false;
           virtualisation.docker.enable=true;
-          services.octoprint.enable=true;
+          
           users.users.vittorio.extraGroups = [ "dialout" "docker" "wheel"];
           netbootxyz.enable = true;
+          octoprint.enable=true;
 
           services.xserver.desktopManager.gnome.enable=false;
 

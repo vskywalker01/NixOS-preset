@@ -38,14 +38,6 @@ in {
     };
     services.spice-vdagentd.enable = lib.mkDefault true;
 
-    system.activationScripts.installLibvirtHooks.text = ''
-      rm -rf /var/lib/libvirt/hooks
-      mkdir -p /var/lib/libvirt/hooks
-      cp -r /etc/nixos/modules/system/qemu/hooks/* /var/lib/libvirt/hooks/
-      chmod +x /var/lib/libvirt/hooks/qemu
-      find /var/lib/libvirt/hooks/qemu.d -type f -exec chmod +x {} +
-    '';
-
   };
   
 }
