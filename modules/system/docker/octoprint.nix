@@ -25,7 +25,7 @@
             "--network=host"
             "--privileged"
           #  "--device-cgroup-rule=c 166:* rmw"
-          #  "--device-cgroup-rule=c 188:* rmw"
+            "--device-cgroup-rule=c 188:* rmw"
           #  "--device-cgroup-rule=c 81:* rmw"
           #  "--device-cgroup-rule=c 1:3 rw"
           ];
