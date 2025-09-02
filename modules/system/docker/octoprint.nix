@@ -18,9 +18,6 @@
           volumes = [
             "octoprint:/octoprint"
           ];
-          devices = [
-            "/dev/ttyUSB0:/dev/ttyUSB0"
-          ];
           extraOptions = [
             "--network=host"
           #  "--privileged"
