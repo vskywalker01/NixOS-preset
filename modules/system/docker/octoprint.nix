@@ -38,8 +38,8 @@
     };
     services.udev.extraRules = ''
       SUBSYSTEM!="tty", GOTO="end_octoprint_printers"
-      ACTION=="add|change", SUBSYSTEM=="tty", KERNEL=="ttyUSB[0-9]|ttyACM[0-9]", RUN+="${pkgs.docker} exec octoprint rm -rf /dev/3dprinter", RUN+="${pkgs.docker} exec octoprint mknod /dev/3dprinter c %M %m"
-      ACTION=="remove", SUBSYSTEM=="tty", KERNEL=="ttyUSB[0-9]|ttyACM[0-9]", RUN+="${pkgs.docker} exec octoprint rm -rf /dev/3dprinter"
+      ACTION=="add|change", SUBSYSTEM=="tty", KERNEL=="ttyUSB[0-9]|ttyACM[0-9]", RUN+="${pkgs.docker}/bin/docker exec octoprint rm -rf /dev/3dprinter", RUN+="${pkgs.docker}/bin/docker exec octoprint mknod /dev/3dprinter c %M %m"
+      ACTION=="remove", SUBSYSTEM=="tty", KERNEL=="ttyUSB[0-9]|ttyACM[0-9]", RUN+="${pkgs.docker}/bin/docker exec octoprint rm -rf /dev/3dprinter"
       LABEL="end_octoprint_printers"
     '';
   };
