@@ -13,7 +13,10 @@
       containers = {
         filebrowser = {
           image = "filebrowser/filebrowser";
-          extraOptions = [ "--network=host" ];
+          #extraOptions = [ "--network=host" ];
+          ports = [
+            "80:8080"
+          ];
           autoStart = true;
           volumes = [
             "/srv/hdd:/srv"

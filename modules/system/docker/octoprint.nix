@@ -18,8 +18,11 @@
           volumes = [
             "octoprint:/octoprint"
           ];
+          ports = [
+            "5000:5000"
+          ];
           extraOptions = [
-            "--network=host"
+          #  "--network=host"
           #  "--privileged"
           #  "--device-cgroup-rule=c 166:* rmw"
             "--device-cgroup-rule=c 188:* rmw"

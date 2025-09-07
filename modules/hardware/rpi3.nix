@@ -7,7 +7,7 @@
 
     environment.systemPackages = with pkgs; [
       libraspberrypi
-      hd-idle
+      hdparm
     ];
     boot= {
       kernelParams = [
@@ -80,13 +80,13 @@
         "directory mask" = "0755";
       };
     }; 
-    systemd.services.hd-idle = {
-      description = "External HD spin down daemon";
-      wantedBy = [ "multi-user.target" ];
-      serviceConfig = {
-        Type = "forking";
-        ExecStart = "${pkgs.hd-idle}/bin/hd-idle -i 0 -a sda -i 600";
-      };
+    systemd.services.hdparm-sda = {
+        description = "Set spindown timeout for /dev/sda";
+        wantedBy = [ "multi-user.target" ];
+        serviceConfig = {
+          Type = "oneshot";
+          ExecStart = "${pkgs.hdparm}/bin/hdparm -S 120 -B 127 /dev/sda";
+        };
     };
   };
 }
