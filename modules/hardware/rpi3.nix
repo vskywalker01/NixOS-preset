@@ -7,6 +7,7 @@
 
     environment.systemPackages = with pkgs; [
       libraspberrypi
+      hd-idle
     ];
     boot= {
       kernelParams = [
@@ -53,5 +54,39 @@
       };
     };
     hardware.enableRedistributableFirmware = true;
+
+    systemd.tmpfiles.rules = [
+      "d /srv/hdd 0755 root root -"
+      "d /var/spool/samba 1777 root root -"
+    ];
+
+    fileSystems."/srv/hdd" = {
+      device = "/dev/sda1";
+      fsType = "btrfs";
+      options = [
+        "defaults" 
+        "compress=zstd"
+      ];
+    };
+
+    services.samba.settings = lib.mkIf (config.services.samba.enable) {
+      "hdd" = {
+        "path" = "/srv/hdd";
+        "browseable" = "yes";
+        "read only" = "no";
+        "guest ok" = "no";
+        "valid users" = [ "vittorio" ];
+        "create mask" = "0644";
+        "directory mask" = "0755";
+      };
+    }; 
+    systemd.services.hd-idle = {
+      description = "External HD spin down daemon";
+      wantedBy = [ "multi-user.target" ];
+      serviceConfig = {
+        Type = "forking";
+        ExecStart = "${pkgs.hd-idle}/bin/hd-idle -i 0 -a sda -i 600";
+      };
+    };
   };
 }
