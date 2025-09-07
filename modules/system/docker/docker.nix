@@ -5,6 +5,7 @@
     ./netbootxyz.nix
     ./octoprint.nix
     ./ollama.nix
+    ./filebrowser.nix
   ];
   config = lib.mkIf (config.virtualisation.docker.enable) {
     users.extraGroups.docker.members = [ "username-with-access-to-socket" ];

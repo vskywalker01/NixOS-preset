@@ -47,6 +47,7 @@
           users.users.vittorio.extraGroups = [ "dialout" "docker" "wheel"];
           netbootxyz.enable = true;
           octoprint.enable=true;
+          filebrowser.enable=true;
           services.samba.enable=true;
           services.xserver.desktopManager.gnome.enable=false;
 
