@@ -3,6 +3,7 @@ let
   unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
 in {
   config = lib.mkIf (config.services.xserver.desktopManager.gnome.enable) {
+    programs.firefox.package = pkgs.firefox-bin;
     services.xserver.enable = lib.mkDefault true;
     services.xserver.displayManager.gdm.enable = lib.mkDefault true;
     services.printing.enable = lib.mkDefault true;
@@ -68,6 +69,7 @@ in {
       pkgs.gnomeExtensions.gamemode-shell-extension
       pkgs.gnomeExtensions.custom-command-toggle
       pkgs.gnomeExtensions.user-themes
+      pkgs.gnomeExtensions.tiling-shell
       pkgs.gnome-tweaks
       pkgs.gnomeExtensions.cronomix
       unstable.whitesur-icon-theme

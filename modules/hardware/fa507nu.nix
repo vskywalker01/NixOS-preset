@@ -3,7 +3,7 @@ let
   unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
 in {
   config = lib.mkIf (config.hardware.hardware-profile == "FA507NU") {
-    boot.kernelPackages = pkgs.linuxPackages_6_15;
+    boot.kernelPackages = pkgs.linuxPackages_6_16;
 
     zramSwap.enable = true; 
   
@@ -18,15 +18,21 @@ in {
     #Workaround for errors during compilation for specific kernel versions                  
     hardware.nvidia.open = lib.mkForce true;                                          
 
-    hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.latest;
-    #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-    #  version = "570.133.07";
-    #  sha256_64bit = "sha256-LUPmTFgb5e9VTemIixqpADfvbUX1QoTT2dztwI3E3CY=";
-    #  sha256_aarch64 = "sha256-2l8N83Spj0MccA8+8R1uqiXBS0Ag4JrLPjrU3TaXHnM=";
-    #  openSha256 = "sha256-9l8N83Spj0MccA8+8R1uqiXBS0Ag4JrLPjrU3TaXHnM=";
-    #  settingsSha256 = "sha256-XMk+FvTlGpMquM8aE8kgYK2PIEszUZD2+Zmj2OpYrzU=";
-    #  persistencedSha256 = "sha256-4l8N83Spj0MccA8+8R1uqiXBS0Ag4JrLPjrU3TaXHnM=";
-    #};
+    #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.production;
+    hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
+      version = "580.65.06";
+      sha256_64bit = "sha256-BLEIZ69YXnZc+/3POe1fS9ESN1vrqwFy6qGHxqpQJP8=";
+      sha256_aarch64 = "sha256-4CrNwNINSlQapQJr/dsbm0/GvGSuOwT/nLnIknAM+cQ=";
+      openSha256 = "sha256-BKe6LQ1ZSrHUOSoV6UCksUE0+TIa0WcCHZv4lagfIgA=";
+      settingsSha256 = "sha256-9PWmj9qG/Ms8Ol5vLQD3Dlhuw4iaFtVHNC0hSyMCU24=";
+      persistencedSha256 = "sha256-ETRfj2/kPbKYX1NzE0dGr/ulMuzbICIpceXdCRDkAxA=";
+      #version = "570.133.07";
+      #sha256_64bit = "sha256-LUPmTFgb5e9VTemIixqpADfvbUX1QoTT2dztwI3E3CY=";
+      #sha256_aarch64 = "sha256-2l8N83Spj0MccA8+8R1uqiXBS0Ag4JrLPjrU3TaXHnM=";
+      #openSha256 = "sha256-9l8N83Spj0MccA8+8R1uqiXBS0Ag4JrLPjrU3TaXHnM=";
+      #settingsSha256 = "sha256-XMk+FvTlGpMquM8aE8kgYK2PIEszUZD2+Zmj2OpYrzU=";
+      #persistencedSha256 = "sha256-4l8N83Spj0MccA8+8R1uqiXBS0Ag4JrLPjrU3TaXHnM=";
+    };
 
     #enable Cuda support and GPU passtrough for Nvidia GPU on docker 
     nixpkgs.config.cudaSupport = lib.mkDefault true;  

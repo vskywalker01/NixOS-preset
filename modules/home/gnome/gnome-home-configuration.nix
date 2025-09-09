@@ -14,6 +14,7 @@
           appindicator.extensionUuid
           user-themes.extensionUuid 
           cronomix.extensionUuid
+          tiling-shell.extensionUuid
         ]
         ++
         lib.optionals (systemConfig.programs.gamemode.enable) 
@@ -60,6 +61,19 @@
         gtk-theme = "WhiteSur-Dark";
         key-theme = "WhiteSur-Dark";
         show-battery-percentage = true;
+      };
+
+      "org/gnome/shell/extensions/blur-my-shell/applications" = {
+        enable-tiling-system = true;
+        enable-window-border = true;
+        inner-gaps = 6;
+        outer-gaps = 2;
+        resize-complementing-windows = true;
+        restore-window-original-size = true;
+        show-indicator = true;
+        snap-assistant-threshold = 40;
+        window-border-color = "rgb(154,153,150)";
+        window-border-width = 2;
       };
     };
   };
