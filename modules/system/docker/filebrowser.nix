@@ -15,7 +15,7 @@
           image = "filebrowser/filebrowser";
           #extraOptions = [ "--network=host" ];
           ports = [
-            "80:8080"
+            "80:80"
           ];
           autoStart = true;
           volumes = [
@@ -26,6 +26,6 @@
         };
       };
     };
-    networking.firewall.allowedTCPPorts = [ 8080 ];
+    networking.firewall.allowedTCPPorts = [ 80 ];
   };
 }
