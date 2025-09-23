@@ -22,6 +22,7 @@ in {
       pkgs.drawio
       pkgs.corefonts 
       pkgs.zoom-us
+      pkgs.woeusb-ng
     ];
     home.activation.installfonts = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       mkdir -p "${config.xdg.dataHome}/fonts"

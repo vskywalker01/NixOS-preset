@@ -13,4 +13,10 @@
     ./samba.nix
     ./launchpad.nix
   ];
+
+  config = {
+    environment.systemPackages = with pkgs; [
+      ntfs3g
+    ];
+  };
 }
