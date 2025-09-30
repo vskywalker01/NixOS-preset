@@ -23,6 +23,7 @@ in {
       pkgs.corefonts 
       pkgs.zoom-us
       pkgs.woeusb-ng
+      pkgs.krita
     ];
     home.activation.installfonts = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       mkdir -p "${config.xdg.dataHome}/fonts"
