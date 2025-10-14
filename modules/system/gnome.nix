@@ -59,6 +59,7 @@ in {
       gnome-software
     ];
     environment.systemPackages =  [
+      pkgs.openconnect
       pkgs.gnomeExtensions.blur-my-shell
       pkgs.gnomeExtensions.appindicator
       pkgs.gnomeExtensions.caffeine

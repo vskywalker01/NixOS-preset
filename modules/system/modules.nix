@@ -12,6 +12,7 @@
     ./cups.nix
     ./samba.nix
     ./launchpad.nix
+    ./vpn.nix
   ];
 
   config = {

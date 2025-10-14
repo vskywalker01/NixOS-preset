@@ -1,7 +1,9 @@
 {config, lib, pkgs,flake-inputs, systemConfig ? {}, ...}:
 
 let 
-  unstable = flake-inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
+  unstable = import flake-inputs.nixpkgs-unstable {
+    system = pkgs.system;
+  };
 in {
   options.applications = {
     programming = lib.mkOption {
@@ -35,9 +37,9 @@ in {
       ];
 
     };
-    home.packages = with pkgs; [
-      gtkterm
-      arduino
+    home.packages = [
+      pkgs.gtkterm
+      pkgs.arduino
     ];
   };
 }
