@@ -4,10 +4,6 @@ let
   unstable = import flake-inputs.nixpkgs-unstable {
     system = pkgs.system;
   };
-  vimrc = builtins.fetchGit  {
-    url = "https://github.com/danebulat/vim-config.git";
-    rev = "491f6306f46b2eaacb90b5732f121c00e94ec3a2"; 
-  };
 in {
   options.applications = {
     programming = lib.mkOption {
@@ -16,8 +12,8 @@ in {
       description = "Include programming IDEs in home configuration";
     };
   };
-  
-  config = lib.mkIf (config.applications.programming) {
+    imports=[flake-inputs.nvf.homeManagerModules.nvf];
+    config = lib.mkIf (config.applications.programming) {
     programs.vscode = {
       enable = lib.mkDefault true;
       profiles.default.extensions = with pkgs.vscode-extensions; [
@@ -43,16 +39,26 @@ in {
       gtkterm
       arduino
     ];
-    programs.vim.enable = true;
-    home.file.".vim/bundle/Vundle.vim".source = builtins.fetchGit {
-      url = "https://github.com/VundleVim/Vundle.vim.git";
-      rev = "5548a1a937d4e72606520c7484cd384e6c76b565"; 
+
+    programs.nvf = {
+      enable = true;
+      settings = {
+        vim = {
+          viAlias=true;
+          vimAlias=true;
+          theme = {
+            enable = true;
+            name = "catppuccin";
+            style = "mocha";
+          };
+
+          languages.nix.enable=true;
+          telescope.enable=true;
+          filetree.neo-tree.enable=true;
+          autocomplete.nvim-cmp.enable=true;
+        };
+      };
     };
-    home.activation.installVimCustomizations = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      if [ -x "$(command -v vim)" ]; then
-        vim +PluginInstall +qall || true
-      fi
-    '';
-    home.file.".vimrc".source = "${vimrc}/light-ide/vimrc";
+    
   };
 }
