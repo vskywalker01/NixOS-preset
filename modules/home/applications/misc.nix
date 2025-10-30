@@ -20,16 +20,11 @@ in {
       pkgs.rnote
       pkgs.gimp 
       pkgs.drawio
-      pkgs.corefonts 
       pkgs.zoom-us
       pkgs.woeusb-ng
       pkgs.krita
     ];
-    home.activation.installfonts = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      mkdir -p "${config.xdg.dataHome}/fonts"
-      cp -n ${pkgs.corefonts}/share/fonts/truetype/* "${config.xdg.dataHome}/fonts/"
-      ${pkgs.fontconfig}/bin/fc-cache -f "${config.xdg.dataHome}/fonts"
-    '';
+   
 
   };
 

@@ -10,6 +10,9 @@
   home.packages = [
       pkgs.neofetch
       flake-inputs.nix-alien.packages.${pkgs.system}.nix-alien
+      pkgs.nerd-fonts.jetbrains-mono
+      pkgs.nerd-fonts.fira-code
+      pkgs.corefonts 
     ];
   programs.git = {
     enable = true;
@@ -24,7 +27,12 @@
       end
     '';
   };
+  fonts.fontconfig.enable = true;
   
-
+  home.activation.installfonts = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    mkdir -p "${config.xdg.dataHome}/fonts"
+    cp -n ${pkgs.corefonts}/share/fonts/truetype/* "${config.xdg.dataHome}/fonts/"
+    ${pkgs.fontconfig}/bin/fc-cache -f "${config.xdg.dataHome}/fonts"
+  '';
 }
 
