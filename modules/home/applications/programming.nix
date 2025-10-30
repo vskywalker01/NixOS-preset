@@ -42,20 +42,27 @@ in {
     home.packages = with pkgs; [
       gtkterm
       arduino
+      wl-clipboard
     ];
 
     programs.nvf = {
       enable = true;
       settings = {
         vim = {
+          options={
+            tabstop=4;
+            shiftwidth=4;
+          };
           viAlias=true;
           vimAlias=true;
+          clipboard.enable=true;
           theme = {
             enable = true;
             name = "catppuccin";
             style = "mocha";
           };
-
+          autocomplete.blink-cmp.enable=true;
+          autopairs.nvim-autopairs.enable=true;
           languages.nix.enable=true;
           telescope.enable=true;
           filetree.neo-tree.enable=true;
@@ -70,12 +77,12 @@ in {
                 endpoint = "http://127.0.0.1:11434";
                 model= "codegemma:latest";
                 timeout = 30000;
-                #extra_request_body = {
-                #  options = {
-                #    num_ctx = 20480;
-                #    keep_alive = "5m";
-                #  };
-                #};
+                extra_request_body = {
+                  options = {
+                    num_ctx = 20480;
+                    keep_alive = "5m";
+                  };
+                };
               };
             };
           };
