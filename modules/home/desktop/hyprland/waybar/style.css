@@ -1,0 +1,70 @@
+* {
+    font-family: "JetBrainsMono Nerd Font";
+    font-weight: bold;
+    min-height: 0;
+    font-size: 98%;
+}
+
+.modules-left, .modules-right, .modules-center {
+    border: 2px solid rgba(255,255,255,0.5);
+    border-radius: 10px;
+    background-color: rgba(156,128,163,0.2);
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+.modules-left, .modules-right, .modules-center > * {
+    margin-left:6px;
+    margin-right:6px;
+}
+
+#clock {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+window#waybar {
+    background: transparent;
+    border-radius: 5px;
+    color: whitesmoke;
+}
+
+window#waybar.hidden {
+    opacity: 0.5;
+}
+
+#workspaces {
+    background: rgba(23,23,23,0.0);
+    color: #888789;
+    box-shadow: none;
+    text-shadow: none;
+    transition: 0.2s ease;
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-top: 1px;
+}
+
+#workspaces button {
+    background: rgba(23,23,23,0.0);
+    color: #A1BDCE;
+    box-shadow: none;
+    text-shadow:none;
+    border-radius: 9px;
+    transition: 0.2s ease;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+#workspaces button.active {
+    color: #A1BDCE;
+    transition: all 0.3s ease;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+#workspaces button:hover {
+    background: none;
+    color: #72D792;
+    animation: ws_hover 20s ease-in-out 1;
+    transition: all 0.5s cubic-bezier(.55,-0.68,.48,1.682);
+}

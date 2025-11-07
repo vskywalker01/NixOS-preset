@@ -1,0 +1,166 @@
+{
+    "layer": "top",
+    "position":"top",
+    "modules-left": ["custom/apps","hyprland/workspaces","group/system"],
+    "modules-center": ["clock"],
+    "modules-right": ["tray","group/network","group/audio","power-profiles-daemon","battery","custom/power"],
+    "reload_style_on_change": true,
+    "clock": {
+        "format": "{:%d.%m.%y | %H:%M}",
+        "rotate": 0,
+        "tooltip-format": "<tt>{calendar}</tt>",
+        "calendar": {
+            "mode": "month",
+            "mode-mon-col": 3,
+            "on-scroll": 1,
+            "on-clock-right": "mode",
+            "format": {
+                "months": "<span color='#ffead3'><b>{}</b></span>",
+                "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+                "today": "<span color='#ff6699'><b>{}</b></span>"
+            }
+        },
+        "actions": {
+            "on-clock-right": "mode",
+            "on-click-forward": "tz_up",
+            "on-click-backward": "tz_down",
+            "on-scroll-up": "shift_up",
+            "on-scroll-down": "shift_down"
+        }
+    },
+    "hyprland/workspaces": {
+        "format": "{icon}",
+        "format-icons": {
+            "active": "\uf111",
+            "default": "\uf4aa"
+        }
+    },
+    "tray": {
+        "icon-size": 14,
+"spacing": 10
+    },
+
+    "group/system": {
+        "orientation": "horizontal",
+        "modules": ["cpu","memory","temperature"]
+    },
+    "memory": {
+        "interval": 5,
+        "format": "\uefc5 {used}/{total} ",
+        "max-length": 25
+    },
+    "cpu": {
+        "interval": 5,
+        "format": "\uf4bc {usage}% "
+    },
+    "group/network": {
+        "orientation": "horizontal",
+        "modules": ["bluetooth", "network"]
+    },
+    "bluetooth": {
+        "format": "{icon} ",
+        "format-off": "",
+        "format-disabled": "",
+        "hide-on-empty": true,
+        "format-icons": {
+            "enabled": "\udb80\udcaf", 
+            "disabled": "\udb80\udcb2",
+            "connected": "\udb80\udcb1"
+        },
+        "tooltip-format": "{controller_alias}\t{controller_address}",
+        "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+        "on-click": "blueman-manager"
+    },
+    "network": {
+        "format": "",
+        "format-ethernet": "\udb83\udc9d ",
+        "format-wifi": "{icon} ",
+        "format-disconnected": "\udb82\udc9c ",
+        "format-icons": [
+            "\udb82\udd2f",
+            "\udb82\udd1f",
+            "\udb82\udd25",
+            "\udb82\udd28"
+        ],
+        "tooltip-format-wifi": "{essid} ({signalStrength}%)",
+        "tooltip-format-ethernet": "{ifname}",
+        "tooltip-format-disconnected": "Disconnected",
+        "on-click": "nm-connection-editor"
+    },
+
+    "group/audio": {
+        "orientation": "horizontal",
+        "modules": ["pulseaudio", "pulseaudio#mic"]
+    },
+    "pulseaudio": {
+        "format": "{icon} ",
+        "format-bluetooth": "\ue638 ", 
+        "format-muted": "\udb81\udf5f",
+        "tooltip": true,
+        "tooltip-format": "{icon} {desc}\t{volume}% ",
+        "format-icons": {
+            "headphones": "\udb80\udecb",
+            "bluetooth": "\udb82\udd70",
+            "handsfree": "\uf130",
+            "headset": "\udb80\udece",
+            "phone": "\uf095",
+            "car": "\udb86\udc78",
+            "default": ["\uf028","\uf027","\uf026"]
+        },
+        "scroll-step": 5,
+        "justify": "center",
+        "on-click": "pavucontrol",
+        "on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+    },
+    "pulseaudio#mic": {
+        "format": "{format_source}",
+        "format-source": "\uf138",
+        "format-muted": "\uf131",
+        "on-click": "pavucontrol -t 4",
+        "on-click-right": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
+        "tooltip-format": "{format_source} {source_desc}\t {source_volume}%",
+        "scroll-step": 5
+    },
+   
+    "battery": {
+        "bat": "$(ls /sys/class/power_supply/ | grep BAT | head -n1)",
+        "adapter": "AC",
+        "interval": 60,
+        "format": "{icon} {capacity}%",
+        "format-charging": "\udb81\udea5 {capacity}%",
+        "format-icons": [
+            "\uf244",
+            "\uf243",
+            "\uf242",
+            "\uf241",
+            "\uf240"
+        ],
+        "on-click": "gnome-power-statistics"
+    },
+    "backlight": {
+        "format": "\udb80\udcdf {percent}%"
+    },
+    "custom/apps": {
+        "format": "\uf40e ",
+        "tooltip-format": "App launcher",
+        "on-click": "rofi -show drun",
+        "interval": "once"
+    },
+    "custom/power": {
+        "format": "\u23fb ",
+        "tooltip-format": "Power options",
+        "on-click": "wlogout",
+        "interval": "once"
+    },
+    "power-profiles-daemon": {
+        "format": "{icon} {profile}",
+        "tooltip-format": "{profile}\t{driver}",
+        "tooltip": true,
+        "format-icons": {
+            "power-saver": "\udb80\udf2a",
+            "balanced": "\udb80\ude10",
+            "performance": "\uf427"
+        }
+    }
+}

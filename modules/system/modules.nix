@@ -3,7 +3,7 @@
   imports = [
     ./docker/docker.nix
     ./pipewire.nix
-    ./gnome.nix
+    ./desktop/desktop.nix
     ./qemu/qemu.nix
     ./steam/steam.nix
     ./ssh.nix

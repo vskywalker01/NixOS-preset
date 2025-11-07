@@ -111,7 +111,8 @@
           hardware.hardware-profile="QEMU";
           services.openssh.enable=true;
           services.flatpak.enable=true;
-          services.xserver.desktopManager.gnome.enable=true;
+          #services.xserver.desktopManager.gnome.enable=true;
+          programs.hyprland.enable=true;
 
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
