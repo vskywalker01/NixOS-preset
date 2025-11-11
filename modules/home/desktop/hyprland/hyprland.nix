@@ -3,6 +3,9 @@
 {
     imports = [
         ./waybar/waybar.nix
+        ./scripts/scripts.nix
+        ./wlogout/wlogout.nix
+        ./hyprlock/hyprlock.nix
     ];
     config = lib.mkIf (systemConfig.programs.hyprland.enable) {
         home.packages = with pkgs; [
@@ -39,7 +42,9 @@
                 "$MOD"="SUPER";
                 exec-once = [
                     "waybar"
-                    "vim"
+                    "swww-daemon"
+                    "wl-paste --watch cliphist store"
+                    "~/.config/hypr/scripts/swww-random.sh"
                 ];
                 input.kb_layout = "it";
                 general = {
@@ -78,7 +83,7 @@
                     "$MOD SHIFT, R, exec, hyprctl reload"
                     "$MOD, ESCAPE, exit"
                     
-                    ",PRINT,exec,grim -g '$(slurp)'"                   
+                    ",PRINT,exec,grim -g '$(slurp)'"
 
                 ];
                 binde = [
@@ -91,6 +96,9 @@
                 bindm = [
                     "$MOD, mouse:272, movewindow"
                     "$MOD, mouse:273, resizewindow"
+                ];
+                layerrule = [
+                    "blur, logout_dialog"
                 ];
             };
         };

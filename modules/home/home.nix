@@ -7,7 +7,7 @@
     ./desktop/gnome/gnome-home-configuration-nvidia.nix
     ./desktop/gnome/gnome-home-configuration-ollama.nix
     ./desktop/hyprland/hyprland.nix
-    ./wallpapaers/wallpapers.nix
+    ./wallpapers/wallpapers.nix
   ];
 
   home.packages = [

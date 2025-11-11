@@ -16,13 +16,13 @@ in {
             grim 
             slurp
             wl-clipboard
+            cliphist
             waybar
             kitty
             rofi-wayland
             rofi-bluetooth
             pulseaudio 
-            swaylock
-            swaybg
+            hyprlock
             xdg-desktop-portal-hyprland
             xdg-desktop-portal-wlr
             catppuccin-sddm-corners
@@ -32,6 +32,7 @@ in {
             wlogout
             upower
             gnome-power-manager 
+            swww
         ];   
         
         networking.networkmanager.enable=true;

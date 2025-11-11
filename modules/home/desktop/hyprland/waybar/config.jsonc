@@ -3,7 +3,7 @@
     "position":"top",
     "modules-left": ["custom/apps","hyprland/workspaces","group/system"],
     "modules-center": ["clock"],
-    "modules-right": ["tray","group/network","group/audio","power-profiles-daemon","battery","custom/power"],
+    "modules-right": ["tray","group/net","group/audio","power-profiles-daemon","battery","custom/power"],
     "reload_style_on_change": true,
     "clock": {
         "format": "{:%d.%m.%y | %H:%M}",
@@ -15,7 +15,7 @@
             "on-scroll": 1,
             "on-clock-right": "mode",
             "format": {
-                "months": "<span color='#ffead3'><b>{}</b></span>",
+                "months": "<span color='#ffffff'><b>{}</b></span>",
                 "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
                 "today": "<span color='#ff6699'><b>{}</b></span>"
             }
@@ -30,35 +30,43 @@
     },
     "hyprland/workspaces": {
         "format": "{icon}",
+        "show-special": false,
         "format-icons": {
             "active": "\uf111",
-            "default": "\uf4aa"
-        }
+            "default": "\uf4c3"
+        },
+        "sort-by-number": true,
+        "persistent-workspace": {
+            "*": [1,2,3,4]
+        },
+        "on-scroll-up": "hyprctl dispatch workspace e-1",
+        "on-scroll-down": "hyprctl dispatch workspace e+1"
     },
     "tray": {
         "icon-size": 14,
-"spacing": 10
+        "spacing": 10
     },
 
     "group/system": {
         "orientation": "horizontal",
-        "modules": ["cpu","memory","temperature"]
+        "modules": ["cpu","memory","temperature"],
+        "class": "container"
     },
     "memory": {
         "interval": 5,
-        "format": "\uefc5 {used}/{total} ",
+        "format": "\uefc5 {used}/{total}",
         "max-length": 25
     },
     "cpu": {
         "interval": 5,
-        "format": "\uf4bc {usage}% "
+        "format": "\uf4bc {usage}%"
     },
-    "group/network": {
+    "group/net": {
         "orientation": "horizontal",
         "modules": ["bluetooth", "network"]
     },
     "bluetooth": {
-        "format": "{icon} ",
+        "format": "{icon}",
         "format-off": "",
         "format-disabled": "",
         "hide-on-empty": true,
@@ -74,9 +82,9 @@
     },
     "network": {
         "format": "",
-        "format-ethernet": "\udb83\udc9d ",
-        "format-wifi": "{icon} ",
-        "format-disconnected": "\udb82\udc9c ",
+        "format-ethernet": "\udb83\udc9d",
+        "format-wifi": "{icon}",
+        "format-disconnected": "\udb82\udc9c",
         "format-icons": [
             "\udb82\udd2f",
             "\udb82\udd1f",
@@ -88,17 +96,16 @@
         "tooltip-format-disconnected": "Disconnected",
         "on-click": "nm-connection-editor"
     },
-
     "group/audio": {
         "orientation": "horizontal",
         "modules": ["pulseaudio", "pulseaudio#mic"]
     },
     "pulseaudio": {
-        "format": "{icon} ",
+        "format": "{icon}",
         "format-bluetooth": "\ue638 ", 
         "format-muted": "\udb81\udf5f",
         "tooltip": true,
-        "tooltip-format": "{icon} {desc}\t{volume}% ",
+        "tooltip-format": "{icon} {desc}\t{volume}%",
         "format-icons": {
             "headphones": "\udb80\udecb",
             "bluetooth": "\udb82\udd70",
@@ -106,7 +113,7 @@
             "headset": "\udb80\udece",
             "phone": "\uf095",
             "car": "\udb86\udc78",
-            "default": ["\uf028","\uf027","\uf026"]
+            "default": ["\uf026","\uf027","\uf028"]
         },
         "scroll-step": 5,
         "justify": "center",
@@ -115,8 +122,8 @@
     },
     "pulseaudio#mic": {
         "format": "{format_source}",
-        "format-source": "\uf138",
-        "format-muted": "\uf131",
+        "format-source": "\udb80\udf6c",
+        "format-muted": "\udb80\udf6d",
         "on-click": "pavucontrol -t 4",
         "on-click-right": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
         "tooltip-format": "{format_source} {source_desc}\t {source_volume}%",
@@ -142,13 +149,13 @@
         "format": "\udb80\udcdf {percent}%"
     },
     "custom/apps": {
-        "format": "\uf40e ",
+        "format": "\uf40e",
         "tooltip-format": "App launcher",
         "on-click": "rofi -show drun",
         "interval": "once"
     },
     "custom/power": {
-        "format": "\u23fb ",
+        "format": "\u23fb",
         "tooltip-format": "Power options",
         "on-click": "wlogout",
         "interval": "once"
