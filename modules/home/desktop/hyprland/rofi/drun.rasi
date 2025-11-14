@@ -1,0 +1,104 @@
+/* MACOS LAUNCHPAD LIKE THEME FOR ROFI */
+/* Author: Newman Sanchez (https://github.com/newmanls) */
+
+* {
+    font: "JetBrainsMono Nerd Font";
+
+    bg:  rgba(25,25,25,0.9);
+    brd: rgba(255,255,255,0.7);
+    brd2: rgba(255,255,255,0.5);
+    ebg: rgba(25,25,25,0.4);
+    txt: white;
+    txt2: rgba(255,255,255,0.7);
+    sel: rgba(255,255,255,0.2);
+
+    background-color: transparent;
+    text-color:       @txt;
+    padding:          0px;
+    margin:           0px;
+}
+
+window {
+    location:       north;
+    y-offset:       calc(50% - 176px);
+    width:          480;
+    border-radius:  24px;
+    border:         2px;
+    border-color:   @brd;
+    background-color:   @bg;
+}
+
+mainbox {
+    padding:    12px;
+}
+
+inputbar {
+    background-color:   @ebg;
+    border-color:       @brd2;
+
+    border:         2px;
+    border-radius:  16px;
+
+    padding:    8px 16px;
+    spacing:    8px;
+    children:   [ prompt, entry ];
+}
+
+prompt {
+    text-color: @txt;
+}
+
+entry {
+    placeholder:        "Search";
+    placeholder-color:  @txt2;
+}
+
+message {
+    margin:             12px 0 0;
+    border-radius:      16px;
+    border-color:       @brd;
+    background-color:   @bg;
+}
+
+textbox {
+    padding:    8px 24px;
+}
+
+listview {
+    background-color:   transparent;
+    border-color:   @brd2;
+    border: 2px;
+    border-radius:  16px;
+    margin:     12px 0 0;
+    lines:      8;
+    columns:    1;
+
+    fixed-height: false;
+}
+
+element {
+    padding:        8px 16px;
+    spacing:        8px;
+    border-radius:  10px;
+}
+
+element normal active {
+    text-color: @txt;
+}
+
+element alternate active {
+    text-color: @txt;
+}
+
+element selected normal, element selected active {
+    background-color:   @sel;
+}
+
+element-icon {
+    size:           1em;
+    vertical-align: 0.5;
+}
+
+element-text {
+    text-color: inherit;
+}

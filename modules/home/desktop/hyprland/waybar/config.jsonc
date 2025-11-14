@@ -3,7 +3,7 @@
     "position":"top",
     "modules-left": ["custom/apps","hyprland/workspaces","group/system"],
     "modules-center": ["clock"],
-    "modules-right": ["tray","group/net","group/audio","power-profiles-daemon","battery","custom/power"],
+    "modules-right": ["tray","group/net","group/toolbar","power-profiles-daemon","battery","custom/power"],
     "reload_style_on_change": true,
     "clock": {
         "format": "{:%d.%m.%y | %H:%M}",
@@ -38,9 +38,7 @@
         "sort-by-number": true,
         "persistent-workspace": {
             "*": [1,2,3,4]
-        },
-        "on-scroll-up": "hyprctl dispatch workspace e-1",
-        "on-scroll-down": "hyprctl dispatch workspace e+1"
+        }
     },
     "tray": {
         "icon-size": 14,
@@ -54,12 +52,14 @@
     },
     "memory": {
         "interval": 5,
-        "format": "\uefc5 {used}/{total}",
-        "max-length": 25
+        "format": "\uefc5 {used}/{total}Gb",
+        "max-length": 25,
+        "on-click": "missioncenter"
     },
     "cpu": {
         "interval": 5,
-        "format": "\uf4bc {usage}%"
+        "format": "\uf4bc {usage}%",
+        "on-click": "missioncenter"
     },
     "group/net": {
         "orientation": "horizontal",
@@ -69,7 +69,7 @@
         "format": "{icon}",
         "format-off": "",
         "format-disabled": "",
-        "hide-on-empty": true,
+        "hide-if-no-adapter": true,
         "format-icons": {
             "enabled": "\udb80\udcaf", 
             "disabled": "\udb80\udcb2",
@@ -78,7 +78,8 @@
         "tooltip-format": "{controller_alias}\t{controller_address}",
         "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
         "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
-        "on-click": "blueman-manager"
+        "on-click": "rofi-bluetooth",
+        "on-click-right": "blueman-manager"
     },
     "network": {
         "format": "",
@@ -94,18 +95,19 @@
         "tooltip-format-wifi": "{essid} ({signalStrength}%)",
         "tooltip-format-ethernet": "{ifname}",
         "tooltip-format-disconnected": "Disconnected",
-        "on-click": "nm-connection-editor"
+        "on-click": "rofi-network-manager",
+        "on-click-right": "nm-connection-editor"
     },
-    "group/audio": {
+    "group/toolbar": {
         "orientation": "horizontal",
-        "modules": ["pulseaudio", "pulseaudio#mic"]
+        "modules": ["pulseaudio", "pulseaudio#mic", "custom/screenshot", "idle_inhibitor"]
     },
     "pulseaudio": {
-        "format": "{icon}",
-        "format-bluetooth": "\ue638 ", 
-        "format-muted": "\udb81\udf5f",
+        "format": "{icon}  {volume}%",
+        "format-bluetooth": "\ue638  {volume}%", 
+        "format-muted": "\ueee8  {volume}%",
         "tooltip": true,
-        "tooltip-format": "{icon} {desc}\t{volume}%",
+        "tooltip-format": "{icon}  {desc}\t{volume}%",
         "format-icons": {
             "headphones": "\udb80\udecb",
             "bluetooth": "\udb82\udd70",
@@ -115,18 +117,25 @@
             "car": "\udb86\udc78",
             "default": ["\uf026","\uf027","\uf028"]
         },
+        "max-volume": 150,
+        "min-colume": 0,
+        "show-percentage": false,
         "scroll-step": 5,
         "justify": "center",
-        "on-click": "pavucontrol",
-        "on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+        "on-click-right": "pavucontrol",
+        "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
     },
     "pulseaudio#mic": {
-        "format": "{format_source}",
+        "source": "default",
+        "format": "{format_source} {source_volume}%",
         "format-source": "\udb80\udf6c",
-        "format-muted": "\udb80\udf6d",
-        "on-click": "pavucontrol -t 4",
-        "on-click-right": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
-        "tooltip-format": "{format_source} {source_desc}\t {source_volume}%",
+        "format-source-muted": "\udb80\udf6d",
+        "show-percentage": false,
+        "on-click-right": "pavucontrol -t 4",
+        "on-click": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
+        "tooltip-format": "{format_source}  {source_desc}\t {source_volume}%",
+        "on-scroll-down": "pactl set-source-volume @DEFAULT_SOURCE@ -5%",
+        "on-scroll-up": "pactl set-source-volume @DEFAULT_SOURCE@ +5%", 
         "scroll-step": 5
     },
    
@@ -151,7 +160,7 @@
     "custom/apps": {
         "format": "\uf40e",
         "tooltip-format": "App launcher",
-        "on-click": "rofi -show drun",
+        "on-click": "rofi -show drun -theme ~/.config/rofi/drun.rasi",
         "interval": "once"
     },
     "custom/power": {
@@ -168,6 +177,21 @@
             "power-saver": "\udb80\udf2a",
             "balanced": "\udb80\ude10",
             "performance": "\uf427"
+        }
+    },
+    "custom/screenshot": {
+        "format": "\uf03e",
+        "tooltip-format": "Take a screenshot",
+        "on-click": "~/.config/hypr/scripts/slurp.sh",
+        "interval": "once"
+    },
+
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "tooltip-format": "Keeps the computer awake",
+        "format-icons": {
+            "deactivated": "\udb80\ude09",
+            "activated": "\udb80\ude08"
         }
     }
 }

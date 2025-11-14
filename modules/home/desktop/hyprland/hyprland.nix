@@ -6,6 +6,10 @@
         ./scripts/scripts.nix
         ./wlogout/wlogout.nix
         ./hyprlock/hyprlock.nix
+        ./rofi/rofi.nix
+        ./mako/mako.nix
+        ./swayosd/swayosd.nix
+        ./hypridle/hypridle.nix
     ];
     config = lib.mkIf (systemConfig.programs.hyprland.enable) {
         home.packages = with pkgs; [
@@ -44,7 +48,12 @@
                     "waybar"
                     "swww-daemon"
                     "wl-paste --watch cliphist store"
-                    "~/.config/hypr/scripts/swww-random.sh"
+                    "waypaper --restore"
+                    "mako"
+                    "hypridle"
+                    "swayosd-server -s ~/.config/swayosd/style.scss"
+                    "hyprctl setcursor WhiteSur-cursors 28"
+                    "dex -a"
                 ];
                 input.kb_layout = "it";
                 general = {
@@ -58,12 +67,13 @@
                         enabled = true;
                         size = 6;
                         passes = 3;
+                        new_optimizations = true;
                     };
                 
                 };
 		        bind = [
 		            "$MOD, T, exec, kitty"
-                    "$MOD, D, exec, rofi -show drun"
+                    "$MOD, D, exec, rofi -show drun -theme=~/.config/rofi/drun.rasi"
                     "$MOD, Q, killactive"
                     "$MOD, F, fullscreen"
                     "$MOD, SPACE, togglefloating"
@@ -87,11 +97,11 @@
 
                 ];
                 binde = [
-                    ",XF86AudioRaiseVolume, exec, pamixer -i 5"
-                    ",XF86AudioLowerVolume, exec, pamixer -i 5"
-                    ",XF86AudioMute, exec, pamixer -t"
-                    #",XF86,MonBrightnessUp, exec, brightnessctl set +5%"
-		            #",XF86,MonBrightnessDown, exec, brightnessctl set -5%"
+                    ",XF86AudioRaiseVolume, exec, pamixer -i 5 && swayosd-client --output-volume raise"
+                    ",XF86AudioLowerVolume, exec, pamixer -i 5 && swayosd-client --output-volume lower"
+                    ",XF86AudioMute, exec, pamixer -t && swayosd-client --output-volume mute-toggle"
+                    ",XF86MonBrightnessUp, exec, brightnessctl set +5% && swayosd-client --brightness raise"
+		            ",XF86MonBrightnessDown, exec, brightnessctl set -5% swayosd-client --brightness lower"
                 ];
                 bindm = [
                     "$MOD, mouse:272, movewindow"
@@ -99,8 +109,16 @@
                 ];
                 layerrule = [
                     "blur, logout_dialog"
+                    "blur, mako"
+                    "blur, rofi"
                 ];
             };
+            extraConfig = ''
+                env = XCURSOR_THEME,WhiteSur-cursors
+                env = XCURSOR_SIZE,28
+                env = HYPRCURSOR_THEME,WhiteSur-cursors
+                env = HYPRCURSOR_SIZE,28
+            '';
         };
     };
 }

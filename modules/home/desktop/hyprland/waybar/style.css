@@ -68,7 +68,7 @@ window#waybar.hidden {
 #clock,
 #tray,
 #system,
-#audio,
+#toolbar,
 #net,
 #power-profiles-daemon,
 #battery,
@@ -82,6 +82,9 @@ window#waybar.hidden {
 #bluetooth,
 #network,
 #cpu,
+#idle_inhibitor,
+#custom-screenshot,
+#pulseaudio-slider,
 #memory
 {
     padding-left: 8px;
@@ -92,7 +95,7 @@ window#waybar.hidden {
 #power-profiles-daemon,
 #tray,
 #battery,
-#audio,
+#toolbar,
 #net,
 #workspaces {
     border-right: 0.8px solid white;
@@ -110,19 +113,23 @@ window#waybar.hidden {
 #power-profiles-daemon,
 #custom-apps,
 #custom-power,
+#custom-screenshot,
+#idle_inhibitor,
 #clock
 {
     transition: all 0.2s ease;
 }
 
 #cpu:hover,
+#idle_inhibitor:hover,
+#custom-screenshot:hover,
 #bluetooth:hover,
 #network:hover,
 #pulseaudio:hover,
 #pulseaudio-mic:hover,
 #battery:hover,
-#power-profiles-daemon:hover
-{
+#power-profiles-daemon:hover {
+
     padding-left: 16px;
     padding-right: 16px;
 }
@@ -152,3 +159,8 @@ tooltip {
     padding-left: 16px;
     padding-right: 16px;
 }
+
+#pulseaudio-slider {
+    min-width: 150px;
+}
+

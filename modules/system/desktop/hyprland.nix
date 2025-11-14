@@ -10,29 +10,41 @@ in {
         services.pipewire.enable = lib.mkDefault true;
         services.blueman.enable = lib.mkDefault true;
         services.power-profiles-daemon.enable= lib.mkDefault true;
-        hardware.bluetooth.enable=true;
-        environment.systemPackages = with pkgs; [
-            libsForQt5.qt5ct
-            grim 
-            slurp
-            wl-clipboard
-            cliphist
-            waybar
-            kitty
-            rofi-wayland
-            rofi-bluetooth
-            pulseaudio 
-            hyprlock
-            xdg-desktop-portal-hyprland
-            xdg-desktop-portal-wlr
-            catppuccin-sddm-corners
-            wdisplays
-            pavucontrol
-            networkmanagerapplet
-            wlogout
-            upower
-            gnome-power-manager 
-            swww
+        hardware.bluetooth.enable= lib.mkDefault true;
+        environment.systemPackages = [
+            pkgs.libsForQt5.qt5ct
+            pkgs.grim 
+            pkgs.slurp
+            pkgs.wl-clipboard
+            pkgs.cliphist
+            unstable.waybar
+            pkgs.kitty
+            pkgs.rofi-wayland
+            pkgs.rofi-bluetooth
+            pkgs.rofi-network-manager
+            pkgs.rofi-pulse-select
+            pkgs.nautilus
+            pkgs.pulseaudio 
+            pkgs.hyprlock
+            pkgs.xdg-desktop-portal-hyprland
+            pkgs.xdg-desktop-portal-wlr
+            pkgs.catppuccin-sddm-corners
+            pkgs.wdisplays
+            pkgs.pavucontrol
+            pkgs.networkmanagerapplet
+            pkgs.wlogout
+            pkgs.upower
+            pkgs.gnome-power-manager 
+            pkgs.swww
+            pkgs.waypaper
+            pkgs.mako
+            pkgs.hypridle
+            pkgs.swayosd
+            pkgs.libnotify
+            pkgs.mission-center
+            pkgs.dex
+            pkgs.gnome-calculator
+            pkgs.eog 
         ];   
         
         networking.networkmanager.enable=true;
