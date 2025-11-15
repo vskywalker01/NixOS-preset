@@ -15,6 +15,7 @@
         home.packages = with pkgs; [
             whitesur-cursors  
             whitesur-gtk-theme
+            #nordic
             reversal-icon-theme
         ];
         home.sessionVariables = {
@@ -24,7 +25,7 @@
         gtk = {
             enable = true;
             theme = {
-                name = "WhiteSur-Dark";
+                name = "WhiteSur-Dark-solid";
                 package = pkgs.whitesur-gtk-theme;
             };
             iconTheme = {
@@ -37,13 +38,18 @@
                 size=24;
             };
         };
+        qt = {
+            enable = true;
+        #    platformTheme = "gtk";
+            style.package = pkgs.nordic;
+        };
 
         wayland.windowManager.hyprland = {
 	    enable=true;
 	    package = null;
    	    portalPackage = null;
             settings = {
-                "$MOD"="SUPER";
+                "$MOD"="ALT";
                 exec-once = [
                     "waybar"
                     "swww-daemon"
@@ -52,8 +58,9 @@
                     "mako"
                     "hypridle"
                     "swayosd-server -s ~/.config/swayosd/style.scss"
-                    "hyprctl setcursor WhiteSur-cursors 28"
+                    "hyprctl setcursor WhiteSur-cursors 20"
                     "dex -a"
+                    "pkill nm-applet"
                 ];
                 input.kb_layout = "it";
                 general = {
@@ -117,7 +124,7 @@
                 env = XCURSOR_THEME,WhiteSur-cursors
                 env = XCURSOR_SIZE,28
                 env = HYPRCURSOR_THEME,WhiteSur-cursors
-                env = HYPRCURSOR_SIZE,28
+                env = HYPRCURSOR_SIZE,20
             '';
         };
     };

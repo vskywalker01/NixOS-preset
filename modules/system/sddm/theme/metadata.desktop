@@ -1,0 +1,7 @@
+[Theme]
+Name=sddm-custom
+Description=Custom sddm theme for my configuration
+Author=vskywalker01
+License=none
+Type=sddm-theme
+Version=1.0

@@ -13,6 +13,7 @@
     ./samba.nix
     ./launchpad.nix
     ./vpn.nix
+    ./sddm/sddm.nix
   ];
 
   config = {

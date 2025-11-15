@@ -28,7 +28,6 @@ in {
             pkgs.hyprlock
             pkgs.xdg-desktop-portal-hyprland
             pkgs.xdg-desktop-portal-wlr
-            pkgs.catppuccin-sddm-corners
             pkgs.wdisplays
             pkgs.pavucontrol
             pkgs.networkmanagerapplet
@@ -56,7 +55,6 @@ in {
         services.displayManager.sddm = {
             enable = true;
             wayland.enable = true;
-            theme = "catppuccin";
         };
         services.displayManager.sessionPackages = [pkgs.hyprland];
         services.displayManager.defaultSession = "hyprland";

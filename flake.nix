@@ -15,6 +15,11 @@
       url = "github:NotAShelf/nvf";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    silentSDDM = {
+      url = "github:uiriansan/SilentSDDM";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
 
   };
   nixConfig = {
@@ -27,7 +32,7 @@
       "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
     ];
   };
-  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, nix-flatpak, nixos-hardware, cachix, nix-alien,ngrok,nvf}: {
+  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, nix-flatpak, nixos-hardware, cachix, nix-alien,ngrok,nvf,silentSDDM}: {
     nixosConfigurations.skywalker-pi3 = nixpkgs.lib.nixosSystem {
       specialArgs = {
         inherit inputs;
