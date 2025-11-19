@@ -3,7 +3,7 @@
     "position":"top",
     "modules-left": ["custom/apps","hyprland/workspaces","group/system"],
     "modules-center": ["clock"],
-    "modules-right": ["tray","group/net","group/toolbar","power-profiles-daemon","battery","custom/power"],
+    "modules-right": ["tray","group/toolbar","group/power_settings","custom/power"],
     "reload_style_on_change": true,
     "clock": {
         "format": "{:%d.%m.%y | %H:%M}",
@@ -47,7 +47,7 @@
 
     "group/system": {
         "orientation": "horizontal",
-        "modules": ["cpu","memory","temperature"],
+        "modules": ["cpu","temperature","memory","custom/fan-speeds"],
         "class": "container"
     },
     "memory": {
@@ -100,7 +100,7 @@
     },
     "group/toolbar": {
         "orientation": "horizontal",
-        "modules": ["pulseaudio", "pulseaudio#mic", "custom/screenshot", "idle_inhibitor"]
+        "modules": ["pulseaudio", "pulseaudio#mic", "backlight","custom/screenshot", "idle_inhibitor"]
     },
     "pulseaudio": {
         "format": "{icon}  {volume}%",
@@ -138,25 +138,50 @@
         "on-scroll-up": "pactl set-source-volume @DEFAULT_SOURCE@ +5%", 
         "scroll-step": 5
     },
-   
+    "group/power_settings": {
+        "orientation": "horizontal",
+        "modules": ["custom/graphics_control","power-profiles-daemon","battery"]
+    },
     "battery": {
-        "bat": "$(ls /sys/class/power_supply/ | grep BAT | head -n1)",
-        "adapter": "AC",
-        "interval": 60,
+    "interval":1,
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 20
+        },
         "format": "{icon} {capacity}%",
-        "format-charging": "\udb81\udea5 {capacity}%",
-        "format-icons": [
-            "\uf244",
-            "\uf243",
-            "\uf242",
-            "\uf241",
-            "\uf240"
-        ],
-        "on-click": "gnome-power-statistics"
-    },
+        "format-charging": "󰂄 {capacity}%",
+        "format-plugged": "󰂄  {capacity}%",
+        "format-alt": "{icon} {time}",
+            "format-icons": [
+          "󰁻",
+          "󰁼",
+          "󰁾",
+          "󰂀",
+          "󰂂",
+          "󰁹"
+        ]
+    }, 
     "backlight": {
-        "format": "\udb80\udcdf {percent}%"
+        "device": "nvidia_wmi_ec_backlight",
+        "format": "<span font='12'>{icon}</span> {percent}%",
+        "format-icons": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "on-scroll-down": "brightnessctl set 10%-",
+        "on-scroll-up": "brightnessctl set 10%+",
+        "smooth-scrolling-threshold": 1
     },
+  
     "custom/apps": {
         "format": "\uf40e",
         "tooltip-format": "App launcher",
@@ -193,5 +218,31 @@
             "deactivated": "\udb80\ude09",
             "activated": "\udb80\ude08"
         }
+    },
+    "custom/graphics_control": {
+        "exec": "~/.config/hypr/scripts/supergfxctl-get.sh",
+        "return-type": "json",
+        "interval": "once",
+        "format": "{text}",
+        "tooltip": true,
+        "on-click": "~/.config/hypr/scripts/supergfxctl-set.sh",
+        "signal": 0
+    },
+    "custom/gpu-temp": {
+        "exec": "~/.config/hypr/scripts/gpu-temp.sh",
+        "return-type": "json",
+        "tooltip": true,
+        "on-click": "nvtop",
+        "interval": 5,
+        "format": "{text}",
+        "tooltip": true
+    },
+    "custom/fan-speeds": {
+        "exec": "~/.config/hypr/scripts/fan-speeds.sh",
+        "on-click": "missioncenter",
+        "interval": 5,
+        "format": "{}"
     }
+    
+    
 }

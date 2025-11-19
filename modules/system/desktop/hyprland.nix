@@ -11,6 +11,7 @@ in {
         services.blueman.enable = lib.mkDefault true;
         services.power-profiles-daemon.enable= lib.mkDefault true;
         hardware.bluetooth.enable= lib.mkDefault true;
+        services.upower.enable = true;
         environment.systemPackages = [
             pkgs.libsForQt5.qt5ct
             pkgs.grim 
@@ -28,12 +29,11 @@ in {
             pkgs.hyprlock
             pkgs.xdg-desktop-portal-hyprland
             pkgs.xdg-desktop-portal-wlr
-            pkgs.wdisplays
+            pkgs.nwg-displays
             pkgs.pavucontrol
             pkgs.networkmanagerapplet
             pkgs.wlogout
             pkgs.upower
-            pkgs.gnome-power-manager 
             pkgs.swww
             pkgs.waypaper
             pkgs.mako
@@ -43,7 +43,10 @@ in {
             pkgs.mission-center
             pkgs.dex
             pkgs.gnome-calculator
-            pkgs.eog 
+            pkgs.eog
+            pkgs.brightnessctl
+            pkgs.lm_sensors
+            pkgs.hyprsunset
         ];   
         
         networking.networkmanager.enable=true;
@@ -58,6 +61,7 @@ in {
         };
         services.displayManager.sessionPackages = [pkgs.hyprland];
         services.displayManager.defaultSession = "hyprland";
+        services.udisks2.enable = true;      
     };
 }
 

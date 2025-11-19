@@ -5,13 +5,22 @@
         source = ./slurp.sh;
         executable = true;
     };
-    xdg.configFile."hypr/scripts/caffeina-status.sh" = {
-        source = ./caffeina-status.sh;
+    xdg.configFile."hypr/scripts/supergfxctl-get.sh" = {
+        source = ./supergfxctl-get.sh;
         executable = true;
     };
-    xdg.configFile."hypr/scripts/caffeina-set-status.sh" = {
-        source = ./caffeina-set-status.sh;
+    xdg.configFile."hypr/scripts/supergfxctl-set.sh" = {
+        source = ./supergfxctl-set.sh;
         executable = true;
     };
+    xdg.configFile."hypr/scripts/gpu-temp.sh" = {
+        source = ./gpu-temp.sh;
+        executable = true;
+    };
+    xdg.configFile."hypr/scripts/fan-speeds.sh" = {
+        source = ./fan-speeds.sh;
+        executable = true;
+    };
+    
 
 }

@@ -2,7 +2,7 @@
     font-family: "JetBrainsMono Nerd Font";
     font-weight: bold;
     min-height: 0;
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .modules-left, .modules-right, .modules-center {
@@ -13,7 +13,8 @@
     margin-bottom: 0px;
     margin-left: 5px;
     margin-right: 5px;
-    padding: 4px 2px;
+    padding: 0px 0px;
+
 }
 
 #clock {
@@ -70,7 +71,7 @@ window#waybar.hidden {
 #system,
 #toolbar,
 #net,
-#power-profiles-daemon,
+#power_settings,
 #battery,
 #custom-power {
     padding-left: 10px;
@@ -80,21 +81,26 @@ window#waybar.hidden {
 #pulseaudio,
 #pulseaudio-mic,
 #bluetooth,
+#backlight,
 #network,
 #cpu,
 #idle_inhibitor,
 #custom-screenshot,
 #pulseaudio-slider,
-#memory
+#custom-graphics_control,
+#power_profiles-daemon,
+#memory,
+#custom-gpu-temp,
+#custom-fan-speeds,
+#temepratures
 {
     padding-left: 8px;
     padding-right: 8px;
 }
 
 #custom-apps,
-#power-profiles-daemon,
+#power_settings,
 #tray,
-#battery,
 #toolbar,
 #net,
 #workspaces {
@@ -110,12 +116,17 @@ window#waybar.hidden {
 #pulseaudio-mic,
 #battery,
 #workspaces,
+#custom-graphics_control,
 #power-profiles-daemon,
 #custom-apps,
 #custom-power,
 #custom-screenshot,
 #idle_inhibitor,
-#clock
+#clock,
+#temperature,
+#backlight,
+#custom-gpu-temp,
+#custom-fan-speeds
 {
     transition: all 0.2s ease;
 }
@@ -128,13 +139,19 @@ window#waybar.hidden {
 #pulseaudio:hover,
 #pulseaudio-mic:hover,
 #battery:hover,
-#power-profiles-daemon:hover {
+#custom-graphics_control:hover,
+#power-profiles-daemon:hover,
+#temperature:hover,
+#custom-gpu-temp:hover,
+#backlight:hover,
+#memory:hover
+{
 
     padding-left: 16px;
     padding-right: 16px;
 }
 
-#memory:hover,
+#custom-fan-speeds:hover,
 #cpu:hover,
 #custom-power:hover {
     padding-left:16px;

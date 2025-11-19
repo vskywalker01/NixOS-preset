@@ -1,7 +1,7 @@
 {config, lib, pkgs, ...}:
 
 {
-  config = lib.mkIf (config.programs.steam.enable && config.services.xserver.desktopManager.gnome.enable) {
+  config = lib.mkIf (config.programs.steam.enable) {
     programs.steam = {
       remotePlay.openFirewall = lib.mkDefault true;
       dedicatedServer.openFirewall = lib.mkDefault true; 

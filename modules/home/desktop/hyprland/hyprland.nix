@@ -10,23 +10,38 @@
         ./mako/mako.nix
         ./swayosd/swayosd.nix
         ./hypridle/hypridle.nix
+        ./hyprsunset/hyprsunset.nix
     ];
     config = lib.mkIf (systemConfig.programs.hyprland.enable) {
         home.packages = with pkgs; [
             whitesur-cursors  
             whitesur-gtk-theme
+            colloid-gtk-theme
+            pkgs.colloid-gtk-theme
             #nordic
             reversal-icon-theme
         ];
+        services.udiskie = {
+            enable = true;
+            automount = true;
+            notify = true;
+            tray = "always";
+        };
         home.sessionVariables = {
             QT_QPA_PLATFORMTHEME = "qt5ct";
+            GTK_THEME = "Colloid-Dark";            
         };
-
+        home.pointerCursor = {
+            gtk.enable = true;
+            package = pkgs.whitesur-cursors;
+            name = "WhiteSur-cursors";
+            size = 16;
+        }; 
         gtk = {
             enable = true;
             theme = {
-                name = "WhiteSur-Dark-solid";
-                package = pkgs.whitesur-gtk-theme;
+                name = "Colloid-Dark";
+                package = pkgs.colloid-gtk-theme;
             };
             iconTheme = {
                 name = "Reversal-dark";
@@ -34,16 +49,30 @@
             };
             cursorTheme = {
                 name = "WhiteSur-cursors";
-                package = pkgs.whitesur-icon-theme;
+                package = pkgs.whitesur-cursors;
                 size=24;
+            };
+            gtk4.extraConfig = {
+            Settings = ''
+                    gtk-application-prefer-dark-theme=1
+                '';
+            };
+            gtk3.extraConfig = {
+                Settings = ''
+                    gtk-application-prefer-dark-theme=1
+                '';
+            };
+        };
+        dconf.settings = {
+            "org/gnome/desktop/interface" = {
+            color-scheme = "prefer-dark";
             };
         };
         qt = {
             enable = true;
-        #    platformTheme = "gtk";
-            style.package = pkgs.nordic;
+            style.package = pkgs.whitesur-gtk-theme;
         };
-
+        
         wayland.windowManager.hyprland = {
 	    enable=true;
 	    package = null;
@@ -60,7 +89,8 @@
                     "swayosd-server -s ~/.config/swayosd/style.scss"
                     "hyprctl setcursor WhiteSur-cursors 20"
                     "dex -a"
-                    "pkill nm-applet"
+                    "hyprsunset"
+                                    
                 ];
                 input.kb_layout = "it";
                 general = {
@@ -98,17 +128,24 @@
                     "$MOD,B,exec,firefox"
                     "$MOD,L,exec,hyprlock"
                     "$MOD SHIFT, R, exec, hyprctl reload"
-                    "$MOD, ESCAPE, exit"
-                    
+                    "$MOD, ESCAPE, exit"                    
+
                     ",PRINT,exec,grim -g '$(slurp)'"
 
                 ];
                 binde = [
-                    ",XF86AudioRaiseVolume, exec, pamixer -i 5 && swayosd-client --output-volume raise"
-                    ",XF86AudioLowerVolume, exec, pamixer -i 5 && swayosd-client --output-volume lower"
-                    ",XF86AudioMute, exec, pamixer -t && swayosd-client --output-volume mute-toggle"
-                    ",XF86MonBrightnessUp, exec, brightnessctl set +5% && swayosd-client --brightness raise"
-		            ",XF86MonBrightnessDown, exec, brightnessctl set -5% swayosd-client --brightness lower"
+                    ",XF86AudioRaiseVolume, exec, swayosd-client --output-volume raise"
+                    ",XF86AudioLowerVolume, exec, swayosd-client --output-volume lower"
+                    ",XF86AudioMute, exec, swayosd-client --output-volume mute-toggle"
+                    ",XF86MonBrightnessUp, exec, swayosd-client --brightness raise"
+		            ",XF86MonBrightnessDown, exec, swayosd-client --brightness lower"
+
+                    ",KEY_VOLUMEUP, exec, swayosd-client --output-volume raise"
+                    ",KEY_VOLUMEDOWN, exec, swayosd-client --output-volume lower"
+                    ",KEY_MUTE, exec, swayosd-client --output-volume mute-toggle"
+                    ",KEY_BRIGHTNESSUP, exec, swayosd-client --brightness raise"
+		            ",KEY_BRIGHTNESSDOWN, exec, swayosd-client --brightness lower"
+                    ",KEY_PROG2,exec,rog-control-center"
                 ];
                 bindm = [
                     "$MOD, mouse:272, movewindow"
@@ -125,7 +162,10 @@
                 env = XCURSOR_SIZE,28
                 env = HYPRCURSOR_THEME,WhiteSur-cursors
                 env = HYPRCURSOR_SIZE,20
+                source = ~/.config/hypr/monitors.conf
+                source = ~/.config/hypr/workspaces.conf
             '';
+
         };
     };
 }
