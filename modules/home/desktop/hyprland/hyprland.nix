@@ -11,6 +11,7 @@
         ./swayosd/swayosd.nix
         ./hypridle/hypridle.nix
         ./hyprsunset/hyprsunset.nix
+        ./theme/theme.nix
     ];
     config = lib.mkIf (systemConfig.programs.hyprland.enable) {
         home.packages = with pkgs; [
@@ -78,7 +79,7 @@
 	    package = null;
    	    portalPackage = null;
             settings = {
-                "$MOD"="ALT";
+                "$MOD"="CTRL";
                 exec-once = [
                     "waybar"
                     "swww-daemon"
@@ -99,7 +100,7 @@
                     border_size = 1;
                 };
                 decoration = {
-                    rounding = 5;
+                    rounding = 12;
                     blur = {
                         enabled = true;
                         size = 6;
@@ -130,7 +131,8 @@
                     "$MOD SHIFT, R, exec, hyprctl reload"
                     "$MOD, ESCAPE, exit"                    
 
-                    ",PRINT,exec,grim -g '$(slurp)'"
+                    ",PRINT,exec,~/.config/hypr/scripts/slurp.sh"
+
 
                 ];
                 binde = [
@@ -155,6 +157,7 @@
                     "blur, logout_dialog"
                     "blur, mako"
                     "blur, rofi"
+                    "blur, mako"
                 ];
             };
             extraConfig = ''

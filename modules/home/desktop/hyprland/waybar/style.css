@@ -1,3 +1,5 @@
+@import url("../hypr/theme/mainTheme.css");
+
 * {
     font-family: "JetBrainsMono Nerd Font";
     font-weight: bold;
@@ -7,8 +9,8 @@
 
 .modules-left, .modules-right, .modules-center {
     border-radius: 10px;
-    border: 0.8px solid white;
-    background-color: rgba(25,25,25,0.9);
+    border: 1px solid @border;
+    background-color: @bgBlur;
     margin-top: 0px;
     margin-bottom: 0px;
     margin-left: 5px;
@@ -24,7 +26,7 @@
 window#waybar {
     background: transparent;
     border-radius: 5px;
-    color: whitesmoke;
+    color: @textNormal;
 }
 
 window#waybar.hidden {
@@ -32,8 +34,6 @@ window#waybar.hidden {
 }
 
 #workspaces {
-    background: rgba(25,25,25,0.0);
-    color: white;
     box-shadow: none;
     text-shadow: none;
     transition: 0.2s ease;
@@ -44,8 +44,6 @@ window#waybar.hidden {
 }
 
 #workspaces button {
-    background: rgba(25,25,25,0.0);
-    color: white;
     box-shadow: none;
     text-shadow:none;
     transition: 0.2s ease;
@@ -55,14 +53,12 @@ window#waybar.hidden {
 }
 
 #workspaces button.active {
-    color: white;
     padding-left: 5px;
     padding-right: 5px;
 }
 
 #workspaces button:hover {
     background: none;
-    color: white;
 }
 
 #custom-apps,
@@ -74,8 +70,8 @@ window#waybar.hidden {
 #power_settings,
 #battery,
 #custom-power {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 12px;
+    padding-right: 12px;
 }
 
 #pulseaudio,
@@ -104,7 +100,7 @@ window#waybar.hidden {
 #toolbar,
 #net,
 #workspaces {
-    border-right: 0.8px solid white;
+    border-right: 1px solid @border;
 }
 
 #cpu,
@@ -144,22 +140,16 @@ window#waybar.hidden {
 #temperature:hover,
 #custom-gpu-temp:hover,
 #backlight:hover,
-#memory:hover
+#memory:hover,
+#custom-apps:hover,
+#custom-power:hover,
+#custom-fan-speeds:hover
 {
 
     padding-left: 16px;
     padding-right: 16px;
 }
 
-#custom-fan-speeds:hover,
-#cpu:hover,
-#custom-power:hover {
-    padding-left:16px;
-}
-
-#custom-apps:hover {
-    padding-right: 16px;
-}
 #clock:hover {
     padding-left: 25px;
     padding-right: 25px;
@@ -167,8 +157,8 @@ window#waybar.hidden {
 }
 
 tooltip {
-    background: rgba(25,25,25,0.8);
-    border: 0.8px solid white;
+    background: @bgSolid;
+    border: 0.8px solid @border;
     border-radius: 12px;
 }
 
@@ -177,7 +167,4 @@ tooltip {
     padding-right: 16px;
 }
 
-#pulseaudio-slider {
-    min-width: 150px;
-}
 

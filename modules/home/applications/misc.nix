@@ -23,6 +23,7 @@ in {
       pkgs.zoom-us
       pkgs.woeusb-ng
       pkgs.krita
+      pkgs.vlc
     ];
    
 

@@ -47,6 +47,7 @@ in {
             pkgs.brightnessctl
             pkgs.lm_sensors
             pkgs.hyprsunset
+            pkgs.file-roller
         ];   
         
         networking.networkmanager.enable=true;
@@ -61,7 +62,11 @@ in {
         };
         services.displayManager.sessionPackages = [pkgs.hyprland];
         services.displayManager.defaultSession = "hyprland";
-        services.udisks2.enable = true;      
-    };
+        services.udisks2.enable = true;     
+        hardware.opentabletdriver.enable = true;
+        hardware.uinput.enable = true;
+        boot.kernelModules = [ "uinput" ];
+        hardware.opentabletdriver.blacklistedKernelModules = [ "hid-uclogic" "wacom" ];
+        };
 }
 

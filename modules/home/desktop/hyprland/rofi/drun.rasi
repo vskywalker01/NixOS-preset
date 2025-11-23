@@ -1,19 +1,9 @@
-/* MACOS LAUNCHPAD LIKE THEME FOR ROFI */
-/* Author: Newman Sanchez (https://github.com/newmanls) */
-
+@import "~/.config/hypr/theme/rofiTheme.rasi"
 * {
     font: "JetBrainsMono Nerd Font";
 
-    bg:  rgba(25,25,25,0.9);
-    brd: rgba(255,255,255,0.7);
-    brd2: rgba(255,255,255,0.5);
-    ebg: rgba(25,25,25,0.4);
-    txt: white;
-    txt2: rgba(255,255,255,0.7);
-    sel: rgba(255,255,255,0.2);
-
     background-color: transparent;
-    text-color:       @txt;
+    text-color:       @textNormal;
     padding:          0px;
     margin:           0px;
 }
@@ -24,8 +14,8 @@ window {
     width:          480;
     border-radius:  24px;
     border:         2px;
-    border-color:   @brd;
-    background-color:   @bg;
+    border-color:   @border;
+    background-color:   @bgBlur;
 }
 
 mainbox {
@@ -33,10 +23,10 @@ mainbox {
 }
 
 inputbar {
-    background-color:   @ebg;
-    border-color:       @brd2;
+    background-color:   @bgBlur;
+    border-color:       @border;
 
-    border:         2px;
+    border:         1px;
     border-radius:  16px;
 
     padding:    8px 16px;
@@ -45,19 +35,19 @@ inputbar {
 }
 
 prompt {
-    text-color: @txt;
+    text-color: @textNormal;
 }
 
 entry {
     placeholder:        "Search";
-    placeholder-color:  @txt2;
+    placeholder-color:  @textNormal;
 }
 
 message {
     margin:             12px 0 0;
     border-radius:      16px;
-    border-color:       @brd;
-    background-color:   @bg;
+    border-color:       @border;
+    background-color:   @bgBlur;
 }
 
 textbox {
@@ -66,14 +56,14 @@ textbox {
 
 listview {
     background-color:   transparent;
-    border-color:   @brd2;
-    border: 2px;
+    border-color:   @border;
+    border: 1px;
     border-radius:  16px;
     margin:     12px 0 0;
     lines:      8;
     columns:    1;
 
-    fixed-height: false;
+    fixed-height: true;
 }
 
 element {
@@ -83,15 +73,15 @@ element {
 }
 
 element normal active {
-    text-color: @txt;
+    text-color: @textNormal;
 }
 
 element alternate active {
-    text-color: @txt;
+    text-color: @textNormal;
 }
 
 element selected normal, element selected active {
-    background-color:   @sel;
+    background-color:   @fgBlur;
 }
 
 element-icon {

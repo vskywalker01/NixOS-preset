@@ -42,7 +42,8 @@
     },
     "tray": {
         "icon-size": 14,
-        "spacing": 10
+        "spacing": 10,
+        "reverse-direction": true
     },
 
     "group/system": {
