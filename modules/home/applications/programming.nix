@@ -58,8 +58,8 @@ in {
           clipboard.enable=true;
           theme = {
             enable = true;
-            name = "catppuccin";
-            style = "mocha";
+            name = "onedark";
+            style = "warmer";
           };
           autocomplete.blink-cmp.enable=true;
           autopairs.nvim-autopairs.enable=true;

@@ -49,7 +49,9 @@ in {
             pkgs.hyprsunset
             pkgs.file-roller
         ];   
-        
+        services.xserver.excludePackages = [
+            pkgs.xterm
+        ]; 
         networking.networkmanager.enable=true;
         xdg.portal = {
             enable = true;

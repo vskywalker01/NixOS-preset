@@ -41,7 +41,7 @@ in {
     #Installs ryzenadj for setting temperature limit on the cpu
     environment.systemPackages = with pkgs; [
       ryzenadj
-      nvtopPackages.full
+      #nvtopPackages.full
     ];
     systemd.services.ryzenadj = {
       description = "RyzenAdj";

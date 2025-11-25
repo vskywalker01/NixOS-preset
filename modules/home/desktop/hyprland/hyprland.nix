@@ -79,7 +79,7 @@
 	    package = null;
    	    portalPackage = null;
             settings = {
-                "$MOD"="CTRL";
+                "$MOD"="CTRL_SHIFT";
                 exec-once = [
                     "waybar"
                     "swww-daemon"
@@ -116,20 +116,17 @@
                     "$MOD, F, fullscreen"
                     "$MOD, SPACE, togglefloating"
                     "$MOD, h/j/k/l, movefocus, l/d/u/r"
-                    "$MOD SHIFT,h/j/k/l, movewindow, l/d/u/r"
-                    "$MOD SHIFT,1,movetoworkspace,1"
-                    "$MOD SHIFT,2,movetoworkspace,2"
-                    "$MOD SHIFT,3,movetoworkspace,3"
-                    "$MOD SHIFT,4,movetoworkspace,4"
+                    "$MOD,h/j/k/l, movewindow, l/d/u/r"
+                    "$MOD,right,movetoworkspace,+1"
+                    "$MOD,left,movetoworkspace,-1"
                     "$MOD,1,workspace,1"
                     "$MOD,2,workspace,2"
                     "$MOD,3,workspace,3"
                     "$MOD,4,workspace,4"
-                    "$MOD,E,exec,nautilus"
-                    "$MOD,B,exec,firefox"
+                    "$MOD,F,exec,nautilus"
                     "$MOD,L,exec,hyprlock"
+                    "$MOD,ESC,exec,wlogout"
                     "$MOD SHIFT, R, exec, hyprctl reload"
-                    "$MOD, ESCAPE, exit"                    
 
                     ",PRINT,exec,~/.config/hypr/scripts/slurp.sh"
 
