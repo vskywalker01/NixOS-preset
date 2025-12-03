@@ -123,7 +123,7 @@
                     "$MOD,2,workspace,2"
                     "$MOD,3,workspace,3"
                     "$MOD,4,workspace,4"
-                    "$MOD,F,exec,nautilus"
+                    "$MOD,N,exec,nautilus"
                     "$MOD,L,exec,hyprlock"
                     "$MOD,ESC,exec,wlogout"
                     "$MOD SHIFT, R, exec, hyprctl reload"
@@ -152,7 +152,8 @@
                 ];
                 layerrule = [
                     "blur, logout_dialog"
-                    "blur, mako"
+                    "blur, notifications"
+                    "ignorezero, notifications"
                     "blur, rofi"
                     "blur, mako"
                 ];
