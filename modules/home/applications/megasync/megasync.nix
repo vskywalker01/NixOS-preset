@@ -1,8 +1,6 @@
 {config, lib, pkgs,flake-inputs, systemConfig ? {}, ...}:
 
-let 
-  unstable = flake-inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
-in {
+{
   options.applications = {
     megasync = lib.mkOption {
       type = lib.types.bool; 

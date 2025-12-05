@@ -1,6 +1,6 @@
 { config, pkgs, lib, inputs, ... }: 
 let 
-  unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
+  unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in {
   config = lib.mkIf (config.hardware.hardware-profile == "R3") {
     boot.kernelPackages = pkgs.linuxPackages_latest;

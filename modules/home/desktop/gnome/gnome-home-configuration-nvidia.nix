@@ -1,7 +1,7 @@
 {config, lib, pkgs, systemConfig ? {} , ...}:
 
 {
-  config = lib.mkIf (systemConfig.services.xserver.desktopManager.gnome.enable && systemConfig.hardware.nvidia.modesetting.enable) {
+  config = lib.mkIf (systemConfig.services.desktopManager.gnome.enable && systemConfig.hardware.nvidia.modesetting.enable) {
     dconf = {
       settings = {
         "org/gnome/shell" = { 

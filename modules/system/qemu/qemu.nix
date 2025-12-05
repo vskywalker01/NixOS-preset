@@ -1,6 +1,6 @@
 {config, lib, pkgs, inputs, ...}:
 let 
-  unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
+  unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in {
   config = lib.mkIf (config.virtualisation.libvirtd.enable) {
     programs.dconf.enable = lib.mkDefault true;
@@ -12,7 +12,7 @@ in {
       spice 
       spice-gtk
       spice-protocol
-      win-virtio
+      virtio-win
       win-spice
       adwaita-icon-theme
       looking-glass-client
@@ -22,11 +22,7 @@ in {
       libvirtd = {
         qemu = {
           swtpm.enable = lib.mkDefault true;
-          ovmf.enable = lib.mkDefault true;
-          ovmf.packages = [(pkgs.OVMF.override {
-            secureBoot = true;
-            tpmSupport = true;
-          }).fd];
+        
           runAsRoot=true;
         };
         hooks.qemu = {

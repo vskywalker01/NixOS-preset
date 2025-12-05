@@ -1,8 +1,6 @@
 {config, lib, pkgs,flake-inputs, systemConfig ? {} , ...}:
 
-let 
-  unstable = flake-inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
-in {
+{
   options.applications = {
     CADs = lib.mkOption {
       type = lib.types.bool; 
@@ -12,7 +10,7 @@ in {
   };
   config = lib.mkIf (config.applications.CADs) {
     home.packages = [
-      pkgs.eagle
+      #pkgs.eagle
       pkgs.blender
     ];
     services.flatpak.packages = lib.mkIf (systemConfig.services.flatpak.enable || false) [

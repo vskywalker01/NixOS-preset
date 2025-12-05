@@ -12,15 +12,15 @@
 
   home.packages = [
       pkgs.neofetch
-      flake-inputs.nix-alien.packages.${pkgs.system}.nix-alien
+      flake-inputs.nix-alien.packages.${pkgs.stdenv.hostPlatform.system}.nix-alien
       pkgs.nerd-fonts.jetbrains-mono
       pkgs.nerd-fonts.fira-code
       pkgs.corefonts 
     ];
   programs.git = {
     enable = true;
-    userName = "vskywalker01";
-    userEmail = "vittoriopolci@live.com";
+    settings.user.name = "vskywalker01";
+    settings.user.email = "vittoriopolci@live.com";
   };
   programs.fish = {
     enable = true;

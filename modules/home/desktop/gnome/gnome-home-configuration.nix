@@ -1,7 +1,7 @@
 {config, lib, pkgs, systemConfig ? {}, ...}:
 
 {
-  dconf = lib.mkIf (systemConfig.services.xserver.desktopManager.gnome.enable) {
+  dconf = lib.mkIf (systemConfig.services.desktopManager.gnome.enable) {
     enable = true;
     settings = {
       "org/gnome/shell" = {

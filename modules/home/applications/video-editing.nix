@@ -1,13 +1,6 @@
 {config, lib, pkgs,flake-inputs, systemConfig ? {} ,...}:
 
-let 
-  unstable = import flake-inputs.nixpkgs-unstable {
-    system = pkgs.system;
-    config = {
-      allowUnfree = true;
-    };
-  };
-in {
+{
   options.applications = {
     videoEditing = lib.mkOption {
       type = lib.types.bool; 

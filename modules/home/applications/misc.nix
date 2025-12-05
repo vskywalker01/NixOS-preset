@@ -1,8 +1,6 @@
 {config, lib, pkgs,flake-inputs, systemConfig ? {}, ...}:
 
-let 
-  unstable = flake-inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
-in {
+{
   options.applications = {
     misc = lib.mkOption {
       type = lib.types.bool; 
@@ -13,7 +11,7 @@ in {
   config = lib.mkIf (config.applications.misc) {
     home.packages = [
       pkgs.bottles
-      unstable.calibre
+      pkgs.calibre
       pkgs.filezilla
       pkgs.termius
       pkgs.onlyoffice-desktopeditors

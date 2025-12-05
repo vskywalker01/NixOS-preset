@@ -1,6 +1,6 @@
 { config, pkgs, lib, inputs, ... }: 
 let
-  unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
+  unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in {
   config = lib.mkIf (config.hardware.hardware-profile == "FA507NU") {
     boot.kernelPackages = pkgs.linuxPackages_6_17;
@@ -41,7 +41,7 @@ in {
     #Installs ryzenadj for setting temperature limit on the cpu
     environment.systemPackages = with pkgs; [
       ryzenadj
-      #nvtopPackages.full
+      nvtopPackages.full
     ];
     systemd.services.ryzenadj = {
       description = "RyzenAdj";

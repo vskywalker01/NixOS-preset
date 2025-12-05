@@ -1,7 +1,7 @@
 {config, lib, pkgs, ...}:
 
 {
-  config = lib.mkIf (config.services.pipewire.enable || config.programs.hyprland.enable || config.services.xserver.desktopManager.gnome.enable) {
+  config = lib.mkIf (config.services.pipewire.enable || config.programs.hyprland.enable || config.services.desktopManager.gnome.enable) {
     security.rtkit.enable = lib.mkDefault true;
     services.pipewire = {
       alsa.enable = lib.mkDefault true;

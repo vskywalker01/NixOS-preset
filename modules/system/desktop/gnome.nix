@@ -1,8 +1,8 @@
 {config, lib, pkgs, inputs, ...}:
 let 
-  unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
+  unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in {
-  config = lib.mkIf (config.services.xserver.desktopManager.gnome.enable) {
+  config = lib.mkIf (config.services.desktopManager.gnome.enable) {
     programs.firefox.package = pkgs.firefox-bin;
     services.xserver.enable = lib.mkDefault true;
     services.xserver.displayManager.gdm.enable = lib.mkDefault true;

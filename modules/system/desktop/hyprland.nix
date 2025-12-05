@@ -1,6 +1,6 @@
 {config, lib, pkgs, inputs, ...}:
 let 
-  unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
+  unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in {
   config = lib.mkIf (config.programs.hyprland.enable) {
         programs.xwayland.enable = true;
@@ -20,7 +20,7 @@ in {
             pkgs.cliphist
             unstable.waybar
             pkgs.kitty
-            pkgs.rofi-wayland
+            pkgs.rofi
             pkgs.rofi-bluetooth
             pkgs.rofi-network-manager
             pkgs.rofi-pulse-select

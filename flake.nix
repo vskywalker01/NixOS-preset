@@ -1,10 +1,10 @@
 {
   description = "personal configuration for my NixOS systems";
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-flatpak.url = "github:gmodena/nix-flatpak";
@@ -19,8 +19,6 @@
       url = "github:uiriansan/SilentSDDM";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-
   };
   nixConfig = {
     extra-substituters = [
@@ -60,7 +58,7 @@
           services.samba.enable=true;
           services.xserver.desktopManager.gnome.enable=false;
 
-          home-manager.useGlobalPkgs = true;
+          #home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.users.vittorio = {
             imports = [./modules/home/home.nix];
@@ -80,6 +78,7 @@
           home-manager.extraSpecialArgs = {
             flake-inputs = inputs;
             systemConfig = config;
+                        
           };
           nixpkgs.config.allowUnfree = true;
           services.ngrok = {
@@ -120,7 +119,7 @@
           programs.hyprland.enable=true;
 
           home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
+          #home-manager.useUserPackages = true;
           home-manager.users.vittorio = {
             imports = [./modules/home/home.nix];
             home.username = "vittorio";
@@ -139,6 +138,7 @@
           home-manager.extraSpecialArgs = {
             flake-inputs = inputs;
             systemConfig = config;
+                        
           };
         }
         )
@@ -171,9 +171,9 @@
           hardware.asus.battery.chargeUpto = 80;
           users.users.vittorio.extraGroups = [ "dialout" "docker" "audio" "realtime"];
           launchpad.enable=true;
-          #services.xserver.desktopManager.gnome.enable=true;
+          #services.desktopManager.gnome.enable=true;
           programs.hyprland.enable=true;
-          home-manager.useGlobalPkgs = true;
+          #home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.users.vittorio = {
             imports = [./modules/home/home.nix];
@@ -193,6 +193,7 @@
           home-manager.extraSpecialArgs = {
             flake-inputs = inputs;
             systemConfig = config;
+                        
           };
         }
         )
@@ -221,10 +222,10 @@
           programs.steam.enable=true;
           services.samba.enable=true;
           launchpad.enable=true;
-          services.xserver.desktopManager.gnome.enable=true;
+          services.desktopManager.gnome.enable=true;
           users.users.vittorio.extraGroups = [ "dialout" "docker " "audio" "realtime" "network" "systemd-journal"];
 
-          home-manager.useGlobalPkgs = true;
+          #home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.users.vittorio = {
             imports = [./modules/home/home.nix];
@@ -244,6 +245,7 @@
           home-manager.extraSpecialArgs = {
             flake-inputs = inputs;
             systemConfig = config;
+                        
           };
         })
       ];
@@ -267,9 +269,9 @@
           services.flatpak.enable=true;
           virtualisation.docker.enable=true;
           users.users.vittorio.extraGroups = [ "dialout" "docker" "audio" "realtime"];
-          services.xserver.desktopManager.gnome.enable=true;
+          services.desktopManager.gnome.enable=true;
 
-          home-manager.useGlobalPkgs = true;
+          #home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.users.vittorio = {
             imports = [./modules/home/home.nix];
@@ -289,7 +291,7 @@
           home-manager.extraSpecialArgs = {
             flake-inputs = inputs;
             systemConfig = config;
-          };
+            };
         }
         )
       ];

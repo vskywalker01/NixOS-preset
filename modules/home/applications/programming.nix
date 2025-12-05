@@ -1,10 +1,6 @@
 {config, lib, pkgs,flake-inputs, systemConfig ? {}, ...}:
 
-let 
-  unstable = import flake-inputs.nixpkgs-unstable {
-    system = pkgs.system;
-  };
-in {
+{
   options.applications = {
     programming = lib.mkOption {
       type = lib.types.bool; 
