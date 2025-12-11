@@ -3,13 +3,13 @@
 graphics_mode=$(supergfxctl -g 2>/dev/null)
 case "$graphics_mode" in
     "Hybrid")
-        graphics="󰈐 Hybrid"
+        graphics="󰍺 Hybrid"
         ;;
     "Integrated")
-        graphics="󰢮 iGPU"
+        graphics="󰍹 iGPU"
         ;;
     "Dedicated")
-        graphics="󰢹 dGPU"
+        graphics="󰢮 dGPU"
         ;;
     *)
         graphics=""

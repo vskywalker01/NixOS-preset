@@ -12,6 +12,8 @@ in {
         services.power-profiles-daemon.enable= lib.mkDefault true;
         hardware.bluetooth.enable= lib.mkDefault true;
         services.upower.enable = true;
+        services.system-config-printer.enable = lib.mkDefault true;
+        programs.system-config-printer.enable = lib.mkDefault true;
         environment.systemPackages = [
             pkgs.libsForQt5.qt5ct
             pkgs.grim 
@@ -48,6 +50,7 @@ in {
             pkgs.lm_sensors
             pkgs.hyprsunset
             pkgs.file-roller
+
         ];   
         services.xserver.excludePackages = [
             pkgs.xterm

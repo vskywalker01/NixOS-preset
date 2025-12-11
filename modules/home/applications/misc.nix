@@ -15,7 +15,7 @@
       pkgs.filezilla
       pkgs.termius
       pkgs.onlyoffice-desktopeditors
-      pkgs.rnote
+      #pkgs.rnote
       pkgs.gimp 
       pkgs.drawio
       pkgs.zoom-us
@@ -23,6 +23,10 @@
       pkgs.krita
       pkgs.vlc
     ];
+    services.flatpak.packages = lib.mkIf (systemConfig.services.flatpak.enable || false) [
+        "com.github.flxzt.rnote"
+    ];
+
    
 
   };

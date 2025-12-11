@@ -18,6 +18,7 @@
           };
         };
       };
+      wireplumber.enable = true;
     };
   };
 }

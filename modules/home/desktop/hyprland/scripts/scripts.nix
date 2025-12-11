@@ -21,6 +21,23 @@
         source = ./fan-speeds.sh;
         executable = true;
     };
+    xdg.configFile."hypr/scripts/cpu-fan-speed.sh" = {
+        source = ./cpu-fan-speed.sh;
+        executable = true;
+    };
+    xdg.configFile."hypr/scripts/gpu-fan-speed.sh" = {
+        source = ./gpu-fan-speed.sh;
+        executable = true;
+    };
+    xdg.configFile."hypr/scripts/gpu-status.sh" = {
+        source = ./gpu-status.sh;
+        executable = true;
+    };
+    xdg.configFile."hypr/scripts/settings.sh" = {
+        source = ./settings.sh;
+        executable = true;
+    };
+     
     
 
 }

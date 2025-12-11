@@ -50,6 +50,8 @@ window#waybar.hidden {
     padding-left:1px;
     padding-right: 1px;
     transition: all 0.2s ease;
+    color: @textNormal;
+    
 }
 
 #workspaces button.active {
@@ -68,7 +70,8 @@ window#waybar.hidden {
 #toolbar,
 #net,
 #power_settings,
-#battery,
+#custom-cpu-fan-speed,
+#custom-gpu-fan-speed,
 #custom-power {
     padding-left: 12px;
     padding-right: 12px;
@@ -80,15 +83,16 @@ window#waybar.hidden {
 #backlight,
 #network,
 #cpu,
+#temperature,
 #idle_inhibitor,
 #custom-screenshot,
 #pulseaudio-slider,
 #custom-graphics_control,
-#power_profiles-daemon,
+#power-profiles-daemon,
 #memory,
-#custom-gpu-temp,
-#custom-fan-speeds,
-#temepratures
+#battery,
+#custom-gpu-status,
+#custom-settings
 {
     padding-left: 8px;
     padding-right: 8px;
@@ -99,8 +103,15 @@ window#waybar.hidden {
 #tray,
 #toolbar,
 #net,
-#workspaces {
+#workspaces,
+#custom-cpu-fan-speed 
+{
     border-right: 1px solid @border;
+}
+
+#custom-gpu-fan-speed 
+{
+    border-left: 1px solid @border;
 }
 
 #cpu,
@@ -121,8 +132,10 @@ window#waybar.hidden {
 #clock,
 #temperature,
 #backlight,
-#custom-gpu-temp,
-#custom-fan-speeds
+#custom-gpu-status,
+#custom-gpu-fan-speed,
+#custom-cpu-fan-speed,
+#custom-settings
 {
     transition: all 0.2s ease;
 }
@@ -143,7 +156,10 @@ window#waybar.hidden {
 #memory:hover,
 #custom-apps:hover,
 #custom-power:hover,
-#custom-fan-speeds:hover
+#custom-gpu-fan-speed:hover,
+#custom-cpu-fan-speed:hover,
+#custom-gpu-status:hover,
+#custom-settings:hover
 {
 
     padding-left: 16px;

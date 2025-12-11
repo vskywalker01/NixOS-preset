@@ -78,6 +78,17 @@
             accent: ${config.theme.colors.accentHex};
         }
         '';
+        home.packages = [pkgs.wleave];
+        home.activation.installWlogoutIcons = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+            mkdir -p ${config.home.homeDirectory}/.config/hypr/theme/icons/logout
+            for f in ${pkgs.wleave}/share/wleave/icons/*.svg; do
+                sed \
+                -e 's/fill="[^"]*"/fill="${config.theme.colors.textNormalHex}"/g' \
+                -e 's/stroke="[^"]*"/stroke="${config.theme.colors.textNormalHex}"/g' \
+                "$f" > ${config.home.homeDirectory}/.config/hypr/theme/icons/logout/$(basename "$f")
+            done
+        '';
+        
     };
     
 }

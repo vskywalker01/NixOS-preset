@@ -1,5 +1,4 @@
 {config, lib, pkgs, systemConfig ? {} , ...}:
-
 {
     config = lib.mkIf (systemConfig.programs.hyprland.enable) {
         programs.wlogout={
@@ -85,27 +84,26 @@
                 }
 
                 #lock {
-                    background-image: image(url("${pkgs.wleave}/share/wleave/icons/lock.svg"));
+                    background-image: image(url("${config.home.homeDirectory}/.config/hypr/theme/icons/logout/lock.svg"));
                 }
                 #logout {
-                    background-image: image(url("${pkgs.wleave}/share/wleave/icons/logout.svg"));
+                    background-image: image(url("${config.home.homeDirectory}/.config/hypr/theme/icons/logout/logout.svg"));
                 }
                 #reboot {
-                    background-image: image(url("${pkgs.wleave}/share/wleave/icons/reboot.svg"));
+                    background-image: image(url("${config.home.homeDirectory}/.config/hypr/theme/icons/logout/reboot.svg"));
+
                 }
                 #shutdown {
-                    background-image: image(url("${pkgs.wleave}/share/wleave/icons/shutdown.svg"));
+                    background-image: image(url("${config.home.homeDirectory}/.config/hypr/theme/icons/logout/shutdown.svg"));
                 }
                 #suspend {
-                    background-image: image(url("${pkgs.wleave}/share/wleave/icons/suspend.svg"));
+                    background-image: image(url("${config.home.homeDirectory}/.config/hypr/theme/icons/logout/suspend.svg"));
                 }
                 #hibernate {
-                    background-image: image(url("${pkgs.wleave}/share/wleave/icons/hibernate.svg"));
+                    background-image: image(url("${config.home.homeDirectory}/.config/hypr/theme/icons/logout/hibernate.svg"));
                 }
             '';
         };
-        home.packages = [pkgs.wleave];
-
     };
 
 }

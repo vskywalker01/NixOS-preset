@@ -1,9 +1,9 @@
 {
     "layer": "top",
     "position":"top",
-    "modules-left": ["custom/apps","hyprland/workspaces","group/system"],
-    "modules-center": ["clock"],
-    "modules-right": ["tray","group/toolbar","group/power_settings","custom/power"],
+    "modules-left": ["custom/apps","hyprland/workspaces","group/power_settings","group/system"],
+    "modules-center": ["custom/cpu-fan-speed", "clock","custom/gpu-fan-speed"],
+    "modules-right": ["tray","group/toolbar","custom/power"],
     "reload_style_on_change": true,
     "clock": {
         "format": "{:%d.%m.%y | %H:%M}",
@@ -48,7 +48,7 @@
 
     "group/system": {
         "orientation": "horizontal",
-        "modules": ["cpu","temperature","memory","custom/fan-speeds"],
+        "modules": ["cpu","temperature","memory"],
         "class": "container"
     },
     "memory": {
@@ -101,7 +101,7 @@
     },
     "group/toolbar": {
         "orientation": "horizontal",
-        "modules": ["pulseaudio", "pulseaudio#mic", "backlight","custom/screenshot", "idle_inhibitor"]
+        "modules": ["pulseaudio", "pulseaudio#mic", "backlight","custom/screenshot", "idle_inhibitor","battery","custom/settings"]
     },
     "pulseaudio": {
         "format": "{icon}  {volume}%",
@@ -123,7 +123,7 @@
         "show-percentage": false,
         "scroll-step": 5,
         "justify": "center",
-        "on-click-right": "pavucontrol",
+        "on-click-right": "rofi-pulse-select sink",
         "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
     },
     "pulseaudio#mic": {
@@ -132,7 +132,7 @@
         "format-source": "\udb80\udf6c",
         "format-source-muted": "\udb80\udf6d",
         "show-percentage": false,
-        "on-click-right": "pavucontrol -t 4",
+        "on-click-right": "rofi-pulse-select source",
         "on-click": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
         "tooltip-format": "{format_source}  {source_desc}\t {source_volume}%",
         "on-scroll-down": "pactl set-source-volume @DEFAULT_SOURCE@ -5%",
@@ -141,7 +141,7 @@
     },
     "group/power_settings": {
         "orientation": "horizontal",
-        "modules": ["custom/graphics_control","power-profiles-daemon","battery"]
+        "modules": ["power-profiles-daemon","custom/graphics_control","custom/gpu-status"]
     },
     "battery": {
     "interval":1,
@@ -201,7 +201,7 @@
         "tooltip": true,
         "format-icons": {
             "power-saver": "\udb80\udf2a",
-            "balanced": "\udb80\ude10",
+            "balanced": "\uf24e",
             "performance": "\uf427"
         }
     },
@@ -229,21 +229,30 @@
         "on-click": "~/.config/hypr/scripts/supergfxctl-set.sh",
         "signal": 0
     },
-    "custom/gpu-temp": {
-        "exec": "~/.config/hypr/scripts/gpu-temp.sh",
-        "return-type": "json",
-        "tooltip": true,
-        "on-click": "nvtop",
-        "interval": 5,
-        "format": "{text}",
-        "tooltip": true
-    },
-    "custom/fan-speeds": {
-        "exec": "~/.config/hypr/scripts/fan-speeds.sh",
-        "on-click": "missioncenter",
+    "custom/cpu-fan-speed": {
+        "exec": "~/.config/hypr/scripts/cpu-fan-speed.sh",
+        "on-click-right": "missioncenter",
         "interval": 5,
         "format": "{}"
+    },
+    "custom/gpu-fan-speed": {
+        "exec": "~/.config/hypr/scripts/gpu-fan-speed.sh",
+        "on-click-right": "missioncenter",
+        "interval": 5,
+        "format": "{}"
+    },
+    "custom/gpu-status": {
+        "exec": "~/.config/hypr/scripts/gpu-status.sh",
+        "interval": 5,
+        "format": "{}"
+    },
+    "custom/settings": {
+        "interval": 5,
+        "format": "\uf013",
+        "tooltip": true,
+        "tooltip-format": "Manage system settings",
+        "on-click": "~/.config/hypr/scripts/settings.sh"
     }
     
-    
+        
 }

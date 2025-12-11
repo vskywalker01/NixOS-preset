@@ -14,10 +14,10 @@
       drumkv1
       samplv1
       synthv1
-      sfizz
       jack2
       a2jmidid
       alsa-utils
     ];
+        
   };
 }

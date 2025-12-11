@@ -20,7 +20,7 @@
         padding=16
         width=300
         anchor=top-right 
-        max-visible=1
+        max-visible=3
         '';
  
     };

@@ -18,7 +18,8 @@
             whitesur-cursors  
             whitesur-gtk-theme
             colloid-gtk-theme
-            pkgs.colloid-gtk-theme
+            #colloid-icon-theme
+            
             #nordic
             reversal-icon-theme
         ];
@@ -156,6 +157,10 @@
                     "ignorezero, notifications"
                     "blur, rofi"
                     "blur, mako"
+                ];
+                windowrulev2 = [
+                    "float, class:^(org.pulseaudio.pavucontrol)$" 
+                    "float, class:^(.blueman-manager-wrapped)$"
                 ];
             };
             extraConfig = ''
