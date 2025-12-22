@@ -11,6 +11,9 @@ case "$graphics_mode" in
     "Dedicated")
         graphics="󰢮 dGPU"
         ;;
+    "Vfio")
+        graphics=" Vfio"
+        ;;
     *)
         graphics=""
         ;;

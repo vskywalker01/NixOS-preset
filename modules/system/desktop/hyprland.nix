@@ -14,6 +14,8 @@ in {
         services.upower.enable = true;
         services.system-config-printer.enable = lib.mkDefault true;
         programs.system-config-printer.enable = lib.mkDefault true;
+        services.gvfs.enable = true;
+
         environment.systemPackages = [
             pkgs.libsForQt5.qt5ct
             pkgs.grim 
@@ -27,6 +29,11 @@ in {
             pkgs.rofi-network-manager
             pkgs.rofi-pulse-select
             pkgs.nautilus
+            pkgs.nautilus-open-in-blackbox
+            pkgs.nautilus-open-any-terminal
+            pkgs.libheif
+            pkgs.libheif.out
+
             pkgs.pulseaudio 
             pkgs.hyprlock
             pkgs.xdg-desktop-portal-hyprland
@@ -50,8 +57,10 @@ in {
             pkgs.lm_sensors
             pkgs.hyprsunset
             pkgs.file-roller
-
+            pkgs.libinput
         ];   
+        environment.pathsToLink = [ "share/thumbnailers" ];
+
         services.xserver.excludePackages = [
             pkgs.xterm
         ]; 

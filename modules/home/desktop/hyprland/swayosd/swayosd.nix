@@ -33,7 +33,7 @@
             min-height: inherit;
             border-radius: inherit;
             border: none;
-            background: ${config.theme.colors.textNormal}; }
+            background: ${config.theme.colors.bgBlur}; }
         window#osd progress {
             min-height: inherit;
             border-radius: inherit;

@@ -117,17 +117,20 @@
                     "$MOD, F, fullscreen"
                     "$MOD, SPACE, togglefloating"
                     "$MOD, h/j/k/l, movefocus, l/d/u/r"
-                    "$MOD,h/j/k/l, movewindow, l/d/u/r"
-                    "$MOD,right,movetoworkspace,+1"
-                    "$MOD,left,movetoworkspace,-1"
+                    "$MOD, right,movetoworkspace,+1"
+                    "$MOD, left,movetoworkspace,-1"
+
                     "$MOD,1,workspace,1"
                     "$MOD,2,workspace,2"
                     "$MOD,3,workspace,3"
                     "$MOD,4,workspace,4"
+                    "$MOD,5,workspace,5"
+                    "$MOD,6,workspace,6"
+                    "$MOD,7,workspace,7"
+                    "$MOD,8,workspace,8"
+
                     "$MOD,N,exec,nautilus"
-                    "$MOD,L,exec,hyprlock"
-                    "$MOD,ESC,exec,wlogout"
-                    "$MOD SHIFT, R, exec, hyprctl reload"
+                    "$MOD, R, exec, hyprctl reload"
 
                     ",PRINT,exec,~/.config/hypr/scripts/slurp.sh"
 
@@ -162,6 +165,7 @@
                     "float, class:^(org.pulseaudio.pavucontrol)$" 
                     "float, class:^(.blueman-manager-wrapped)$"
                 ];
+
             };
             extraConfig = ''
                 env = XCURSOR_THEME,WhiteSur-cursors
@@ -171,7 +175,6 @@
                 source = ~/.config/hypr/monitors.conf
                 source = ~/.config/hypr/workspaces.conf
             '';
-
         };
     };
 }
