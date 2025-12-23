@@ -222,8 +222,10 @@
           programs.steam.enable=true;
           services.samba.enable=true;
           launchpad.enable=true;
-          services.desktopManager.gnome.enable=true;
-          users.users.vittorio.extraGroups = [ "dialout" "docker " "audio" "realtime" "network" "systemd-journal"];
+          #services.desktopManager.gnome.enable=true;
+          programs.hyprland.enable=true;
+
+	  users.users.vittorio.extraGroups = [ "dialout" "docker " "audio" "realtime" "network" "systemd-journal"];
 
           #home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;

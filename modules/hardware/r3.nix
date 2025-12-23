@@ -3,8 +3,7 @@ let
   unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in {
   config = lib.mkIf (config.hardware.hardware-profile == "R3") {
-    boot.kernelPackages = pkgs.linuxPackages_latest;
-
+    boot.kernelPackages = pkgs.linuxPackages_6_17;
     environment.systemPackages = with pkgs; [ lact ];
     systemd.packages = with pkgs; [ 
       lact 
