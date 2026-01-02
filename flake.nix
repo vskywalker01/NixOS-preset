@@ -271,8 +271,8 @@
           services.flatpak.enable=true;
           virtualisation.docker.enable=true;
           users.users.vittorio.extraGroups = [ "dialout" "docker" "audio" "realtime"];
-          services.desktopManager.gnome.enable=true;
-
+          #services.desktopManager.gnome.enable=true;
+          programs.hyprland.enable=true;
           #home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.users.vittorio = {
