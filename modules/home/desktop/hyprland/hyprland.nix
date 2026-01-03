@@ -72,7 +72,7 @@
         };
         qt = {
             enable = true;
-            style.package = pkgs.whitesur-gtk-theme;
+            style.package = pkgs.colloid-gtk-theme;
         };
         
         wayland.windowManager.hyprland = {
@@ -117,8 +117,11 @@
                     "$MOD, F, fullscreen"
                     "$MOD, SPACE, togglefloating"
                     "$MOD, h/j/k/l, movefocus, l/d/u/r"
-                    "$MOD, right,movetoworkspace,+1"
-                    "$MOD, left,movetoworkspace,-1"
+                    "$MOD, r,movetoworkspace,+1"
+                    "$MOD, l,movetoworkspace,-1"
+                    
+                    "$MOD,left,workspace,-1"
+                    "$MOD,right,workspace,+1"
 
                     "$MOD,1,workspace,1"
                     "$MOD,2,workspace,2"

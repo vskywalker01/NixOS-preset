@@ -183,4 +183,8 @@ tooltip {
     padding-right: 16px;
 }
 
+#tray:hover {
+    padding-left: 24px; 
+    padding-right: 24px;
+}
 
