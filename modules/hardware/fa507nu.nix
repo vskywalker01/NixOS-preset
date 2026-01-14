@@ -3,7 +3,7 @@ let
   unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in {
   config = lib.mkIf (config.hardware.hardware-profile == "FA507NU") {
-    boot.kernelPackages = pkgs.linuxPackages_6_17;
+    boot.kernelPackages = pkgs.linuxPackages_6_18;
 
     zramSwap.enable = true; 
   
@@ -18,7 +18,7 @@ in {
     #Workaround for errors during compilation for specific kernel versions                  
     hardware.nvidia.open = lib.mkForce true;                                          
 
-    hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.production;
+    hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.latest;
     #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
     #  version = "580.95.05";
     #  sha256_64bit = "sha256-hJ7w746EK5gGss3p8RwTA9VPGpp2lGfk5dlhsv4Rgqc=";

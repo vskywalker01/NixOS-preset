@@ -33,7 +33,7 @@ in {
             pkgs.nautilus-open-any-terminal
             pkgs.libheif
             pkgs.libheif.out
-
+            pkgs.gnome-disk-utility
             pkgs.pulseaudio 
             pkgs.hyprlock
             pkgs.xdg-desktop-portal-hyprland
