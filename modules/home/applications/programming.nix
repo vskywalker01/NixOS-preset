@@ -54,10 +54,9 @@
           clipboard.enable=true;
           theme = {
             enable = true;
-            name = "onedark";
-            style = "warmer";
+            name = "oxocarbon";
+            style = "dark";
           };
-          autocomplete.blink-cmp.enable=true;
           autopairs.nvim-autopairs.enable=true;
           languages.nix.enable=true;
           telescope.enable=true;
@@ -65,23 +64,8 @@
           autocomplete.nvim-cmp.enable=true;
           statusline.lualine.enable=true;
           terminal.toggleterm.enable=true;
-          assistant.avante-nvim = lib.mkIf (systemConfig.ollama.enable) {
-            enable = true;
-            setupOpts= {
-              provider = "ollama";
-              providers.ollama = {
-                endpoint = "http://127.0.0.1:11434";
-                model= "codegemma:latest";
-                timeout = 30000;
-                extra_request_body = {
-                  options = {
-                    num_ctx = 20480;
-                    keep_alive = "5m";
-                  };
-                };
-              };
-            };
-          };
+          git.neogit.enable = true;
+          visuals.nvim-cursorline.enable=true;
         };
       };
     };

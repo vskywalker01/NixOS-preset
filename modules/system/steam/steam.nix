@@ -1,12 +1,16 @@
 {config, lib, pkgs, ...}:
 
 {
-  config = lib.mkIf (config.programs.steam.enable) {
+  config = lib.mkIf (config.programs.steam.enable) { 
+    boot.kernelModules = [ "ntsync" ];
     programs.steam = {
       remotePlay.openFirewall = lib.mkDefault true;
       dedicatedServer.openFirewall = lib.mkDefault true; 
       localNetworkGameTransfers.openFirewall = lib.mkDefault true; 
       gamescopeSession.enable = lib.mkDefault true;
+      extraCompatPackages = with pkgs; [
+        proton-ge-bin
+      ];   
     };
     programs.gamemode = {
       enable = lib.mkDefault true;

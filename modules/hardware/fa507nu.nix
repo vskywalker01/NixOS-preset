@@ -3,8 +3,8 @@ let
   unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in {
   config = lib.mkIf (config.hardware.hardware-profile == "FA507NU") {
-    boot.kernelPackages = pkgs.linuxPackages_6_17;
-
+    boot.kernelPackages = pkgs.linuxPackages_6_18;
+    hardware.enableAllFirmware = true;
     zramSwap.enable = true; 
   
     swapDevices = [{
@@ -18,15 +18,15 @@ in {
     #Workaround for errors during compilation for specific kernel versions                  
     hardware.nvidia.open = lib.mkForce true;                                          
 
-    hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.production;
-    #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-    #  version = "580.95.05";
-    #  sha256_64bit = "sha256-hJ7w746EK5gGss3p8RwTA9VPGpp2lGfk5dlhsv4Rgqc=";
-    #  sha256_aarch64 = "sha256-4CrNwNINSlQapQJr/dsbm0/GvGSuOwT/nLnIknAM+cQ=";
-    #  openSha256 = "sha256-BKe6LQ1ZSrHUOSoV6UCksUE0+TIa0WcCHZv4lagfIgA=";
-    #  settingsSha256 = "sha256-9PWmj9qG/Ms8Ol5vLQD3Dlhuw4iaFtVHNC0hSyMCU24=";
-    #  persistencedSha256 = "sha256-ETRfj2/kPbKYX1NzE0dGr/ulMuzbICIpceXdCRDkAxA=";
-    #};
+    #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.latest;
+    hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
+      version = "590.48.01";
+      sha256_64bit = "sha256-ueL4BpN4FDHMh/TNKRCeEz3Oy1ClDWto1LO/LWlr1ok=";
+      sha256_aarch64 = "sha256-FOz7f6pW1NGM2f74kbP6LbNijxKj5ZtZ08bm0aC+/YA=";
+      openSha256 = "sha256-hECHfguzwduEfPo5pCDjWE/MjtRDhINVr4b1awFdP44=";
+      settingsSha256 = "sha256-NWsqUciPa4f1ZX6f0By3yScz3pqKJV1ei9GvOF8qIEE=";
+      persistencedSha256 = "sha256-wsNeuw7IaY6Qc/i/AzT/4N82lPjkwfrhxidKWUtcwW8=";
+    };
 
     #enable Cuda support and GPU passtrough for Nvidia GPU on docker 
     nixpkgs.config.cudaSupport = lib.mkDefault true;  

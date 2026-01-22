@@ -22,6 +22,7 @@
       pkgs.woeusb-ng
       pkgs.krita
       pkgs.vlc
+      pkgs.gparted
     ];
     services.flatpak.packages = lib.mkIf (systemConfig.services.flatpak.enable || false) [
         "com.github.flxzt.rnote"

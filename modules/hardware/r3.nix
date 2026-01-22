@@ -4,7 +4,10 @@ let
 in {
   config = lib.mkIf (config.hardware.hardware-profile == "R3") {
     boot.kernelPackages = pkgs.linuxPackages_6_17;
-    environment.systemPackages = with pkgs; [ lact ];
+    environment.systemPackages = with pkgs; [ 
+        lact
+        ryzenadj
+    ];
     systemd.packages = with pkgs; [ 
       lact 
       ethtool
@@ -51,6 +54,19 @@ in {
         "create mode" = 0700;
       };
     }; 
+    systemd.services.ryzenadj = {
+      description = "RyzenAdj";
+      after = [ "sysinit.target" ]; 
+      wantedBy = [ "multi-user.target" ]; 
+
+      serviceConfig = {
+        Restart = "always"; 
+        RestartSec = "10";
+        ExecStart = "${pkgs.ryzenadj}/bin/ryzenadj -f 70";  
+        User = "root";
+      };
+    };
+
 
     networking.interfaces.eth0 = {
       useDHCP = false;

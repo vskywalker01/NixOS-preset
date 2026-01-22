@@ -19,7 +19,7 @@
             whitesur-gtk-theme
             colloid-gtk-theme
             #colloid-icon-theme
-            
+            catppuccin-qt5ct 
             #nordic
             reversal-icon-theme
         ];
@@ -30,7 +30,7 @@
             tray = "always";
         };
         home.sessionVariables = {
-            QT_QPA_PLATFORMTHEME = "qt5ct";
+            QT_QPA_PLATFORMTHEME = "gtk3";
             GTK_THEME = "Colloid-Dark";            
         };
         home.pointerCursor = {
@@ -72,7 +72,9 @@
         };
         qt = {
             enable = true;
+            platformTheme.name = "gtk3";
             style.package = pkgs.colloid-gtk-theme;
+            #style.name = "Catppuccin-Mocha";
         };
         
         wayland.windowManager.hyprland = {
@@ -84,6 +86,7 @@
                 exec-once = [
                     "waybar"
                     "swww-daemon"
+                    "systemctl --user start hyprpolkitagent"
                     "wl-paste --watch cliphist store"
                     "waypaper --restore"
                     "mako"
