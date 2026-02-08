@@ -15,6 +15,7 @@
       pkgs.r2modman
     ];
     services.flatpak.packages = lib.mkIf (systemConfig.services.flatpak.enable || false) [
+      #"io.github.Geocld.XStreamingDesktop"
       "io.github.unknownskl.greenlight"
     #  "net.studio08.xbplay"
     ];

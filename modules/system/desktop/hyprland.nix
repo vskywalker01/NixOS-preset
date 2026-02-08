@@ -16,6 +16,7 @@ in {
         programs.system-config-printer.enable = lib.mkDefault true;
         services.gvfs.enable = true;
         security.polkit.enable = true;
+        environment.sessionVariables.NIXOS_OZONE_WL = "1";
         environment.systemPackages = [
             pkgs.libsForQt5.qt5ct
             pkgs.grim 
