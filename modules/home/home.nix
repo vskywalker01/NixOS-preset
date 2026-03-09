@@ -12,7 +12,7 @@
 
   home.packages = [
       pkgs.neofetch
-      flake-inputs.nix-alien.packages.${pkgs.stdenv.hostPlatform.system}.nix-alien
+      #flake-inputs.nix-alien.packages.${pkgs.stdenv.hostPlatform.system}.nix-alien
       pkgs.nerd-fonts.jetbrains-mono
       pkgs.nerd-fonts.fira-code
       pkgs.corefonts 

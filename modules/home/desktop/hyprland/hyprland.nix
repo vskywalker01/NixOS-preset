@@ -171,13 +171,16 @@
                     "float, class:^(org.pulseaudio.pavucontrol)$" 
                     "float, class:^(.blueman-manager-wrapped)$"
                 ];
-
+                misc = {
+                    "vrr" = 2;
+                };
             };
             extraConfig = ''
                 env = XCURSOR_THEME,WhiteSur-cursors
                 env = XCURSOR_SIZE,28
                 env = HYPRCURSOR_THEME,WhiteSur-cursors
                 env = HYPRCURSOR_SIZE,20
+                env = AQ_NO_MODIFIERS,1
                 source = ~/.config/hypr/monitors.conf
                 source = ~/.config/hypr/workspaces.conf
             '';

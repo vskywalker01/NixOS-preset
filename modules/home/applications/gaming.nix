@@ -17,6 +17,7 @@
     services.flatpak.packages = lib.mkIf (systemConfig.services.flatpak.enable || false) [
       #"io.github.Geocld.XStreamingDesktop"
       "io.github.unknownskl.greenlight"
+      "ch.tlaun.TL"
     #  "net.studio08.xbplay"
     ];
   };

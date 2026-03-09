@@ -28,6 +28,7 @@ in {
       persistencedSha256 = "sha256-wsNeuw7IaY6Qc/i/AzT/4N82lPjkwfrhxidKWUtcwW8=";
     };
 
+   
     #enable Cuda support and GPU passtrough for Nvidia GPU on docker 
     nixpkgs.config.cudaSupport = lib.mkDefault true;  
     hardware.nvidia-container-toolkit = lib.mkIf (config.virtualisation.docker.enable) {
