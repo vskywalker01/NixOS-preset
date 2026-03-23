@@ -10,7 +10,7 @@
   };
   config = lib.mkIf (config.applications.misc) {
     home.packages = [
-      pkgs.bottles
+      #pkgs.bottles
       pkgs.calibre
       pkgs.filezilla
       pkgs.termius
@@ -26,6 +26,7 @@
     ];
     services.flatpak.packages = lib.mkIf (systemConfig.services.flatpak.enable || false) [
         "com.github.flxzt.rnote"
+        "com.usebottles.bottles"
     ];
 
    

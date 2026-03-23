@@ -223,7 +223,7 @@
     "custom/graphics_control": {
         "exec": "~/.config/hypr/scripts/supergfxctl-get.sh",
         "return-type": "json",
-        "interval": "once",
+        "interval": "10",
         "format": "{text}",
         "tooltip": true,
         "on-click": "~/.config/hypr/scripts/supergfxctl-set.sh",

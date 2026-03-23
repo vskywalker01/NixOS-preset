@@ -4,7 +4,6 @@
   imports = [
     ./netbootxyz.nix
     ./octoprint.nix
-    ./ollama.nix
     ./filebrowser.nix
   ];
   config = lib.mkIf (config.virtualisation.docker.enable) {

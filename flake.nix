@@ -163,7 +163,7 @@
           virtualisation.virtualbox.host.enable=true;
           services.openssh.enable=true;
           virtualisation.libvirtd.enable=true;
-          ollama.enable = true;
+          services.ollama.enable = true;
           services.flatpak.enable=true;
           virtualisation.docker.enable=true;
           programs.steam.enable=true;

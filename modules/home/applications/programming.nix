@@ -28,7 +28,7 @@
         jnoortheen.nix-ide
         james-yu.latex-workshop
       ] 
-      ++ lib.optionals (systemConfig.ollama.enable) [
+      ++ lib.optionals (systemConfig.services.ollama.enable) [
         continue.continue
       ]
       ++ lib.optionals (systemConfig.virtualisation.docker.enable) [

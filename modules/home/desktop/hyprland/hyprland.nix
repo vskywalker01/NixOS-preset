@@ -94,8 +94,7 @@
                     "swayosd-server -s ~/.config/swayosd/style.scss"
                     "hyprctl setcursor WhiteSur-cursors 20"
                     "dex -a"
-                    "hyprsunset"
-                                    
+                    "hyprsunset"    
                 ];
                 input.kb_layout = "it";
                 general = {
@@ -140,6 +139,7 @@
 
                     ",PRINT,exec,~/.config/hypr/scripts/slurp.sh"
 
+                    "$MOD,O,exec, hyprctl dispatch exec 'xdg-open http://localhost:8080'"
 
                 ];
                 binde = [

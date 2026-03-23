@@ -14,8 +14,4 @@
   cpu = {
     pin_cores="yes";
   };
-  custom = {
-    start = "powerprofilesctl set performance"; 
-    end = "powerprofilesctl set balanced";
-  };
 }

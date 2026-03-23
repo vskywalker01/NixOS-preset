@@ -1,6 +1,19 @@
 { config, pkgs, lib, inputs, ... }: 
 let
   unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+
+  ryzenadjDynamic = pkgs.writeShellScript "ryzenadj-dynamic" ''
+    AC_STATUS=$(cat /sys/class/power_supply/AC*/online)
+
+    if [ "$AC_STATUS" = "1" ]; then
+      echo "AC connected -> performance mode"
+      exec ${pkgs.ryzenadj}/bin/ryzenadj -f 85
+    else
+      echo "Battery -> power saving"
+      exec ${pkgs.ryzenadj}/bin/ryzenadj -f 65
+    fi
+  '';
+
 in {
   config = lib.mkIf (config.hardware.hardware-profile == "FA507NU") {
     boot.kernelPackages = pkgs.linuxPackages_6_18;
@@ -52,8 +65,18 @@ in {
       serviceConfig = {
         Restart = "always"; 
         RestartSec = "10";
-        ExecStart = "${pkgs.ryzenadj}/bin/ryzenadj -f 85";  
+        ExecStart = ryzenadjDynamic;  
         User = "root";
+      };
+    };
+    systemd.services.supergfxd-restart = {
+      description = "Restart supergfxd after suspend";
+      wantedBy = [ "suspend.target" ];
+      after = [ "suspend.target" ];
+
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = "${pkgs.systemd}/bin/systemctl restart supergfxd.service";
       };
     };
 

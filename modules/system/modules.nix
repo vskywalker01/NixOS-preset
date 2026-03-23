@@ -14,6 +14,7 @@
     ./launchpad.nix
     ./vpn.nix
     ./sddm/sddm.nix
+    ./ollama.nix
   ];
 
   config = {

@@ -2,8 +2,14 @@
 
 {
     xdg.configFile."hypr/scripts/slurp.sh" = {
-        source = ./slurp.sh;
-        executable = true;
+        text =
+        ''
+        #!/usr/bin/env bash
+
+        grim -g "$(slurp -c '${config.theme.colors.borderHex}' -b '${config.theme.colors.bgBlurHex}' -w ${config.theme.colors.borderWidth})" - | wl-copy --type image/png
+        notify-send "Screenshot saved in the clipboard"
+        '';
+       executable = true;
     };
     xdg.configFile."hypr/scripts/supergfxctl-get.sh" = {
         source = ./supergfxctl-get.sh;

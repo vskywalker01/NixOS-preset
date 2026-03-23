@@ -22,6 +22,7 @@
             
             border         = "rgba(255,251,254,0.8)";
             borderHex      = "#FFFBFECC";
+            borderWidth    = "2";
 
             borderSelected = "rgba(52,36,166,0.8)";
             borderSelectedHex = "#3424A6CC";
