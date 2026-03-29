@@ -1,0 +1,66 @@
+#!/usr/bin/env bash 
+
+# Dependency checks
+command -v powerprofilesctl >/dev/null 2>&1 || { echo "powerprofilesctl not found"; exit 1; }
+command -v rofi >/dev/null 2>&1 || { echo "rofi not found"; exit 1; }
+
+ROFI_ARGS=(-dmenu -i -p "Current Power settings: " -markup-rows -no-search)
+
+# Menu entries
+cancel="  Cancel"
+perf=" Performance"
+balanced="  Balanced"
+powersave=" Power Saver"
+
+igpu="󰍹  iGPU"
+dgpu="󰢮  dGPU"
+vfio="  Vfio"
+hybrid="󰍺  Hybrid"
+
+ppd_perf="Power profile\t\t$perf"
+ppd_bal="Power profile\t\t$balanced"
+ppd_ps="Power profile\t\t$powersave"
+
+sgf_igpu="GPU profile\t\t$igpu"
+sfg_hybrid="GPU profile\t\t$hybrid"
+sfg_vfio="GPU profile\t\t$vfio"
+# sets chancel to be on top
+options="$cancel"
+
+if powerprofilesctl get | grep -q "performance"; then
+    options="$options\n$ppd_perf"
+fi
+if powerprofilesctl get | grep -q "balanced"; then
+    options="$options\n$ppd_bal"
+fi
+if powerprofilesctl get | grep -q "power-saver"; then
+    options="$options\n$ppd_ps"
+fi
+if supergfxctl --get | grep -q "Integrated"; then
+    options="$options\nGPU profile\t\t$igpu"
+fi
+
+# Show menu
+chosen="$(echo -e "$options" | rofi "${ROFI_ARGS[@]}")"
+
+# Run selection
+case $chosen in
+    "$perf")
+        powerprofilesctl set performance
+        ;;
+    "$balanced")
+        powerprofilesctl set balanced
+        ;;
+    "$powersave")
+        powerprofilesctl set power-saver
+        ;;
+    "$cancel"|"")
+        exit 0
+        ;;
+esac
+
+# Send notification if available
+if [[ "$chosen" != "$cancel" && -z "${notify_send_missing}" ]]; then
+  notify-send -i dialog-information "Power Profile Changed" "New profile: ${chosen}"
+fi
+
