@@ -199,7 +199,7 @@
         )
       ];
     };
-    nixosConfigurations.skywalker-r3 = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.skywalker-r5 = nixpkgs.lib.nixosSystem {
       specialArgs = {
         inherit inputs;
       };
@@ -213,7 +213,7 @@
         (
         {config,lib,...}:
         {
-          hardware.hardware-profile="R3";
+          hardware.hardware-profile="R5";
           virtualisation.virtualbox.host.enable=true;
           services.openssh.enable=true;
           virtualisation.libvirtd.enable=true;
@@ -221,11 +221,12 @@
           virtualisation.docker.enable=true;
           programs.steam.enable=true;
           services.samba.enable=true;
+          services.ollama.enable=true;
           launchpad.enable=true;
           #services.desktopManager.gnome.enable=true;
           programs.hyprland.enable=true;
 
-	  users.users.vittorio.extraGroups = [ "dialout" "docker " "audio" "realtime" "network" "systemd-journal"];
+	      users.users.vittorio.extraGroups = [ "dialout" "docker " "audio" "realtime" "network" "systemd-journal"];
 
           #home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;

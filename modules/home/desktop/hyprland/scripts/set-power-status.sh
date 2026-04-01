@@ -4,18 +4,18 @@
 command -v powerprofilesctl >/dev/null 2>&1 || { echo "powerprofilesctl not found"; exit 1; }
 command -v rofi >/dev/null 2>&1 || { echo "rofi not found"; exit 1; }
 
-ROFI_ARGS=(-dmenu -i -p "Current Power settings: " -markup-rows -no-search)
+ROFI_ARGS=(-dmenu -i -p "Change profile: " -markup-rows -no-search)
 
 # Menu entries
-cancel="  Cancel"
-perf=" Performance"
-balanced="  Balanced"
-powersave=" Power Saver"
+cancel=" \tCancel"
+perf=" \tPerformance"
+balanced=" \tBalanced"
+powersave=" \tPower Saver"
 
-igpu="󰍹  iGPU"
-dgpu="󰢮  dGPU"
-vfio="  Vfio"
-hybrid="󰍺  Hybrid"
+igpu="󰍹 \tiGPU"
+dgpu="󰢮 \tdGPU"
+vfio=" \tVfio"
+hybrid="󰍺 \tHybrid"
 
 ppd_perf="Power profile\t\t$perf"
 ppd_bal="Power profile\t\t$balanced"
@@ -52,16 +52,79 @@ if command -v supergfxctl >/dev/null 2>&1; then
     fi
 fi 
 
+if command -v supergfxctl >/dev/null 2>&1; then 
+    chosen="$(echo -e "$options" | rofi "${ROFI_ARGS[@]}")"
+    submenu="${chosen%% *}"
+else 
+    submenu="Power"
+fi
 
-chosen="$(echo -e "$options" | rofi "${ROFI_ARGS[@]}")"
-case $chosen in 
+case $submenu in 
     "GPU")
-        echo "gpu"
+        submenu_options="$cancel"
+
+        if supergfxctl --get | grep -q "Integrated"; then
+            submenu_options="$submenu_options\n$igpu"
+        fi
+        if supergfxctl --get | grep -q "Hybrid"; then
+            submenu_options="$submenu_options\n$hybrid"
+        fi
+        if supergfxctl --get | grep -q "AsusMuxDgpu"; then
+            submenu_options="$submenu_options\n$dgpu"
+        fi
+        if supergfxctl --get | grep -q "vfio"; then
+            submenu_options="$submenu_options\n$vfio"
+        fi
+
+        chosen="$(echo -e "$submenu_options" | rofi "${ROFI_ARGS[@]}")"
+        case $chosen in
+            "$igpu")
+                supergfxctl -m Integrated 
+                ;;
+            "$hybrid")
+                supergfxctl -m Hybrid
+                ;;
+            "$dgpu")
+                supergfxctl -m AsusMuxDgpu
+                ;;
+            "$vfio")
+                supergfxctl -m vfio
+                ;;
+            *)
+                exit 0
+                ;;
+        esac 
+
         ;;
 
     "Power")
-        echo = "power"
+        submenu_options="$cancel"
+        if  powerprofilesctl list | grep -q "performance"; then 
+            submenu_options="$submenu_options\n$perf"
+        fi
+        if  powerprofilesctl list | grep -q "balanced"; then
+            submenu_options="$submenu_options\n$balanced"
+        fi
+        if  powerprofilesctl list | grep -q "power-saver"; then
+            submenu_options="$submenu_options\n$powersave"
+        fi
+        chosen="$(echo -e "$submenu_options" | rofi "${ROFI_ARGS[@]}")"
+        case $chosen in
+            "$perf")
+                powerprofilesctl set performance 
+                ;;
+            "$balanced")
+                powerprofilesctl set balanced
+                ;;
+            "$powersave")
+                powerprofilesctl set power-saver
+                ;;
+            *)
+                exit 0
+                ;;
+        esac 
         ;;
+        
     *) 
         exit 0
         ;;

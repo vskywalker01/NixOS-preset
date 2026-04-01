@@ -25,9 +25,9 @@ in {
         
           runAsRoot=true;
         };
-        hooks.qemu = {
+        /*hooks.qemu = {
           qemu = ./hooks;
-        };
+        };*/
       };
       
       spiceUSBRedirection.enable = lib.mkDefault true;

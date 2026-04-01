@@ -2,8 +2,15 @@
 let 
   unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in {
-  config = lib.mkIf (config.hardware.hardware-profile == "R3") {
-    boot.kernelPackages = pkgs.linuxPackages_6_17;
+  config = lib.mkIf (config.hardware.hardware-profile == "R5") {
+    boot.kernelPackages = pkgs.linuxPackages_6_18;
+    programs.coolercontrol.enable = true;
+    boot.extraModulePackages = with config.boot.kernelPackages; [ it87 ];
+    boot.kernelParams = [ "acpi_enforce_resources=lax" ];
+    boot.kernelModules = [ "coretemp" "it87" ];
+    hardware.amdgpu.opencl.enable = true;
+    hardware.amdgpu.overdrive.enable = false;
+    
     environment.systemPackages = with pkgs; [ 
         lact
         ryzenadj
@@ -18,7 +25,6 @@ in {
       enable = true;
       enable32Bit = true;
     };
-
     systemd.tmpfiles.rules = [
       "d /srv/hddraid 0755 root root -"
       "d /var/spool/samba 1777 root root -"

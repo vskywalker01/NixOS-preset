@@ -99,8 +99,8 @@
                 input.kb_layout = "it";
                 general = {
                     gaps_in = 2;
-                    gaps_out = 5;
-                    border_size = 1;
+                    gaps_out = 8;
+                    border_size = 2;
                 };
                 decoration = {
                     rounding = 12;

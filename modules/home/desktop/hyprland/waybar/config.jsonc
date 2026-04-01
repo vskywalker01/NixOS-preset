@@ -1,9 +1,13 @@
 {
     "layer": "top",
     "position":"top",
-    "modules-left": ["custom/apps","hyprland/workspaces","group/power_settings","group/system"],
-    "modules-center": ["custom/cpu-fan-speed", "clock","custom/gpu-fan-speed"],
-    "modules-right": ["tray","group/toolbar","custom/power"],
+    "margin-top": 4,
+    "margin-bottom": 2,
+    "margin-left":10,
+    "margin-right":10,
+    "modules-left": ["group/desktop","group/system"],
+    "modules-center": ["clock"],
+    "modules-right": ["tray","group/toolbar"],
     "reload_style_on_change": true,
     "clock": {
         "format": "{:%d.%m.%y | %H:%M}",
@@ -32,76 +36,46 @@
         "format": "{icon}",
         "show-special": false,
         "format-icons": {
-            "active": "\uf111",
-            "default": "\uf4c3"
+            "active": "",
+            "default": ""
         },
         "sort-by-number": true,
         "persistent-workspace": {
-            "*": [1,2,3,4]
+            "*": [1,2,3,4,5,6,7,8]
         }
     },
+    "group/desktop": {
+        "orientation": "horizontal", 
+        "modules": ["custom/apps", "hyprland/workspaces"]
+    },
+    "group/system": {
+        "orientation": "horizontal",
+        "modules": ["custom/power-status","cpu","temperature","memory","custom/fan-speeds"]
+    },
+    "group/toolbar": {
+        "orientation": "horizontal",
+        "modules": ["pulseaudio", "pulseaudio#mic", "backlight","custom/screenshot", "idle_inhibitor","battery","custom/power"]
+    },
+    
     "tray": {
         "icon-size": 14,
         "spacing": 10,
         "reverse-direction": true
     },
 
-    "group/system": {
-        "orientation": "horizontal",
-        "modules": ["cpu","temperature","memory"],
-        "class": "container"
-    },
     "memory": {
         "interval": 5,
         "format": "\uefc5 {used}/{total}Gb",
         "max-length": 25,
-        "on-click": "missioncenter"
+        "on-click": "missioncenter",
+        "class": "element"
     },
     "cpu": {
         "interval": 5,
         "format": "\uf4bc {usage}%",
-        "on-click": "missioncenter"
-    },
-    "group/net": {
-        "orientation": "horizontal",
-        "modules": ["bluetooth", "network"]
-    },
-    "bluetooth": {
-        "format": "{icon}",
-        "format-off": "",
-        "format-disabled": "",
-        "hide-if-no-adapter": true,
-        "format-icons": {
-            "enabled": "\udb80\udcaf", 
-            "disabled": "\udb80\udcb2",
-            "connected": "\udb80\udcb1"
-        },
-        "tooltip-format": "{controller_alias}\t{controller_address}",
-        "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
-        "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
-        "on-click": "rofi-bluetooth",
-        "on-click-right": "blueman-manager"
-    },
-    "network": {
-        "format": "",
-        "format-ethernet": "\udb83\udc9d",
-        "format-wifi": "{icon}",
-        "format-disconnected": "\udb82\udc9c",
-        "format-icons": [
-            "\udb82\udd2f",
-            "\udb82\udd1f",
-            "\udb82\udd25",
-            "\udb82\udd28"
-        ],
-        "tooltip-format-wifi": "{essid} ({signalStrength}%)",
-        "tooltip-format-ethernet": "{ifname}",
-        "tooltip-format-disconnected": "Disconnected",
-        "on-click": "rofi-network-manager",
-        "on-click-right": "nm-connection-editor"
-    },
-    "group/toolbar": {
-        "orientation": "horizontal",
-        "modules": ["pulseaudio", "pulseaudio#mic", "backlight","custom/screenshot", "idle_inhibitor","battery","custom/settings"]
+        "on-click": "missioncenter",
+        "class": "element"
+
     },
     "pulseaudio": {
         "format": "{icon}  {volume}%",
@@ -124,7 +98,8 @@
         "scroll-step": 5,
         "justify": "center",
         "on-click-right": "rofi-pulse-select sink",
-        "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+        "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+        "class": "element"
     },
     "pulseaudio#mic": {
         "source": "default",
@@ -137,11 +112,9 @@
         "tooltip-format": "{format_source}  {source_desc}\t {source_volume}%",
         "on-scroll-down": "pactl set-source-volume @DEFAULT_SOURCE@ -5%",
         "on-scroll-up": "pactl set-source-volume @DEFAULT_SOURCE@ +5%", 
-        "scroll-step": 5
-    },
-    "group/power_settings": {
-        "orientation": "horizontal",
-        "modules": ["power-profiles-daemon","custom/graphics_control","custom/gpu-status"]
+        "scroll-step": 5,
+        "class": "element" 
+
     },
     "battery": {
     "interval":1,
@@ -161,7 +134,9 @@
           "󰂀",
           "󰂂",
           "󰁹"
-        ]
+        ],
+        "class": "element"
+
     }, 
     "backlight": {
         "device": "nvidia_wmi_ec_backlight",
@@ -180,79 +155,82 @@
         ],
         "on-scroll-down": "brightnessctl set 10%-",
         "on-scroll-up": "brightnessctl set 10%+",
-        "smooth-scrolling-threshold": 1
-    },
-  
-    "custom/apps": {
-        "format": "\uf40e",
-        "tooltip-format": "App launcher",
-        "on-click": "rofi -show drun -theme ~/.config/rofi/drun.rasi",
-        "interval": "once"
-    },
-    "custom/power": {
-        "format": "\u23fb",
-        "tooltip-format": "Power options",
-        "on-click": "wlogout",
-        "interval": "once"
-    },
-    "power-profiles-daemon": {
-        "format": "{icon} {profile}",
-        "tooltip-format": "{profile}\t{driver}",
-        "tooltip": true,
-        "format-icons": {
-            "power-saver": "\udb80\udf2a",
-            "balanced": "\uf24e",
-            "performance": "\uf427"
-        }
-    },
-    "custom/screenshot": {
-        "format": "\uf03e",
-        "tooltip-format": "Take a screenshot",
-        "on-click": "~/.config/hypr/scripts/slurp.sh",
-        "interval": "once"
-    },
+        "smooth-scrolling-threshold": 1,
+        "class": "element"
 
+    },
     "idle_inhibitor": {
         "format": "{icon}",
         "tooltip-format": "Keeps the computer awake",
         "format-icons": {
             "deactivated": "\udb80\ude09",
             "activated": "\udb80\ude08"
-        }
+        },
+        "class": "element"
+
     },
-    "custom/graphics_control": {
-        "exec": "~/.config/hypr/scripts/supergfxctl-get.sh",
-        "return-type": "json",
-        "interval": "10",
-        "format": "{text}",
-        "tooltip": true,
-        "on-click": "~/.config/hypr/scripts/supergfxctl-set.sh",
-        "signal": 0
+    "custom/apps": {
+        "format": "\uf40e",
+        "tooltip-format": "App launcher",
+        "on-click": "rofi -show drun -theme ~/.config/rofi/drun.rasi",
+        "interval": "once",
+        "class": "element"
+
     },
+        
+    
+    "custom/power": {
+        "format": "\u23fb",
+        "tooltip-format": "Power options",
+        "on-click": "wlogout",
+        "interval": "once",
+        "class": "element"
+
+    },
+
+    "custom/screenshot": {
+        "format": "\uf03e",
+        "tooltip-format": "Take a screenshot",
+        "on-click": "~/.config/hypr/scripts/slurp.sh",
+        "interval": "once",
+        "class": "element"
+
+    },
+
     "custom/cpu-fan-speed": {
         "exec": "~/.config/hypr/scripts/cpu-fan-speed.sh",
         "on-click-right": "missioncenter",
         "interval": 5,
-        "format": "{}"
+        "format": "{}",
+        "class": "element"
+
     },
     "custom/gpu-fan-speed": {
         "exec": "~/.config/hypr/scripts/gpu-fan-speed.sh",
         "on-click-right": "missioncenter",
         "interval": 5,
-        "format": "{}"
+        "format": "{}",
+        "class": "element"
+
     },
-    "custom/gpu-status": {
-        "exec": "~/.config/hypr/scripts/gpu-status.sh",
+    "custom/power-status": {
+        "exec": "~/.config/hypr/scripts/get-power-status.sh",
         "interval": 5,
-        "format": "{}"
+        "format": "{text}",
+        "return-type": "json",
+        "tooltip": true, 
+        "on-click": "~/.config/hypr/scripts/set-power-status.sh",
+        "signal": 0,
+        "class": "element"
+
     },
-    "custom/settings": {
+    "custom/fan-speeds": {
+        "exec": "~/.config/hypr/scripts/get-fan-speeds.sh",
         "interval": 5,
-        "format": "\uf013",
-        "tooltip": true,
-        "tooltip-format": "Manage system settings",
-        "on-click": "~/.config/hypr/scripts/settings.sh"
+        "format": "{text}",
+        "return-type": "json",
+        "tooltip": true, 
+        "signal": 0,
+        "class": "element"
     }
-    
-        
 }

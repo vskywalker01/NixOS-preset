@@ -11,35 +11,18 @@
         '';
        executable = true;
     };
-    xdg.configFile."hypr/scripts/supergfxctl-get.sh" = {
-        source = ./supergfxctl-get.sh;
+    xdg.configFile."hypr/scripts/get-power-status.sh" = {
+        source = ./get-power-status.sh;
         executable = true;
     };
-    xdg.configFile."hypr/scripts/supergfxctl-set.sh" = {
-        source = ./supergfxctl-set.sh;
+    xdg.configFile."hypr/scripts/set-power-status.sh" = {
+        source = ./set-power-status.sh;
         executable = true;
     };
-    xdg.configFile."hypr/scripts/fan-speeds.sh" = {
-        source = ./fan-speeds.sh;
-        executable = true;
-    };
-    xdg.configFile."hypr/scripts/cpu-fan-speed.sh" = {
-        source = ./cpu-fan-speed.sh;
-        executable = true;
-    };
-    xdg.configFile."hypr/scripts/gpu-fan-speed.sh" = {
-        source = ./gpu-fan-speed.sh;
-        executable = true;
-    };
-    xdg.configFile."hypr/scripts/gpu-status.sh" = {
-        source = ./gpu-status.sh;
-        executable = true;
-    };
-    xdg.configFile."hypr/scripts/settings.sh" = {
-        source = ./settings.sh;
-        executable = true;
-    };
-     
-    
 
+    xdg.configFile."hypr/scripts/get-fan-speeds.sh" = {
+        source = ./get-fan-speeds.sh;
+        executable = true;
+    };
+         
 }
