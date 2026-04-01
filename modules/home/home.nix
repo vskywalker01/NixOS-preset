@@ -31,7 +31,7 @@
     '';
   };
   fonts.fontconfig.enable = true;
-  
+  nixpkgs.config.allowUnfree = true;  
   home.activation.installfonts = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     mkdir -p "${config.xdg.dataHome}/fonts"
     cp -n ${pkgs.corefonts}/share/fonts/truetype/* "${config.xdg.dataHome}/fonts/"
