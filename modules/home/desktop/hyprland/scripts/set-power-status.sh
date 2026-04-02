@@ -7,15 +7,15 @@ command -v rofi >/dev/null 2>&1 || { echo "rofi not found"; exit 1; }
 ROFI_ARGS=(-dmenu -i -p "Change profile: " -markup-rows -no-search)
 
 # Menu entries
-cancel=" \tCancel"
-perf=" \tPerformance"
-balanced=" \tBalanced"
-powersave=" \tPower Saver"
+cancel="   Cancel"
+perf="   Performance"
+balanced="   Balanced"
+powersave="   Power Saver"
 
-igpu="󰍹 \tiGPU"
-dgpu="󰢮 \tdGPU"
-vfio=" \tVfio"
-hybrid="󰍺 \tHybrid"
+igpu="󰍹   iGPU"
+dgpu="󰢮   dGPU"
+vfio="   Vfio"
+hybrid="󰍺   Hybrid"
 
 ppd_perf="Power profile\t\t$perf"
 ppd_bal="Power profile\t\t$balanced"
@@ -63,21 +63,21 @@ case $submenu in
     "GPU")
         submenu_options="$cancel"
 
-        if supergfxctl --get | grep -q "Integrated"; then
+        if supergfxctl -s | grep -q "Integrated"; then
             submenu_options="$submenu_options\n$igpu"
         fi
-        if supergfxctl --get | grep -q "Hybrid"; then
+        if supergfxctl -s | grep -q "Hybrid"; then
             submenu_options="$submenu_options\n$hybrid"
         fi
-        if supergfxctl --get | grep -q "AsusMuxDgpu"; then
+        if supergfxctl -s | grep -q "AsusMuxDgpu"; then
             submenu_options="$submenu_options\n$dgpu"
         fi
-        if supergfxctl --get | grep -q "vfio"; then
+        if supergfxctl -s | grep -q "vfio"; then
             submenu_options="$submenu_options\n$vfio"
         fi
 
         chosen="$(echo -e "$submenu_options" | rofi "${ROFI_ARGS[@]}")"
-        case $chosen in
+        case "$chosen" in
             "$igpu")
                 supergfxctl -m Integrated 
                 ;;
@@ -109,9 +109,9 @@ case $submenu in
             submenu_options="$submenu_options\n$powersave"
         fi
         chosen="$(echo -e "$submenu_options" | rofi "${ROFI_ARGS[@]}")"
-        case $chosen in
+        case "$chosen" in
             "$perf")
-                powerprofilesctl set performance 
+                powerprofilesctl set performance
                 ;;
             "$balanced")
                 powerprofilesctl set balanced
