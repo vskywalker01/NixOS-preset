@@ -61,6 +61,7 @@ in {
             pkgs.hyprsunset
             pkgs.file-roller
             pkgs.libinput
+            pkgs.moonlight-qt
         ];   
         environment.pathsToLink = [ "share/thumbnailers" ];
 
@@ -84,6 +85,12 @@ in {
         hardware.uinput.enable = true;
         boot.kernelModules = [ "uinput" ];
         hardware.opentabletdriver.blacklistedKernelModules = [ "hid-uclogic" "wacom" ];
-        };
+        services.sunshine = {
+            enable = true;
+            autoStart = true;
+            capSysAdmin = true;
+            openFirewall = true;
+        };    
+    };
 }
 

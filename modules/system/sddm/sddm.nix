@@ -6,6 +6,7 @@ let
 in {
   config = lib.mkIf (config.services.displayManager.sddm.enable) {
     services.displayManager.sddm = {
+        wayland.enable = true;
         package = pkgs.kdePackages.sddm;
         theme = sddm-theme.pname;
         extraPackages = sddm-theme.propagatedBuildInputs;

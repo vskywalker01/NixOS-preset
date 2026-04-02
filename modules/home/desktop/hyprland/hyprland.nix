@@ -94,7 +94,7 @@
                     "swayosd-server -s ~/.config/swayosd/style.scss"
                     "hyprctl setcursor WhiteSur-cursors 20"
                     "dex -a"
-                    "hyprsunset"    
+                    "hyprsunset"
                 ];
                 input.kb_layout = "it";
                 general = {
