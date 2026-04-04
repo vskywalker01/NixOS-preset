@@ -68,7 +68,7 @@ in {
       serviceConfig = {
         Restart = "always"; 
         RestartSec = "10";
-        ExecStart = "${pkgs.ryzenadj}/bin/ryzenadj -f 70";  
+        ExecStart = "${pkgs.ryzenadj}/bin/ryzenadj -f 85";  
         User = "root";
       };
     };
