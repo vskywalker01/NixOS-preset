@@ -20,13 +20,14 @@
       pkgs.drawio
       pkgs.zoom-us
       pkgs.woeusb-ng
-      pkgs.krita
+      #pkgs.krita
       pkgs.vlc
       pkgs.gparted
     ];
     services.flatpak.packages = lib.mkIf (systemConfig.services.flatpak.enable || false) [
         "com.github.flxzt.rnote"
         "com.usebottles.bottles"
+        "org.kde.krita"
     ];
 
    
