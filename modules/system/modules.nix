@@ -15,6 +15,7 @@
     ./vpn.nix
     ./sddm/sddm.nix
     ./ollama.nix
+    ./appimage.nix
   ];
 
   config = {
