@@ -9,6 +9,9 @@
         pkgs.libxcrypt-legacy
         pkgs.python312
         pkgs.python312Packages.torch
+        pkgs.libepoxy
+        pkgs.zstd
+        pkgs.gcc
         ]; 
     };
     environment.systemPackages = with pkgs; [
