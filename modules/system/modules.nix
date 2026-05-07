@@ -16,6 +16,7 @@
     ./sddm/sddm.nix
     ./ollama.nix
     ./appimage.nix
+    ./stabilitymatrix.nix
   ];
 
   config = {
