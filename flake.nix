@@ -24,10 +24,13 @@
     extra-substituters = [
       "https://nix-community.cachix.org"
       "https://cuda-maintainers.cachix.org"
+      "https://cache.nixos-cuda.org"
+      
     ];
     extra-trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
+      "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="
     ];
   };
   outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, nix-flatpak, nixos-hardware, cachix,ngrok,nvf,silentSDDM}: {
@@ -169,7 +172,7 @@
           programs.steam.enable=true;
           hardware.asus.battery.enableChargeUptoScript = true;
           hardware.asus.battery.chargeUpto = 80;
-          users.users.vittorio.extraGroups = [ "dialout" "docker" "audio" "realtime"];
+          users.users.vittorio.extraGroups = ["networkmanager" "dialout" "docker" "audio" "realtime"];
           launchpad.enable=true;
           #services.desktopManager.gnome.enable=true;
           programs.hyprland.enable=true;

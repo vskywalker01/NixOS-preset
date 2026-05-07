@@ -87,7 +87,7 @@ in {
         hardware.opentabletdriver.blacklistedKernelModules = [ "hid-uclogic" "wacom" ];
         services.sunshine = {
             enable = true;
-            autoStart = true;
+            autoStart = false;
             capSysAdmin = true;
             openFirewall = true;
         };    
