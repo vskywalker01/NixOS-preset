@@ -4,7 +4,7 @@
     services.ollama = {
         environmentVariables = {
             OLLAMA_CONTEXT_LENGTH = "8192";
-            OLLAMA_KEEP_ALIVE = "2m";
+            OLLAMA_KEEP_ALIVE = "5m";
         };
         package = pkgs.ollama-vulkan;
         acceleration = "vulkan";
@@ -12,9 +12,12 @@
             "codegemma:2b"
         ];
     };
-    services.nextjs-ollama-llm-ui = {
+    /*services.nextjs-ollama-llm-ui = {
         port = 8080;
         enable = true;
+    };*/ 
+    services.open-webui = {
+        enable = true; 
     };
     systemd.user.services.ollama-unload = {
         description = "Unload Ollama models on logout";

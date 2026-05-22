@@ -27,5 +27,7 @@
     networking.firewall.allowedTCPPorts = [ 53 ];
     # If internet works but DNS fails, you might need:
     networking.firewall.checkReversePath = "loose";
+
+    programs.java.enable = true;
   };
 }
