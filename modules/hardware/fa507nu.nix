@@ -16,7 +16,7 @@ let
 
 in {
   config = lib.mkIf (config.hardware.hardware-profile == "FA507NU") {
-    boot.kernelPackages = pkgs.linuxPackages_6_18;
+    boot.kernelPackages = pkgs.linuxPackages_latest;
     hardware.enableAllFirmware = true;
     zramSwap.enable = true; 
   
@@ -31,15 +31,14 @@ in {
     #Workaround for errors during compilation for specific kernel versions                  
     hardware.nvidia.open = lib.mkForce true;                                          
 
-    #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.latest;
-    hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-      version = "590.48.01";
-      sha256_64bit = "sha256-ueL4BpN4FDHMh/TNKRCeEz3Oy1ClDWto1LO/LWlr1ok=";
-      sha256_aarch64 = "sha256-FOz7f6pW1NGM2f74kbP6LbNijxKj5ZtZ08bm0aC+/YA=";
-      openSha256 = "sha256-hECHfguzwduEfPo5pCDjWE/MjtRDhINVr4b1awFdP44=";
-      settingsSha256 = "sha256-NWsqUciPa4f1ZX6f0By3yScz3pqKJV1ei9GvOF8qIEE=";
-      persistencedSha256 = "sha256-wsNeuw7IaY6Qc/i/AzT/4N82lPjkwfrhxidKWUtcwW8=";
-    };
+    hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
+    #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
+    #  version = "610.43.02";
+    #      sha256_64bit = "sha256-MDSgVLtM33dS/43CclZMsQVROAS/9TU4lFkBsWyndGM=";
+    #      openSha256 = "sha256-hECHfguzwduEfPo5pCDjWE/MjtRDhINVr4b1awFdP44=";
+    #      settingsSha256 = "sha256-NWsqUciPa4f1ZX6f0By3yScz3pqKJV1ei9GvOF8qIEE=";
+    #      persistencedSha256 = "sha256-wsNeuw7IaY6Qc/i/AzT/4N82lPjkwfrhxidKWUtcwW8=";
+    #    };
 
    
     #enable Cuda support and GPU passtrough for Nvidia GPU on docker 
@@ -56,6 +55,7 @@ in {
     environment.systemPackages = with pkgs; [
       ryzenadj
       nvtopPackages.full
+      supergfxctl
     ];
     systemd.services.ryzenadj = {
       description = "RyzenAdj";
@@ -69,6 +69,7 @@ in {
         User = "root";
       };
     };
+    services.supergfxd.enable = true; 
     systemd.services.supergfxd-restart = {
       description = "Restart supergfxd after suspend";
       wantedBy = [ "suspend.target" ];

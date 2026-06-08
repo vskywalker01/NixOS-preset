@@ -57,6 +57,30 @@
             name = "oxocarbon";
             style = "dark";
           };
+          assistant.avante-nvim = lib.mkIf (systemConfig.services.ollama.enable) {
+            enable = true;
+            setupOpts = {
+                provider = "ollama";
+                auto_suggestions_provider="ollama";
+                behaviour.auto_suggestions = false;
+                providers = {
+                    ollama = {
+                        model = "qwen2.5-coder:1.5b";
+                        endpoint = "http://127.0.0.1:11434";
+                        timeout = 30000;
+                        extra_request_body = {
+                            options = {
+                                num_predict = 128;
+                                temperature = 0;
+                                top_p = 0.9;
+                                num_ctx = 20480;
+                                keep_alive = "2m";
+                            };
+                        };
+                    };
+                };
+            };
+          };
           autopairs.nvim-autopairs.enable=true;
           languages.nix.enable=true;
           telescope.enable=true;

@@ -41,12 +41,12 @@ in {
             pkgs.hyprlock
             pkgs.xdg-desktop-portal-hyprland
             pkgs.xdg-desktop-portal-wlr
-            pkgs.nwg-displays
+            unstable.nwg-displays
             pkgs.pavucontrol
             pkgs.networkmanagerapplet
             pkgs.wlogout
             pkgs.upower
-            pkgs.swww
+            pkgs.awww
             pkgs.waypaper
             pkgs.mako
             pkgs.hypridle

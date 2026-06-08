@@ -11,7 +11,6 @@
   ];
 
   home.packages = [
-      pkgs.neofetch
       #flake-inputs.nix-alien.packages.${pkgs.stdenv.hostPlatform.system}.nix-alien
       pkgs.nerd-fonts.jetbrains-mono
       pkgs.nerd-fonts.fira-code
@@ -24,11 +23,6 @@
   };
   programs.fish = {
     enable = true;
-    shellInit = ''
-      if status is-interactive
-        neofetch
-      end
-    '';
   };
   fonts.fontconfig.enable = true;
   nixpkgs.config.allowUnfree = true;  

@@ -1,6 +1,7 @@
 {config, lib, pkgs, systemConfig ? {} , ...}:
-
-{
+let
+    lua = lib.generators.mkLuaInline; 
+in {
     imports = [
         ./waybar/waybar.nix
         ./scripts/scripts.nix
@@ -54,10 +55,13 @@
                 package = pkgs.whitesur-cursors;
                 size=24;
             };
-            gtk4.extraConfig = {
-            Settings = ''
-                    gtk-application-prefer-dark-theme=1
-                '';
+            gtk4 = {
+                extraConfig = {
+                    Settings = ''
+                        gtk-application-prefer-dark-theme=1
+                    '';
+                };
+                theme = config.gtk.theme;
             };
             gtk3.extraConfig = {
                 Settings = ''
@@ -78,111 +82,126 @@
         };
         
         wayland.windowManager.hyprland = {
-	    enable=true;
-	    package = null;
-   	    portalPackage = null;
+            enable=true;
+            package = null;
+            portalPackage = null;
+            configType = "lua";
             settings = {
-                "$MOD"="CTRL_SHIFT";
-                exec-once = [
-                    "waybar"
-                    "swww-daemon"
-                    "systemctl --user start hyprpolkitagent"
-                    "wl-paste --watch cliphist store"
-                    "waypaper --restore"
-                    "mako"
-                    "hypridle"
-                    "swayosd-server -s ~/.config/swayosd/style.scss"
-                    "hyprctl setcursor WhiteSur-cursors 20"
-                    "dex -a"
-                    "hyprsunset"
-                ];
-                input.kb_layout = "it";
-                general = {
-                    gaps_in = 2;
-                    gaps_out = 8;
-                    border_size = 2;
+                mod = {
+                    _var = "CTRL + SHIFT";
                 };
-                decoration = {
-                    rounding = 12;
-                    blur = {
-                        enabled = true;
-                        size = 6;
-                        passes = 3;
-                        new_optimizations = true;
-                    };
                 
+                config = {
+                    general = {
+                        gaps_in = 2;
+                        gaps_out = 8;
+                        border_size = 2;
+                    };
+                    misc = {
+                        vrr = 2;
+                    };
+                    decoration = {
+                        rounding = 12;
+                        blur = {
+                            enabled = true;
+                            size = 9;
+                            passes = 3;
+                            new_optimizations = true;
+                            special = true; 
+                            popups= true;
+                            ignore_opacity = false;
+                        };
+                        active_opacity = 1.0;
+                    };
+                    input = {
+                        kb_layout = "it";
+                        sensitivity = -0.2;
+                        natural_scroll = false;
+                        touchpad = {
+                            natural_scroll = true;
+                            disable_while_typing = true; 
+                            tap_to_click = true; 
+
+                        };
+                    };
+                    window_rule = [
+                        {match.class = "kitty"; opacity = 0.8;}
+                        {match.class = "logout_dialog"; no_blur = false; }
+                        {match.class = "notifications"; no_blur = false; }
+                        {match.class = "rofi"; active_opacity = 0.90; }
+                        {match.class = "mako"; no_blur = false; }
+                        {match.class = "^(org.pulseaudio.pavucontrol)$"; float = true;}
+                        {match.class = "^(.blueman-manager-wrapped)$"; float = true;}
+                    ];
+                    cursor = {
+                        sync_gsettings_theme = true;
+                        no_break_fs_vrr = 1;
+                        enable_hyprcursor = true; 
+                    };
                 };
-		        bind = [
-		            "$MOD, T, exec, kitty"
-                    "$MOD, D, exec, rofi -show drun -theme=~/.config/rofi/drun.rasi"
-                    "$MOD, Q, killactive"
-                    "$MOD, F, fullscreen"
-                    "$MOD, SPACE, togglefloating"
-                    "$MOD, h/j/k/l, movefocus, l/d/u/r"
-                    "$MOD, r,movetoworkspace,+1"
-                    "$MOD, l,movetoworkspace,-1"
-                    
-                    "$MOD,left,workspace,-1"
-                    "$MOD,right,workspace,+1"
+                
+                bind = [
+                    {_args = [(lua "mod .. \" + Q\"")(lua "hl.dsp.window.close()"){ locked = false; }];}
+                    {_args = [(lua "mod .. \" + T\"")(lua "hl.dsp.exec_cmd(\"kitty\")"){ locked = false; }];}
+                    {_args = [(lua "mod .. \" + N\"")(lua "hl.dsp.exec_cmd(\"nautilus\")"){ locked = false; }];}
+                    {_args = [(lua "mod .. \" + C\"")(lua "hl.dsp.exec_cmd(\"gnome-calculator\")"){ locked = false; }];}
+                    {_args = [(lua "mod .. \" + D\"")(lua "hl.dsp.exec_cmd(\"rofi -show drun -theme=~/.config/rofi/drun.rasi\")"){ locked = false; }];}
+                    {_args = [(lua "mod .. \" + O\"")(lua "hl.dsp.exec_cmd(\"xdg-open http://localhost:8080\")"){ locked = false; }];}
+                    {_args = [(lua "mod .. \" + F\"")(lua "hl.dsp.window.fullscreen()"){ locked = false; }];}
+                    {_args = [(lua "mod .. \" + SPACE\"")(lua "hl.dsp.window.float({ action = \"toggle\" })"){ locked = false; }];}
+                    {_args = [(lua "mod .. \" + 1\"")(lua "hl.dsp.focus({ workspace = 1 })"){ locked = false; }];}
+                    {_args = [(lua "mod .. \" + 2\"")(lua "hl.dsp.focus({ workspace = 2 })"){ locked = false; }];}
+                    {_args = [(lua "mod .. \" + 3\"")(lua "hl.dsp.focus({ workspace = 3 })"){ locked = false; }];}
+                    {_args = [(lua "mod .. \" + 4\"")(lua "hl.dsp.focus({ workspace = 4 })"){ locked = false; }];}
+                    {_args = [(lua "mod .. \" + 5\"")(lua "hl.dsp.focus({ workspace = 5 })"){ locked = false; }];}
+                    {_args = [(lua "mod .. \" + 6\"")(lua "hl.dsp.focus({ workspace = 6 })"){ locked = false; }];}
+                    {_args = [(lua "mod .. \" + 7\"")(lua "hl.dsp.focus({ workspace = 7 })"){ locked = false; }];}
+                    {_args = [(lua "mod .. \" + 8\"")(lua "hl.dsp.focus({ workspace = 8 })"){ locked = false; }];}
+                    {_args = [(lua "mod .. \" + 9\"")(lua "hl.dsp.focus({ workspace = 9 })"){ locked = false; }];}
+                    {_args = [(lua "mod .. \" + LEFT\"")(lua "hl.dsp.focus({ workspace = \"e-1\" })"){ locked = false; }];}
+                    {_args = [(lua "mod .. \" + RIGHT\"")(lua "hl.dsp.focus({ workspace = \"e+1\" })"){ locked = false; }];}
+                    {_args = [(lua "mod .. \" + L\"")(lua "hl.dsp.window.move({ workspace = \"e-1\" })"){ locked = false; }];}
+                    {_args = [(lua "mod .. \" + R\"")(lua "hl.dsp.window.move({ workspace = \"e+1\" })"){ locked = false; }];}
 
-                    "$MOD,1,workspace,1"
-                    "$MOD,2,workspace,2"
-                    "$MOD,3,workspace,3"
-                    "$MOD,4,workspace,4"
-                    "$MOD,5,workspace,5"
-                    "$MOD,6,workspace,6"
-                    "$MOD,7,workspace,7"
-                    "$MOD,8,workspace,8"
-
-                    "$MOD,N,exec,nautilus"
-                    "$MOD, R, exec, hyprctl reload"
-
-                    ",PRINT,exec,~/.config/hypr/scripts/slurp.sh"
-
-                    "$MOD,O,exec, hyprctl dispatch exec 'xdg-open http://localhost:8080'"
-
-                ];
-                binde = [
-                    ",XF86AudioRaiseVolume, exec, swayosd-client --output-volume raise"
-                    ",XF86AudioLowerVolume, exec, swayosd-client --output-volume lower"
-                    ",XF86AudioMute, exec, swayosd-client --output-volume mute-toggle"
-                    ",XF86MonBrightnessUp, exec, swayosd-client --brightness raise"
-		            ",XF86MonBrightnessDown, exec, swayosd-client --brightness lower"
-
-                    ",KEY_VOLUMEUP, exec, swayosd-client --output-volume raise"
-                    ",KEY_VOLUMEDOWN, exec, swayosd-client --output-volume lower"
-                    ",KEY_MUTE, exec, swayosd-client --output-volume mute-toggle"
-                    ",KEY_BRIGHTNESSUP, exec, swayosd-client --brightness raise"
-		            ",KEY_BRIGHTNESSDOWN, exec, swayosd-client --brightness lower"
-                    ",KEY_PROG2,exec,rog-control-center"
-                ];
-                bindm = [
-                    "$MOD, mouse:272, movewindow"
-                    "$MOD, mouse:273, resizewindow"
-                ];
-                layerrule = [
-                    "blur, logout_dialog"
-                    "blur, notifications"
-                    "ignorezero, notifications"
-                    "blur, rofi"
-                    "blur, mako"
-                ];
-                windowrulev2 = [
-                    "float, class:^(org.pulseaudio.pavucontrol)$" 
-                    "float, class:^(.blueman-manager-wrapped)$"
-                ];
-                misc = {
-                    "vrr" = 2;
-                };
+                    {_args = [(lua "\"XF86AudioRaiseVolume\"")(lua "hl.dsp.exec_cmd(\"swayosd-client --output-volume raise\")"){ locked = true; repeating = true;}];}
+                    {_args = [(lua "\"XF86AudioLowerVolume\"")(lua "hl.dsp.exec_cmd(\"swayosd-client --output-volume lower\")"){ locked = true; repeating = true;}];}
+                    {_args = [(lua "\"XF86AudioMute\"")(lua "hl.dsp.exec_cmd(\"swayosd-client --output-volume mute-toggle\")"){ locked = true; repeating = true;}];}
+                    {_args = [(lua "\"XF86MonBrightnessUp\"")(lua "hl.dsp.exec_cmd(\"swayosd-client --brightness raise\")"){ locked = true; repeating = true;}];}
+                    {_args = [(lua "\"XF86MonBrightnessDown\"")(lua "hl.dsp.exec_cmd(\"swayosd-client --brightness lower\")"){ locked = true; repeating = true;}];}
+                    #{_args = [(lua "\"KEY_VOLUMEUP\"")(lua "hl.dsp.exec_cmd(\"swayosd-client --brightness lower\")"){ locked = true; repeating = true;}];} 
+                    #{_args = [(lua "\"KEY_VOLUMEDOWN\"")(lua "hl.dsp.exec_cmd(\"swayosd-client --output-volume lower\")"){ locked = true; repeating = true;}];}
+                    #{_args = [(lua "\"KEY_MUTE\"")(lua "hl.dsp.exec_cmd(\"swayosd-client --output-volume mute-toggle\")"){ locked = true; repeating = true;}];}
+                    #{_args = [(lua "\"KEY_BRIGHTNESSUP\"")(lua "hl.dsp.exec_cmd(\"swayosd-client --brightness raise\")"){ locked = true; repeating = true;}];}
+                   # {_args = [(lua "\"KEY_PROG2\"")(lua "hl.dsp.exec_cmd(\"rog-control-center\")"){ locked = true; repeating = true;}];}
+                    {_args = [(lua "mod .. \"+ mouse:272\"")(lua "hl.dsp.window.drag()"){ locked = false; mouse= true;}];}
+                    {_args = [(lua "mod .. \"+ mouse:273\"")(lua "hl.dsp.window.resize()"){ locked = false; mouse= true;}];}
+                ];    
+                on = {
+                    _args = [
+                        "hyprland.start"
+                        (lua "function()\n  
+                           hl.exec_cmd(\"waybar\")\n
+                           hl.exec_cmd(\"swww-daemon\")\n
+                           hl.exec_cmd(\"systemctl --user start hyprpolkitagent\")\n
+                           hl.exec_cmd(\"wl-paste --watch cliphist store\")\n
+                           hl.exec_cmd(\"waypaper --restore\")\n
+                           hl.exec_cmd(\"mako\")\n
+                           hl.exec_cmd(\"hypridle\")\n
+                           hl.exec_cmd(\"swayosd-server -s ~/.config/swayosd/style.scss\")\n
+                           hl.exec_cmd(\"hyprctl setcursor WhiteSur-cursors 20\")\n
+                           hl.exec_cmd(\"dex -a\")\n
+                           hl.exec_cmd(\"hyprsunset\")\n
+                        \nend")
+                    ];
+                }; 
             };
             extraConfig = ''
-                env = XCURSOR_THEME,WhiteSur-cursors
-                env = XCURSOR_SIZE,28
-                env = HYPRCURSOR_THEME,WhiteSur-cursors
-                env = HYPRCURSOR_SIZE,20
-                env = AQ_NO_MODIFIERS,1
-                source = ~/.config/hypr/monitors.conf
-                source = ~/.config/hypr/workspaces.conf
+                hl.env("XCURSOR_THEME","WhiteSur-cursors")
+                hl.env("XCURSOR_SIZE","28")
+                hl.env("HYPRCURSOR_SIZE","20")
+                hl.env("AQ_NO_MODIFIERS","1")
+                require("monitors");
+                require("workspaces");
             '';
         };
     };

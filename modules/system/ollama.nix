@@ -7,9 +7,9 @@
             OLLAMA_KEEP_ALIVE = "5m";
         };
         package = pkgs.ollama-vulkan;
-        acceleration = "vulkan";
         loadModels = [
-            "codegemma:2b"
+            "qwen2.5-coder:1.5b"
+            "qwen3.5:4b"
         ];
     };
     /*services.nextjs-ollama-llm-ui = {
