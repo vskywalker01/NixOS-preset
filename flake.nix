@@ -8,8 +8,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-flatpak.url = "github:gmodena/nix-flatpak";
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    #nix-alien.url = "github:thiagokokada/nix-alien";
+
     ngrok.url = "github:ngrok/ngrok-nix";
     nvf = {
       url = "github:NotAShelf/nvf";
@@ -39,61 +38,50 @@
       system = "aarch64-linux";
       modules = [ 
         nix-flatpak.nixosModules.nix-flatpak
-        ngrok.nixosModules.ngrok
-        ./modules/hardware/hardware.nix
+        
+        ./modules/hardware
         ./configuration.nix
         ./modules/system/modules.nix
         home-manager.nixosModules.home-manager
         (
         {config,lib,...}:
         {
-          hardware.hardware-profile="RPI3";
-          services.openssh.enable=true;
-          services.flatpak.enable=false;
-          virtualisation.docker.enable=true;
+            hardware.raspberry.RPI3.enable=true;
+            services.openssh.enable=true;
+            services.flatpak.enable=false;
+            virtualisation.docker.enable=true;
           
-          users.users.vittorio.extraGroups = [ "dialout" "docker" "wheel"];
-          netbootxyz.enable = true;
-          octoprint.enable=true;
-          filebrowser.enable=true;
-          services.samba.enable=true;
-          services.xserver.desktopManager.gnome.enable=false;
+            users.users.vittorio.extraGroups = [ "dialout" "docker" "wheel"];
+            netbootxyz.enable = true;
+            octoprint.enable=true;
+            filebrowser.enable=true;
+            services.samba.enable=true;
+            services.xserver.desktopManager.gnome.enable=false;
 
-          #home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.vittorio = {
-            imports = [./modules/home/home.nix];
-            home.username = "vittorio";
-            home.homeDirectory = "/home/vittorio";
+            #home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.vittorio = {
+                imports = [./modules/home/home.nix];
+                home.username = "vittorio";
+                home.homeDirectory = "/home/vittorio";
 
-            applications.CADs=false;
-            applications.gaming=false;
-            applications.misc=false;
-            applications.videoEditing=false;
-            applications.programming=false;
-            applications.megasync=false;
+                applications.CADs=false;
+                applications.gaming=false;
+                applications.misc=false;
+                applications.videoEditing=false;
+                applications.programming=false;
+                applications.megasync=false;
 
-            home.stateVersion = "24.11";
-            programs.home-manager.enable = true;
-          };
-          home-manager.extraSpecialArgs = {
-            flake-inputs = inputs;
-            systemConfig = config;
-                        
-          };
-          nixpkgs.config.allowUnfree = true;
-          services.ngrok = {
-            enable = true;
-            extraConfigFiles = [
-              "/auth.yml"
-            ];
-            tunnels = {
-              ssh = {
-                proto = "tcp";
-                addr = 22;
-              };
+                home.stateVersion = "24.11";
+                programs.home-manager.enable = true;
             };
-          };
+            home-manager.extraSpecialArgs = {
+                flake-inputs = inputs;
+                systemConfig = config;
+                        
+            };
+            nixpkgs.config.allowUnfree = true;
+            
         }
         )
       ];
@@ -106,14 +94,14 @@
       system = "x86_64-linux";
       modules = [ 
         nix-flatpak.nixosModules.nix-flatpak
-        ./modules/hardware/hardware.nix
+        ./modules/hardware
         ./configuration.nix
         ./modules/system/modules.nix
         home-manager.nixosModules.home-manager
         (
         {config,lib,...}:
         {
-          hardware.hardware-profile="QEMU";
+          hardware.virtual.qemu.enable=true;
           services.openssh.enable=true;
           services.flatpak.enable=true;
           #services.xserver.desktopManager.gnome.enable=true;
@@ -152,15 +140,14 @@
       system = "x86_64-linux";
       modules = [ 
         nix-flatpak.nixosModules.nix-flatpak
-        nixos-hardware.nixosModules.asus-fa507nv
-        ./modules/hardware/hardware.nix
+        ./modules/hardware
         ./configuration.nix
         ./modules/system/modules.nix
         home-manager.nixosModules.home-manager
         (
         {config,lib,...}:
         {
-          hardware.hardware-profile="FA507NU";
+            hardware.asus.FA507NU.enable=true;
           virtualisation.virtualbox.host.enable=true;
           services.openssh.enable=true;
           virtualisation.libvirtd.enable=true;
@@ -168,8 +155,6 @@
           services.flatpak.enable=true;
           virtualisation.docker.enable=true;
           programs.steam.enable=true;
-          hardware.asus.battery.enableChargeUptoScript = true;
-          hardware.asus.battery.chargeUpto = 80;
           users.users.vittorio.extraGroups = ["networkmanager" "dialout" "docker" "audio" "realtime"];
           launchpad.enable=true;
           #services.desktopManager.gnome.enable=true;
@@ -207,14 +192,14 @@
       system = "x86_64-linux";
       modules = [ 
         nix-flatpak.nixosModules.nix-flatpak
-        ./modules/hardware/hardware.nix
+        ./modules/hardware
         ./configuration.nix
         ./modules/system/modules.nix
         home-manager.nixosModules.home-manager
         (
         {config,lib,...}:
         {
-          hardware.hardware-profile="R5";
+            hardware.asus.A320M-K.enable=true;
           virtualisation.virtualbox.host.enable=true;
           services.openssh.enable=true;
           virtualisation.libvirtd.enable=true;
@@ -261,14 +246,14 @@
       system = "x86_64-linux";
       modules = [ 
         nix-flatpak.nixosModules.nix-flatpak
-        ./modules/hardware/hardware.nix
+        ./modules/hardware
         ./configuration.nix
         ./modules/system/modules.nix
         home-manager.nixosModules.home-manager
         (
         {config,lib,...}:
         {
-          hardware.hardware-profile="I3";
+          hardware.toshiba.I3.enable=true;
           services.openssh.enable=true;
           services.flatpak.enable=true;
           virtualisation.docker.enable=true;
