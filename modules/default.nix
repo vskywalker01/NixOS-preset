@@ -30,6 +30,11 @@
         default = false;
         description = "Enable developing application stock";
     };
+    options.applications.ai.enable = lib.mkOption {
+        type = lib.types.bool; 
+        default = false;
+        description = "Enable ai application stock";
+    };
 
 
     imports = [

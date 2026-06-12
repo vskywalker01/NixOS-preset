@@ -1,8 +1,9 @@
 {config, pkgs, lib, inputs, ...}:
 {
-    config = lib.mkIf (config.services.ollama.enable) {
+    config = lib.mkIf (config.applications.ai.enable) {
         
         services.ollama = {
+            enable = true;
             environmentVariables = {
                 OLLAMA_CONTEXT_LENGTH = "8192";
                 OLLAMA_KEEP_ALIVE = "5m";

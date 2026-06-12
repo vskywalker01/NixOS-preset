@@ -1,6 +1,9 @@
 {config, lib, pkgs, ...}:
 
 {
+    imports = [
+        ./apps/stabilitymatrix.nix
+    ];
     config = {
         programs.appimage.enable = lib.mkDefault true;
         programs.appimage.binfmt = lib.mkDefault true;

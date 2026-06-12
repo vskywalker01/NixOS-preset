@@ -2,25 +2,40 @@
 
 {  
     config = lib.mkIf(systemConfig.applications.tools.enable) {
-        nixpkgs.config.allowUnfree = lib.mkForce true;
         home.packages = with pkgs; [
-            megasync    
+        #    pcloud
+            megacmd    
         ];
+        systemd.user.services.megacmd = {
+            Unit = {
+                Description = "MEGAcmd server";
+                After = [ "network-online.target" ];
+                Wants = [ "network-online.target" ];
+            };
 
-        home.file.".config/autostart/megasync.desktop".text = ''
-        [Desktop Entry]
-        Type=Application
-        Version=1.0
-        GenericName=File Synchronizer
-        Name=MEGAsync
-        Comment=Easy automated syncing between your computers and your MEGA cloud drive.
-        TryExec=megasync
-        Exec=sh -c "sleep 10 && megasync"
-        Icon=mega
-        Terminal=false
-        Categories=Network;System;
-        StartupNotify=false
-        X-GNOME-Autostart-Delay=60
-        '';
+            Service = {
+                ExecStart = "${pkgs.megacmd}/bin/mega-cmd-server";
+                Restart = "on-failure";
+            };
+
+            Install = {
+                WantedBy = [ "default.target" ];
+            };
+        };
+        #home.file.".config/autostart/megasync.desktop".text = ''
+        #[Desktop Entry]
+        #Type=Application
+        #Version=1.0
+        #GenericName=File Synchronizer
+        #Name=MEGAsync
+        #Comment=Easy automated syncing between your computers and your MEGA cloud drive.
+        #TryExec=megasync
+        #Exec=sh -c "sleep 10 && megasync"
+        #Icon=mega
+        #Terminal=false
+        #Categories=Network;System;
+        #StartupNotify=false
+        #X-GNOME-Autostart-Delay=60
+        #'';
   };
 }

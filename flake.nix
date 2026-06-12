@@ -96,8 +96,7 @@
                     virtualisation.virtualbox.host.enable=true;
                     virtualisation.libvirtd.enable=true;
     
-                    services.ollama.enable = true;
-
+                    applications.ai.enable = true;
                     programs.hyprland.enable=true;
  
                     applications.tools.enable = true;
@@ -128,7 +127,7 @@
                     virtualisation.virtualbox.host.enable=true;
                     virtualisation.libvirtd.enable=true;
     
-                    services.ollama.enable = true;
+                    applications.ai.enable = true;
 
                     programs.hyprland.enable=true;
  
