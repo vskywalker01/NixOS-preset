@@ -43,11 +43,12 @@ in {
         # ----- Boot/system settings -----
 
         #USe latest kernel and enable proprietary drivers
-        boot.kernelPackages = pkgs.linuxPackages_latest;
-        hardware.enableAllFirmware = true;
+        boot.kernelPackages = pkgs.linuxPackages_6_18;
+        boot.kernelParams = [ "amd_pstate=active" "usbcore.autosuspend=1"];
+        hardware.enableAllFirmware = false;
         hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
         services.fstrim.enable = lib.mkDefault true;        
-
+        services.irqbalance.enable = true;
         # Battery charge limit 
         systemd.services.battery-charge-threshold = {
             wantedBy = [
@@ -129,6 +130,7 @@ in {
             User = "root";
           };
         };
+        networking.networkmanager.wifi.powersave = true;
          
     };
 }
