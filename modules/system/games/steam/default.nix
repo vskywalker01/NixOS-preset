@@ -8,6 +8,7 @@
 
         #enabling steam 
         programs.steam = {
+            enable = true;
             remotePlay.openFirewall = lib.mkDefault true;
             dedicatedServer.openFirewall = lib.mkDefault true; 
             localNetworkGameTransfers.openFirewall = lib.mkDefault true; 
