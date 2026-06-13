@@ -6,7 +6,7 @@
         ''
         #!/usr/bin/env bash
 
-        grim -g "$(slurp -c '${config.theme.colors.borderHex}' -b '${config.theme.colors.bgBlurHex}' -w ${config.theme.colors.borderWidth})" - | wl-copy --type image/png
+        grim -g "$(slurp -c '${config.theme.colors.borderHex}' -b '#1919194d' -w ${config.theme.colors.borderWidth})" - | wl-copy --type image/png
         notify-send "Screenshot saved in the clipboard"
         '';
        executable = true;

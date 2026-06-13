@@ -111,6 +111,7 @@ in {
         wayland.windowManager.hyprland = {
             enable=true;
             package = null;
+            systemd.enable = false;
             portalPackage = null;
             configType = "lua";
             extraConfig = ''
@@ -138,7 +139,7 @@ in {
                         inactive_opacity = 1.0,
 
                         shadow = {
-                            enabled      = true,
+                            enabled      = false,
                             range        = 4,
                             render_power = 3,
                             color        = 0xee1a1a1a,
@@ -208,10 +209,11 @@ in {
                 hl.bind(mod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
                 hl.window_rule({match = {class = "^(kitty)$"}, opacity = 0.85})
-                hl.layer_rule({match = {class = "^(logout_dialog)$"}, blur = true})
-                hl.layer_rule({match = {class = "^(notifications)$"}, blur = true})
-                hl.layer_rule({match = {class = "^(rofi)$"}, blur = true})
-                hl.layer_rule({match = {class = "^(mako)$"}, blur = true})
+                hl.layer_rule({match = {class = "^(logout_dialog)$"}, blur = true, ignore_alpha = 0.4})
+                hl.layer_rule({match = {class = "^(notifications)$"}, blur = true, ignore_alpha = 0.4})
+                hl.layer_rule({match = {class = "^(rofi)$"}, blur = true, ignore_alpha = 0.4})
+                hl.layer_rule({match = {class = "^(mako)$"}, blur = true, ignore_alpha = 0.4})
+                hl.layer_rule({match = {class = "^(slurp)$"}, blur = true, ignore_alpha = 0.4})
                 hl.window_rule({match = {class = "^(org.pulseaudio.pavucontrol)$"}, float = true,})
                 hl.window_rule({match = {class = "^(.blueman-manager-wrapped)$"}, float = true,})
 

@@ -1,7 +1,7 @@
 {config, lib, pkgs,flake-inputs, systemConfig ? {} ,...}:
 {
   imports = [
-    ./megasync.nix
+    ./rclone.nix
     ./rog-control-center.nix
     ./arduino.nix
     ./blender.nix
