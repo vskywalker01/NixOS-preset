@@ -178,7 +178,7 @@ in {
                 hl.bind(mod .. "+ Q", hl.dsp.window.close())
                 hl.bind(mod .. "+ T", hl.dsp.exec_cmd("kitty"))
                 hl.bind(mod .. "+ N", hl.dsp.exec_cmd("nautilus"))
-                hl.bind(mod .. "+ D", hl.dsp.exec_cmd("rofi -show drun -theme=~/.config/rofi/drun.rasi"))
+                hl.bind(mod .. "+ D", hl.dsp.exec_cmd("rofi -show drun -theme=~/.config/rofi/drun.rasi -run-command \"uwsm app -- {cmd} \" "))
                 hl.bind(mod .. "+ O", hl.dsp.exec_cmd("xdg-open http://localhost:8080"))
 
                 hl.bind(mod .. "+ F", hl.dsp.window.fullscreen())
@@ -209,7 +209,8 @@ in {
                 hl.bind(mod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
                 hl.window_rule({match = {class = "^(kitty)$"}, opacity = 0.85})
-                hl.layer_rule({match = {class = "^(logout_dialog)$"}, blur = true, ignore_alpha = 0.4})
+                hl.layer_rule({match = {class = "^(logout_dialog)$"}, blur = true})
+                hl.layer_rule({match = {class = "^(wlogout)$"}, blur = true})
                 hl.layer_rule({match = {class = "^(notifications)$"}, blur = true, ignore_alpha = 0.4})
                 hl.layer_rule({match = {class = "^(rofi)$"}, blur = true, ignore_alpha = 0.4})
                 hl.layer_rule({match = {class = "^(mako)$"}, blur = true, ignore_alpha = 0.4})
@@ -219,17 +220,11 @@ in {
 
     
                 hl.on("hyprland.start", function () 
-                    hl.exec_cmd("waybar")
-                    hl.exec_cmd("swww-daemon")
                     hl.exec_cmd("systemctl --user start hyprpolkitagent")
                     hl.exec_cmd("wl-paste --watch cliphist store")
                     hl.exec_cmd("waypaper --restore")
-                    hl.exec_cmd("mako")
-                    hl.exec_cmd("hypridle")
-                    hl.exec_cmd("swayosd-server -s ~/.config/swayosd/style.scss")
                     hl.exec_cmd("hyprctl setcursor WhiteSur-cursors 20")
                     hl.exec_cmd("dex -a")
-                    hl.exec_cmd("hyprsunset")
                 end)
             '';
         };

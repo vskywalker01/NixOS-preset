@@ -41,5 +41,18 @@
             background: ${config.theme.colors.textNormal}; 
         }
         '';
+        systemd.user.services.swayosd-autorun = {
+          Install.WantedBy = [ "graphical-session.target" ];
+
+          Unit = {
+            PartOf = [ "graphical-session.target" ];
+            After = [ "graphical-session.target" ];
+          };
+
+          Service = {
+            ExecStart = "${pkgs.swayosd}/bin/swayosd-server -s ~/.config/swayosd/style.scss";
+            Restart = "on-failure";
+          };
+        };
     };
 }

@@ -22,6 +22,20 @@
         anchor=top-right 
         max-visible=3
         '';
+
+        systemd.user.services.mako = {
+            Install.WantedBy = [ "graphical-session.target" ];
+
+            Unit = {
+                PartOf = [ "graphical-session.target" ];
+                After = [ "graphical-session.target" ];
+            };
+
+            Service = {
+                ExecStart = "${pkgs.mako}/bin/mako";
+                Restart = "on-failure";
+            };
+        };
  
     };
 

@@ -35,7 +35,7 @@ in {
             pkgs.slurp
             pkgs.wl-clipboard
             pkgs.cliphist
-            pkgs.waybar
+            unstable.waybar
             pkgs.kitty
             pkgs.hyprpolkitagent
             pkgs.rofi

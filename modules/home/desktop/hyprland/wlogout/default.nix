@@ -25,7 +25,7 @@
                 }
                 {
                     label="logout";
-                    action="loginctl kill-user $(whoami)";
+                    action="loginctl terminate-session \"$XDG_SESSION_ID\" ";
                     text = "Logout";
                     keybind="e";
 
@@ -66,7 +66,7 @@
                     border-color: @border;
                     text-decoration-color: @textNormal;
                     color: @textNormal;
-                    background-color: @fgFocus;
+                    background-color: @bgBlur;
 
                 }
                 button {
