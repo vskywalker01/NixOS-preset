@@ -34,6 +34,7 @@ in {
 
         home.sessionVariables = {
             QT_QPA_PLATFORMTHEME = "gtk3";
+            TERMINAL = "kitty";
         };
 
         #assigning cursor theme
@@ -224,7 +225,7 @@ in {
                     hl.exec_cmd("wl-paste --watch cliphist store")
                     hl.exec_cmd("waypaper --restore")
                     hl.exec_cmd("hyprctl setcursor WhiteSur-cursors 20")
-                    hl.exec_cmd("dex -a")
+                    hl.exec_cmd("sleep 10 && dex -a")
                 end)
             '';
         };

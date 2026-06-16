@@ -25,7 +25,7 @@
                 }
                 {
                     label="logout";
-                    action="loginctl terminate-session \"$XDG_SESSION_ID\" ";
+                    action="uwsm stop";
                     text = "Logout";
                     keybind="e";
 

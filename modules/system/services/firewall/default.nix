@@ -1,14 +1,7 @@
 {config, lib, pkgs, ...}:
 {
-    imports = [
-        ./ollama
-        ./printers
-        ./samba
-        ./sshd
-        ./vpn
-    ];
     config = {
-        networking.firewall.enable = lib.default true;
+        networking.firewall.enable = lib.mkDefault true;
         
         #allowing ports used for DNS communicaiton for user network shares
         networking.firewall.allowedUDPPorts = [ 53 67 ];

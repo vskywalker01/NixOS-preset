@@ -2,7 +2,7 @@
 {
   imports = [
     ./rclone.nix
-    ./rog-control-center.nix
+    #./rog-control-center.nix
     ./arduino.nix
     ./blender.nix
     ./bottles.nix
@@ -22,7 +22,7 @@
     ./r2modman.nix
     ./rnote.nix
     ./termius.nix
-    ./tlauncher.nix
+    #./tlauncher.nix
     ./woeusb-ng.nix
     ./zoom.nix
     ./obs-studio.nix

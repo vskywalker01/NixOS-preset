@@ -6,5 +6,6 @@
         ./samba
         ./sshd
         ./vpn
+        ./firewall
     ];
 }

@@ -7,6 +7,7 @@ in {
   config = lib.mkIf (config.services.desktopManager.gnome.enable || config.programs.hyprland.enable) {
         #disabling gdm to avoid conflicts
         services.displayManager.gdm.enable = lib.mkForce false;
+        services.xserver.displayManager.lightdm.enable = lib.mkForce false;
 
         services.displayManager.sddm = {
             enable = lib.mkDefault true;
