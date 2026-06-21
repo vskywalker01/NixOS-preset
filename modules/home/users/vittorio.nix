@@ -3,7 +3,13 @@
     imports = [
         inputs.home-manager.nixosModules.home-manager
     ];
-    users.users.vittorio.extraGroups = [ "dialout" "docker" "audio" "realtime" "network" "systemd-journal" "networkmanager"];
+    users.users.vittorio = {
+        isNormalUser = true;
+        description = "vittorio";
+        extraGroups = [ "networkmanager" "wheel" "dialout" "docker" "audio" "realtime" "network" "systemd-journal"];
+    };
+    nix.settings.trusted-users = [ "vittorio" ];
+
     home-manager.useUserPackages = true;
     home-manager.users.vittorio = {
         imports = [

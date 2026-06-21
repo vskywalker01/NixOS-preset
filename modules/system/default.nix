@@ -10,6 +10,10 @@
 ];
 
   config = {
-    nixpkgs.config.allowUnfree = lib.mkForce true;
-  };
+        nixpkgs.config.allowUnfree = lib.mkForce true;
+        environment.systemPackages = with pkgs; [
+            git
+            nano
+        ];
+    };
 }

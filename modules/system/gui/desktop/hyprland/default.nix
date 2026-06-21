@@ -5,7 +5,7 @@ in {
   config = lib.mkIf (config.programs.hyprland.enable) {
         programs.firefox.package = pkgs.firefox-bin;
    
-        #enabling xwayland for x11 support 
+        #enabling xwayland for x11 support
         programs.xwayland.enable = true;
         services.xserver.enable = lib.mkDefault true;
 
@@ -27,7 +27,8 @@ in {
         hardware.uinput.enable = true;
         boot.kernelModules = [ "uinput" ];
         hardware.opentabletdriver.blacklistedKernelModules = [ "hid-uclogic" "wacom" ];
-
+        security.rtkit.enable = true;
+        programs.firefox.enable = true;
         #required packages
         environment.systemPackages = [
             pkgs.libsForQt5.qt5ct
@@ -74,9 +75,10 @@ in {
             pkgs.file-roller
             pkgs.libinput
             pkgs.moonlight-qt
-            pkgs.easyeffects
             pkgs.vlc
-        ];   
+            unstable.easyeffects
+        ];  
+
         environment.pathsToLink = [ "share/thumbnailers" ];
         
 

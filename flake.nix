@@ -18,6 +18,10 @@
             url = "github:uiriansan/SilentSDDM";
             inputs.nixpkgs.follows = "nixpkgs";
         };
+        lanzaboote = {
+            url = "github:nix-community/lanzaboote/v1.0.0";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
     };
     nixConfig = {
         extra-substituters = [
@@ -30,7 +34,7 @@
             "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="    
         ];
     };
-    outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, nix-flatpak, nixos-hardware,cachix,ngrok,nvf,silentSDDM}: {
+    outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, nix-flatpak, nixos-hardware,cachix,ngrok,nvf,silentSDDM, lanzaboote}: {
         nixosConfigurations.skywalker-pi3 = nixpkgs.lib.nixosSystem {
             specialArgs = {
                 inherit inputs;

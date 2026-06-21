@@ -20,5 +20,11 @@
             };
             wireplumber.enable = true;
         };
+        environment.systemPackages = with pkgs; [
+            pipewire.jack
+        ];
+        environment.sessionVariables = {
+            JACK_DEFAULT_SERVER = "pipewire";
+        };
     };
 }

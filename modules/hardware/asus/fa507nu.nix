@@ -43,8 +43,16 @@ in {
         # ----- Boot/system settings -----
 
         #USe latest kernel and enable proprietary drivers
-        boot.kernelPackages = pkgs.linuxPackages_latest;
-        boot.kernelParams = [ "amd_pstate=active" "usbcore.autosuspend=1"];
+        boot = {
+            loader = { 
+                systemd-boot.enable = false;
+                efi.canTouchEfiVariables = true;
+            };
+            lanzaboote.enable = true;
+            kernelPackages = pkgs.linuxPackages_latest;
+            kernelParams = [ "amd_pstate=active" "usbcore.autosuspend=1"];
+        };
+
         hardware.enableAllFirmware = false;
         hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
         services.fstrim.enable = lib.mkDefault true;        

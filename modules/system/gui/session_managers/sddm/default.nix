@@ -1,7 +1,13 @@
 {config, lib, pkgs,inputs, ...}:
 let
    sddm-theme = inputs.silentSDDM.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
-        theme = "catppuccin-mocha"; 
+        theme = "nord";
+        theme-overrides = {
+            lockscreen = {
+
+                background-color = "#191919";   
+            };
+        };
     };
 in {
   config = lib.mkIf (config.services.desktopManager.gnome.enable || config.programs.hyprland.enable) {
@@ -21,9 +27,6 @@ in {
                 General = {
                     GreeterEnvironment = "QML2_IMPORT_PATH=${sddm-theme}/share/sddm/themes/${sddm-theme.pname}/components/,QT_IM_MODULE=qtvirtualkeyboard";
                     InputMethod = "qtvirtualkeyboard";
-                };
-                LockScreen = {
-                    background-color = "#191919";
                 };
                 Wayland = {
                     EnableHiDPI = true;

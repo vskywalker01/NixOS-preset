@@ -18,10 +18,19 @@ in {
         # ----- Boot/system settings -----
 
         #USe latest kernel and enable proprietary drivers
-        boot.kernelPackages = pkgs.linuxPackages_6_18;
-        boot.extraModulePackages = with config.boot.kernelPackages; [ it87 ];
-        boot.kernelParams = [ "acpi_enforce_resources=lax" ];
-        boot.kernelModules = [ "coretemp" "it87" ];
+
+        boot = {
+            loader = { 
+                systemd-boot.enable = false;
+                efi.canTouchEfiVariables = true;
+            };
+            lanzaboote.enable = true;
+            kernelPackages = pkgs.linuxPackages_6_18;
+            extraModulePackages = with config.boot.kernelPackages; [ it87 ];
+            kernelParams = [ "acpi_enforce_resources=lax" ];
+            kernelModules = [ "coretemp" "it87" ];
+
+        };
         hardware.cpu.amd.updateMicrocode = config.hardware.enableRedistributableFirmware;
 
         # ----- Memory options -----

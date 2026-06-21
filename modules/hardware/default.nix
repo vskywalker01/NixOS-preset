@@ -5,6 +5,7 @@
         ./raspberry
         ./virtual
         ./toshiba
+        ./common
     ];
 
     #Common options

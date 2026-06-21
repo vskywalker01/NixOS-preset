@@ -3,13 +3,11 @@
 {
     config = lib.mkIf (config.applications.video-editing.enable && config.services.pipewire.enable) {
         environment.systemPackages = with pkgs; [
-            ardour
+            ardour_8
             drumkv1
             samplv1
-            synthv1
-            jack2
-            a2jmidid
             alsa-utils
-        ];    
+        ]; 
+        
     };
 }

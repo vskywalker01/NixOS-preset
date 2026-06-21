@@ -11,7 +11,9 @@ in {
         
         #enable printing service
         services.printing.enable = lib.mkDefault true;
-        
+        security.rtkit.enable = true;
+        programs.firefox.enable = true;
+
         #excluding useless packages
         environment.gnome.excludePackages = with pkgs; [
             orca
