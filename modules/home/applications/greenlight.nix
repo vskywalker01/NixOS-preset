@@ -1,0 +1,8 @@
+{config, lib, pkgs,flake-inputs, systemConfig ? {} ,...}:
+{
+    config = lib.mkIf(systemConfig.applications.gaming.enable){
+        services.flatpak.packages = [
+            "io.github.unknownskl.greenlight"
+        ];
+    };
+}
