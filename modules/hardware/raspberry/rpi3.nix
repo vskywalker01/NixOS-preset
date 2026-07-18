@@ -119,6 +119,23 @@ in {
                 "create mask" = "0644";
                 "directory mask" = "0755";
             };
-        }; 
+        };
+        services.tailscale = {
+            enable = true;
+            useRoutingFeatures = "server";
+            extraUpFlags = [
+                "--advertise-routes=192.168.1.0/24" 
+            ];
+        };
+        services.networkd-dispatcher = {
+            enable = true;
+            rules."50-tailscale-optimizations" = {
+                onState = [ "routable" ];
+                script = ''
+                    ${pkgs.ethtool}/bin/ethtool -K eth0 rx-udp-gro-forwarding on rx-gro-list off
+                '';
+            };
+        };
+
     };
 }
