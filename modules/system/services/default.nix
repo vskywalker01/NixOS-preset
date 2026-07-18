@@ -7,5 +7,6 @@
         ./sshd
         ./vpn
         ./firewall
+        ./tailscale
     ];
 }

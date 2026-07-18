@@ -34,6 +34,7 @@ sudo cp flake.nix /etc/nixos
 
 if [[ "$UPGRADE" == false ]]; then
     sudo cp flake.lock /etc/nixos
+    sudo chown root:root /etc/nixos/flake.lock
 fi 
 
 sudo nixos-rebuild switch 
