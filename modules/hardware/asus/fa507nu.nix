@@ -30,7 +30,7 @@ in {
     imports = [
         ./asusd
     ];
-
+    
     config = lib.mkIf (config.hardware.asus.FA507NU.enable) {
         # ----- Addition packages ------
         environment.systemPackages = [
@@ -138,6 +138,7 @@ in {
 
         # ----- Thermal control ------
         # Set limit temperature to avoid CPU overheating using ryzenadj
+        services.asusd.enable = true;
         systemd.services.ryzenadj = {
           description = "RyzenAdj";
           after = [ "sysinit.target" ]; 
