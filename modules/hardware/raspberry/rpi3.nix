@@ -148,5 +148,6 @@ in {
         };
         security.acme.acceptTerms = true;
         networking.firewall.allowedTCPPorts = [ 80 443 ];
+        services.pihole-ftl.enable = true;
     };
 }

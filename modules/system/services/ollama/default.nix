@@ -19,6 +19,8 @@
 
         #enabling open-webui for chatbots
         services.open-webui = {
+
+            
             enable = true;
             environment = {
                 ENABLE_WEB_SEARCH = "True";
