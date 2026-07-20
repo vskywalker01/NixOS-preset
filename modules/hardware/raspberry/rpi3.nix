@@ -84,7 +84,6 @@ in {
             settings = {
                 # Range DHCP + lease time
                 dhcp-range = "proxy";
-                bind-interfaces = true;
 
                 "dhcp-match" = [
                     "set:bios,60,PXEClient:Arch:00000"
@@ -146,7 +145,7 @@ in {
                 enableACME = true;
                 forceSSL = true;
                 locations."/openwebui/" = {
-                    proxyPass = "http://192.168.1.250:8080";
+                    proxyPass = "http://192.168.1.250:8080/";
                     proxyWebsockets = true;
                 };
             };
