@@ -104,6 +104,10 @@ in {
                     "tag:efi64-2,netboot.xyz.efi,,192.168.1.254"
                     "tag:efi64-3,netboot.xyz-arm64.efi,,192.168.1.254"
                 ];
+
+                address = [
+                    "/r5.openwebui.com/192.168.1.254"
+                ];
             };
         };
     
@@ -148,6 +152,5 @@ in {
         };
         security.acme.acceptTerms = true;
         networking.firewall.allowedTCPPorts = [ 80 443 ];
-        services.pihole-ftl.enable = true;
     };
 }
