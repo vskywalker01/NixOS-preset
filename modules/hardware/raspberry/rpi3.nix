@@ -83,13 +83,8 @@ in {
             enable = true;
             settings = {
                 # Range DHCP + lease time
-                dhcp-range = "192.168.1.100,192.168.1.200,255.255.255.0,12h";
-
-                # Gateway
-                dhcp-option = [
-                    "option:router,192.168.1.1"
-                    "option:dns-server,8.8.8.8,8.8.4.4"
-                ];
+                dhcp-range = "proxy";
+                bind-interfaces = true;
 
                 "dhcp-match" = [
                     "set:bios,60,PXEClient:Arch:00000"
@@ -106,7 +101,13 @@ in {
                 ];
 
                 address = [
-                    "/r5.openwebui.com/192.168.1.254"
+                    "/skywalker-pi3/127.0.0.1"
+                ];
+
+                server = [
+                    "192.168.1.1"
+                    "8.8.8.8"
+                    "8.8.4.4"
                 ];
             };
         };
@@ -141,10 +142,10 @@ in {
             enable = true;
             recommendedProxySettings = true;
             recommendedTlsSettings = true;
-            virtualHosts."r5.openwebui.com" =  {
+            virtualHosts."skywalker-pi3" =  {
                 enableACME = true;
                 forceSSL = true;
-                locations."/" = {
+                locations."/openwebui/" = {
                     proxyPass = "http://192.168.1.250:8080";
                     proxyWebsockets = true;
                 };
