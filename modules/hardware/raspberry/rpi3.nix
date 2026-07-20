@@ -123,9 +123,6 @@ in {
         services.tailscale = {
             enable = true;
             useRoutingFeatures = "server";
-            extraUpFlags = [
-                "--advertise-routes=192.168.1.0/24" 
-            ];
         };
         services.networkd-dispatcher = {
             enable = true;
@@ -136,6 +133,19 @@ in {
                 '';
             };
         };
-
+        services.nginx = {
+            enable = true;
+            recommendedProxySettings = true;
+            recommendedTlsSettings = true;
+            virtualHosts."r5.openwebui.com" =  {
+                enableACME = true;
+                forceSSL = true;
+                locations."/" = {
+                    proxyPass = "http://192.168.1.250:8080";
+                    proxyWebsockets = true;
+                };
+            };
+        };
+        networking.firewall.allowedTCPPorts = [ 80 443 ];
     };
 }
