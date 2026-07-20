@@ -101,7 +101,7 @@ in {
                 ];
 
                 address = [
-                    "/skywalker-pi3/127.0.0.1"
+                    "/skywalker-pi3/192.168.1.254"
                 ];
 
                 server = [
