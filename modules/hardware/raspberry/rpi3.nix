@@ -100,11 +100,10 @@ in {
                 ];
 
                 address = [
-                    "/skywalker-pi3/192.168.1.254"
+                    "/openwebui.skywalker.home/192.168.1.254"
                 ];
 
                 server = [
-                    "192.168.1.1"
                     "8.8.8.8"
                     "8.8.4.4"
                 ];
@@ -141,11 +140,11 @@ in {
             enable = true;
             recommendedProxySettings = true;
             recommendedTlsSettings = true;
-            virtualHosts."skywalker-pi3" =  {
+            virtualHosts."openwebui.skywalker.home" =  {
                 enableACME = true;
                 forceSSL = true;
-                locations."/openwebui/" = {
-                    proxyPass = "http://192.168.1.250:8080/";
+                locations."/" = {
+                    proxyPass = "http://192.168.1.250:8080";
                     proxyWebsockets = true;
                 };
             };
