@@ -83,7 +83,7 @@ in {
             enable = true;
             settings = {
                 # Range DHCP + lease time
-                dhcp-range = "proxy";
+                dhcp-range = "192.168.1.0,proxy";
 
                 "dhcp-match" = [
                     "set:bios,60,PXEClient:Arch:00000"
@@ -136,20 +136,35 @@ in {
                 '';
             };
         };
-        services.nginx = {
+        services.caddy = {
             enable = true;
-            recommendedProxySettings = true;
-            recommendedTlsSettings = true;
-            virtualHosts."openwebui.skywalker.home" =  {
-                enableACME = true;
-                forceSSL = true;
-                locations."/" = {
-                    proxyPass = "http://192.168.1.250:8080";
-                    proxyWebsockets = true;
-                };
+            package = pkgs.caddy.withPlugins {
+                plugins = [
+                    "github.com/dulli/caddy-wol@v1.0.0"
+                ];
+                hash = "sha256-vzGs2nuEDQ80tvq8Nl37aDhVU0PBscWwbWy+gTdbPug=";
             };
+            globalConfig = ''
+                order wake_on_lan before respond
+            '';
+            virtualHosts."openwebui.skywalker.home".extraConfig = ''
+                tls internal
+                reverse_proxy 192.168.1.250:8080
+                    handle_errors {
+                        @502 expression {err.status_code} == 502
+
+                        handle @502 {
+                            wake_on_lan CE:F9:52:E5:E0:DF
+
+                            reverse_proxy 192.168.1.250:8080 {
+                            lb_try_duration 120s
+                        }
+                    }
+                }
+            '';
         };
-        security.acme.acceptTerms = true;
+        services.tailscale.permitCertUid = "caddy";
+
         networking.firewall.allowedTCPPorts = [ 80 443 ];
     };
 }
