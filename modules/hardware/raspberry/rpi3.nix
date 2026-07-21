@@ -126,6 +126,9 @@ in {
         services.tailscale = {
             enable = true;
             useRoutingFeatures = "server";
+            extraUpFlags = [
+                "--advertise-routes=192.168.1.254/32" # For subnet routers
+            ];
         };
         services.networkd-dispatcher = {
             enable = true;
