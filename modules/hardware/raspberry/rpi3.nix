@@ -159,7 +159,7 @@ in {
                         @502 expression {err.status_code} == 502
 
                         handle @502 {
-                            wake_on_lan CE:F9:52:E5:E0:DF
+                            wake_on_lan 40:B0:76:D9:79:E1
 
                             reverse_proxy 192.168.1.250:8080 {
                             lb_try_duration 120s
