@@ -1,6 +1,10 @@
 {config, lib, pkgs, inputs, ...}:
 let 
   unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+  hibernateEnvironment = {
+        HIBERNATE_SECONDS = "3600";
+        HIBERNATE_LOCK = "/var/run/autohibernate.lock";
+  };
 in {
   config = lib.mkIf (config.programs.hyprland.enable) {
         programs.firefox.package = pkgs.firefox-bin;
@@ -33,15 +37,45 @@ in {
         services.logind = {
             enable = true; 
             settings.Login = {
-               IdleAction="suspend-then-hibernate";
+               IdleAction="suspend";
                IdleActionSec="20min";
             };
         };
         systemd.sleep.settings.Sleep = {
-            HibernateDelaySec = "1h";
             SuspendState = "mem";
         };
         boot.kernelParams = ["mem_sleep_default=deep"];
+
+        systemd.services."awake-after-suspend-for-a-time" = {
+            description = "Sets up the suspend so that it'll wake for hibernation";
+            wantedBy = [ "suspend.target" ];
+            before = [ "systemd-suspend.service" ];
+            environment = hibernateEnvironment;
+            script = ''
+              curtime=$(date +%s)
+              echo "$curtime $1" >> /tmp/autohibernate.log
+              echo "$curtime" > $HIBERNATE_LOCK
+              ${pkgs.utillinux}/bin/rtcwake -m no -s $HIBERNATE_SECONDS
+            '';
+            serviceConfig.Type = "simple";
+        };
+        systemd.services."hibernate-after-recovery" = {
+            description = "Hibernates after a suspend recovery due to timeout";
+            wantedBy = [ "suspend.target" ];
+            after = [ "systemd-suspend.service" ];
+            environment = hibernateEnvironment;
+            script = ''
+              curtime=$(date +%s)
+              sustime=$(cat $HIBERNATE_LOCK)
+              rm $HIBERNATE_LOCK
+              if [ $(($curtime - $sustime)) -ge $HIBERNATE_SECONDS ] ; then
+                systemctl hibernate
+              else
+                ${pkgs.utillinux}/bin/rtcwake -m no -s 1
+              fi
+            '';
+            serviceConfig.Type = "simple";
+        };
 
         #required packages
         environment.systemPackages = [

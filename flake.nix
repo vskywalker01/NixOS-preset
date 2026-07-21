@@ -51,9 +51,8 @@
                     services.flatpak.enable=false;
                     virtualisation.docker.enable=true;
           
-                    netbootxyz.enable = true;
-                    octoprint.enable=true;
-                    filebrowser.enable=true;
+                    services.octoprint.enable=true;
+                    services.filebrowser.enable=true;
                     services.samba.enable=true;
             
                 })

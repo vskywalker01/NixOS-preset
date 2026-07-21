@@ -104,7 +104,7 @@ in {
                 address = [
                     "/openwebui.skywalker.home/192.168.1.254"
                     "/octoprint.skywalker.home/192.168.1.254"
-                    "/files.skywalker.home/192.168.2.254"
+                    "/files.skywalker.home/192.168.1.254"
                 ];
 
                 server = [
@@ -179,9 +179,9 @@ in {
             '';
         };
         services.filebrowser = {
-            enable = true; 
             settings = {
                 root = "/srv/hdd";
+                address = "127.0.0.1";
                 port = 5001;
             };
         };
