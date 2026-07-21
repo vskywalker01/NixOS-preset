@@ -16,6 +16,8 @@ in {
         environment.systemPackages = with pkgs; [
             libraspberrypi
             hdparm
+            wakeonlan 
+            wol 
         ];
 
         # ----- Boot/system settings -----
