@@ -15,5 +15,7 @@
             allowedTCPPorts = [ 22 ];
             checkReversePath = "loose";
         };
+        services.tailscale.permitCertUid = lib.mkIf (config.services.caddy.enable) "caddy";
+
     };
 }

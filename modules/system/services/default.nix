@@ -8,5 +8,6 @@
         ./vpn
         ./firewall
         ./tailscale
+        ./octoprint
     ];
 }

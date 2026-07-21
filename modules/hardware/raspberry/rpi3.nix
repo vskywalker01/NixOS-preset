@@ -103,6 +103,8 @@ in {
 
                 address = [
                     "/openwebui.skywalker.home/192.168.1.254"
+                    "/octoprint.skywalker.home/192.168.1.254"
+                    "/files.skywalker.home/192.168.2.254"
                 ];
 
                 server = [
@@ -167,9 +169,23 @@ in {
                     }
                 }
             '';
+            virtualHosts."octoprint.skywalker.home".extraConfig = ''
+                tls internal
+                reverse_proxy 127.0.0.1:5000
+            '';
+            virtualHosts."files.skywalker.home".extraConfig = ''
+                tls internal
+                reverse_proxy 127.0.0.1:5001
+            '';
         };
-        services.tailscale.permitCertUid = "caddy";
-
+        services.filebrowser = {
+            enable = true; 
+            settings = {
+                root = "/srv/hdd";
+                port = 5001;
+            };
+        };
+        
         networking.firewall.allowedTCPPorts = [ 80 443 ];
     };
 }

@@ -2,9 +2,6 @@
 
 {
     imports = [
-        ./containers/netbootxyz.nix
-        ./containers/octoprint.nix
-        ./containers/filebrowser.nix
     ];
     config = lib.mkIf (config.virtualisation.docker.enable) {
             

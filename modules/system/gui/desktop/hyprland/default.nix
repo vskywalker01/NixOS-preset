@@ -29,6 +29,20 @@ in {
         hardware.opentabletdriver.blacklistedKernelModules = [ "hid-uclogic" "wacom" ];
         security.rtkit.enable = true;
         programs.firefox.enable = true;
+        
+        services.logind = {
+            enable = true; 
+            settings.Login = {
+               IdleAction="suspend-then-hibernate";
+               IdleActionSec="20min";
+            };
+        };
+        systemd.sleep.settings.Sleep = {
+            HibernateDelaySec = "1h";
+            SuspendState = "mem";
+        };
+        boot.kernelParams = ["mem_sleep_default=deep"];
+
         #required packages
         environment.systemPackages = [
             pkgs.libsForQt5.qt5ct

@@ -50,8 +50,10 @@ in {
             };
             lanzaboote.enable = true;
             kernelPackages = pkgs.linuxPackages_latest;
-            kernelParams = [ "amd_pstate=active" "usbcore.autosuspend=1"];
+            kernelParams = ["amd_pstate=active" "usbcore.autosuspend=1"];
         };
+
+        powerManagement.enable = true;
 
         hardware.enableAllFirmware = false;
         hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
