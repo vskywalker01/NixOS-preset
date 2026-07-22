@@ -1,6 +1,6 @@
 {config, lib, pkgs, ...}:
 let 
-    server-port = 5001; 
+    server-port = 5000; 
 in {
     options.services.octoprint.proxy = {
         enable = lib.mkOption {

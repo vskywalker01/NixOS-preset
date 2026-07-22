@@ -32,7 +32,6 @@ in {
         services.ollama = lib.mkIf (config.applications.ai.enable) {
             enable = true;
             environmentVariables = {
-                OLLAMA_CONTEXT_LENGTH = "8192";
                 OLLAMA_KEEP_ALIVE = "5m";
             };
 

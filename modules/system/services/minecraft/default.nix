@@ -56,13 +56,12 @@ in {
             etc."lazymc/config.toml".text = lib.mkIf (config.services.minecraft-server.proxy.enable) 
             ''
                 [server]
+                directory = "."
+                command = "${wakecommand}" 
                 address = "${config.services.minecraft-server.proxy.server}:${toString server-port}"
 
-                [proxy]
+                [public]
                 bind = "0.0.0.0:25565"
-
-                [start]
-                command = "${wakecommand}" 
                 
                 [motd]
                 sleeping = "Sfinfirinx poskys -> no"
@@ -74,9 +73,26 @@ in {
                 methods = [   
                     "hold",
                 ]
-
+                
+                [join.kick]
+                
                 [join.hold]
                 timeout = 25
+                
+                [join.forward]
+
+                [join.lobby]
+
+                [lockout]
+
+                [time]
+
+                [rcon]
+
+                [advanced]
+
+                [config]
+                version = "0.2.11"
             '';
         };
         systemd.services.minecraft-suspend-lock = lib.mkIf (config.services.minecraft-server.enable) {
