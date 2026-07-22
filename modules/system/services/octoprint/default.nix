@@ -2,8 +2,8 @@
 
 {
     config = lib.mkIf (config.services.octoprint.enable){
-        services.octoprint.plugins = [
-            
-        ];
+       services.octoprint.plugins = plugins: [
+            plugins.themeify 
+       ];
     };
 }

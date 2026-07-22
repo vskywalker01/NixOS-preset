@@ -49,7 +49,7 @@
                     hardware.raspberry.RPI3.enable=true;
                     services.openssh.enable=true;
                     services.flatpak.enable=false;
-                    virtualisation.docker.enable=true;
+                    #virtualisation.docker.enable=true;
           
                     services.octoprint.enable=true;
                     services.filebrowser.enable=true;
