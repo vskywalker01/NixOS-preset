@@ -9,5 +9,9 @@
         ./firewall
         ./tailscale
         ./octoprint
+        ./filebrowser
+        ./haproxy
+        ./minecraft
+        ./caddy
     ];
 }

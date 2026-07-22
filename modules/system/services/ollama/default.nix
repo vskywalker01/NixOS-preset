@@ -1,8 +1,35 @@
 {config, pkgs, lib, inputs, ...}:
-{
-    config = lib.mkIf (config.applications.ai.enable) {
-        
-        services.ollama = {
+let 
+    server-port = 5001; 
+in {
+    options.services.open-webui.proxy = {
+        enable = lib.mkOption {
+            type = lib.types.bool; 
+            default = false;
+            description = "Enable open-webui reverse proxy";
+        };
+        server = lib.mkOption {
+            type = lib.types.str; 
+            default = "127.0.0.1";
+            description = "ip address of the server";
+        };
+        domain = lib.mkOption {
+            type = lib.types.str; 
+            default = "openwebui.skywalker.home";
+        };
+        enableWol = lib.mkOption {
+            type = lib.types.bool; 
+            default = false; 
+            description = "wake on lan when required";
+        };
+        server-mac = lib.mkOption {
+            type = lib.types.str; 
+            default = "00:00:00:00:00:00";
+            description = "mac address of the server (for wake on lan)";
+        };
+    };
+    config = {
+        services.ollama = lib.mkIf (config.applications.ai.enable) {
             enable = true;
             environmentVariables = {
                 OLLAMA_CONTEXT_LENGTH = "8192";
@@ -18,7 +45,7 @@
         };
 
         #enabling open-webui for chatbots
-        services.open-webui = {
+        services.open-webui = lib.mkIf (config.applications.ai.enable){
 
             
             enable = true;
@@ -33,7 +60,7 @@
 
         #automatic unload of ollama models before the logout. 
         #This service fixes problems encoutered with supergfxctl during the logout process for changing GPU profile
-        systemd.user.services.ollama-unload = {
+        systemd.user.services.ollama-unload = lib.mkIf (config.applications.ai.enable){
             description = "Unload Ollama models on logout";
             serviceConfig = {
                 Type = "oneshot";
@@ -43,7 +70,7 @@
         };
 
 
-        services.searx = {
+        services.searx = lib.mkIf (config.applications.ai.enable){
             enable = true;
             redisCreateLocally = true;
             settings = {
@@ -62,5 +89,24 @@
                 };
             };
         };
+        services.caddy = lib.mkIf (config.services.open-webui.proxy.enable) {
+            enable = true;
+            virtualHosts."${config.services.open-webui.proxy.domain}".extraConfig = ''
+                tls internal
+                reverse_proxy ${config.services.open-webui.proxy.server}:5001
+            ''
+            + lib.optionalString config.services.open-webui.proxy.enableWol ''
+                handle_errors {
+                    @502 expression {err.status_code} == 502
+                    handle @502 {
+                        wake_on_lan ${config.services.open-webui.proxy.server-mac}
+                        reverse_proxy ${config.services.open-webui.proxy.server}:${server-port} {
+                            lb_try_duration 120s
+                        }
+                    }
+                }
+            '';
+        };
+
     };
 }

@@ -57,19 +57,6 @@ in {
         };
     
 
-        # ----- Network settings -----
-        services.ngrok = {
-            enable = true;
-            extraConfigFiles = [
-                "/auth.yml" #place the auth file manually in the root folder
-            ];
-            tunnels = {
-                ssh = {
-                    proto = "tcp";
-                    addr = 22;
-                };
-            };
-        };
         networking.interfaces.eth0 = {
             useDHCP = false;
             ipv4.addresses = [{
@@ -85,9 +72,7 @@ in {
             enable = true;
             settings = {
                 address = [
-                    "/openwebui.skywalker.home/192.168.1.254"
-                    "/octoprint.skywalker.home/192.168.1.254"
-                    "/files.skywalker.home/192.168.1.254"
+                    "/skywalker.home/192.168.1.254"
                 ];
 
                 server = [
@@ -126,48 +111,7 @@ in {
                 '';
             };
         };
-        services.caddy = {
-            enable = true;
-            package = pkgs.caddy.withPlugins {
-                plugins = [
-                    "github.com/dulli/caddy-wol@v1.0.0"
-                ];
-                hash = "sha256-vzGs2nuEDQ80tvq8Nl37aDhVU0PBscWwbWy+gTdbPug=";
-            };
-            globalConfig = ''
-                order wake_on_lan before respond
-            '';
-            virtualHosts."openwebui.skywalker.home".extraConfig = ''
-                tls internal
-                reverse_proxy 192.168.1.250:8080
-                    handle_errors {
-                        @502 expression {err.status_code} == 502
-
-                        handle @502 {
-                            wake_on_lan 40:B0:76:D9:79:E1
-
-                            reverse_proxy 192.168.1.250:8080 {
-                            lb_try_duration 120s
-                        }
-                    }
-                }
-            '';
-            virtualHosts."octoprint.skywalker.home".extraConfig = ''
-                tls internal
-                reverse_proxy 127.0.0.1:5000
-            '';
-            virtualHosts."files.skywalker.home".extraConfig = ''
-                tls internal
-                reverse_proxy 127.0.0.1:5001
-            '';
-        };
-        services.filebrowser = {
-            settings = {
-                root = "/srv/hdd";
-                address = "127.0.0.1";
-                port = 5001;
-            };
-        };
+        services.filebrowser.settings.root = "/srv/hdd";
         
         networking.firewall.allowedTCPPorts = [ 80 443 53];
         networking.firewall.allowedUDPPorts = [53];

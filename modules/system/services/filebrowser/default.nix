@@ -1,12 +1,12 @@
 {config, lib, pkgs, ...}:
 let 
-    server-port = 5000; 
+    server-port = 5001; 
 in {
-    options.services.octoprint.proxy = {
+    options.services.filebrowser.proxy = {
         enable = lib.mkOption {
             type = lib.types.bool; 
             default = false;
-            description = "Enable octoprint reverse proxy";
+            description = "Enable filebrowser reverse proxy";
         };
         server = lib.mkOption {
             type = lib.types.str; 
@@ -15,7 +15,7 @@ in {
         };
         domain = lib.mkOption {
             type = lib.types.str; 
-            default = "octoprint.skywalker.home";
+            default = "filebrowser.skywalker.home";
         };
         enableWol = lib.mkOption {
             type = lib.types.bool; 
@@ -28,31 +28,31 @@ in {
             description = "mac address of the server (for wake on lan)";
         };
     };
-    
     config = {
-       services.octoprint = lib.mkIf (config.services.octoprint.enable) {
-            plugins =  plugins: with plugins; [
-                themeify 
-            ];
-       };
-       services.caddy = lib.mkIf (config.services.octoprint.proxy.enable) {
+        services.filebrowser = lib.mkIf (config.services.filebrowser.enable) {
+            settings = {
+                root = "/srv/hdd";
+                address = "127.0.0.1";
+                port = server-port;
+            };
+        };
+        services.caddy = lib.mkIf (config.services.filebrowser.proxy.enable) {
             enable = true;
-            virtualHosts."${config.services.octoprint.proxy.domain}".extraConfig = ''
+            virtualHosts."${config.services.filebrowser.proxy.domain}".extraConfig = ''
                 tls internal
-                reverse_proxy ${config.octoprint.proxy.server}:5001
+                reverse_proxy ${config.services.filebrowser.proxy.server}:5001
             ''
-            + lib.optionalString config.services.octoprint.proxy.enableWol ''
+            + lib.optionalString config.services.filebrowser.proxy.enableWol ''
                 handle_errors {
                     @502 expression {err.status_code} == 502
                     handle @502 {
-                        wake_on_lan ${config.services.octoprint.proxy.server-mac}
-                        reverse_proxy ${config.services.octoprint.proxy.server}:${server-port} {
+                        wake_on_lan ${config.services.filebrowser.proxy.server-mac}
+                        reverse_proxy ${config.services.filebrowser.proxy.server}:${server-port} {
                             lb_try_duration 120s
                         }
                     }
                 }
             '';
         };
- 
     };
 }

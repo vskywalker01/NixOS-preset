@@ -52,7 +52,23 @@
                     #virtualisation.docker.enable=true;
           
                     services.octoprint.enable=true;
+                    services.octoprint.proxy.enable = true;
+
                     services.filebrowser.enable=true;
+                    services.filebrowser.proxy.enable = true;
+                     
+                    services.open-webui-proxy = {
+                        enable = true; 
+                        server = "192.168.1.250";
+                        server-mac = "40:B0:76:D9:79:E1";
+                        enableWol = true; 
+                    };
+                    services.minecraft-server.proxy = {
+                        enable = true; 
+                        server = "192.168.1.250";
+                        server-mac = "40:B0:76:D9:79:E1";
+                        enableWol = true;
+                    };
                     services.samba.enable=true;
             
                 })
@@ -73,7 +89,8 @@
                     services.openssh.enable=true;
                     virtualisation.docker.enable=true;
                     programs.hyprland.enable=true;
- 
+                    
+
                     applications.tools.enable = true;
                     applications.office.enable = true;
                     applicaitons.developing.enable = true;
@@ -128,8 +145,11 @@
                     services.openssh.enable=true;
                     virtualisation.docker.enable=true;
                     virtualisation.virtualbox.host.enable=true;
+
                     virtualisation.libvirtd.enable=true;
-    
+                    services.minecraft-server.enable = true; 
+                    services.minecraft-server.openFirewall = true;
+                    
                     applications.ai.enable = true;
 
                     programs.hyprland.enable=true;
