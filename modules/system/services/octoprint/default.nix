@@ -1,6 +1,6 @@
 {config, lib, pkgs, ...}:
 let 
-    server-port = 5000; 
+    server-port = 5001; 
 in {
     options.services.octoprint.proxy = {
         enable = lib.mkOption {
@@ -39,14 +39,14 @@ in {
             enable = true;
             virtualHosts."${config.services.octoprint.proxy.domain}".extraConfig = ''
                 tls internal
-                reverse_proxy ${config.octoprint.proxy.server}:5001
+                reverse_proxy ${config.services.octoprint.proxy.server}:${toString server-port}
             ''
             + lib.optionalString config.services.octoprint.proxy.enableWol ''
                 handle_errors {
                     @502 expression {err.status_code} == 502
                     handle @502 {
                         wake_on_lan ${config.services.octoprint.proxy.server-mac}
-                        reverse_proxy ${config.services.octoprint.proxy.server}:${server-port} {
+                        reverse_proxy ${config.services.octoprint.proxy.server}:${toString server-port} {
                             lb_try_duration 120s
                         }
                     }

@@ -1,6 +1,6 @@
 {config, pkgs, lib, inputs, ...}:
 let 
-    server-port = 5001; 
+    server-port = 8080; 
 in {
     options.services.open-webui.proxy = {
         enable = lib.mkOption {
@@ -49,6 +49,7 @@ in {
 
             
             enable = true;
+            port = server-port;
             environment = {
                 ENABLE_WEB_SEARCH = "True";
                 WEB_SEARCH_ENGINE = "searxng";
@@ -93,14 +94,14 @@ in {
             enable = true;
             virtualHosts."${config.services.open-webui.proxy.domain}".extraConfig = ''
                 tls internal
-                reverse_proxy ${config.services.open-webui.proxy.server}:5001
+                reverse_proxy ${config.services.open-webui.proxy.server}:${toString server-port}
             ''
             + lib.optionalString config.services.open-webui.proxy.enableWol ''
                 handle_errors {
                     @502 expression {err.status_code} == 502
                     handle @502 {
                         wake_on_lan ${config.services.open-webui.proxy.server-mac}
-                        reverse_proxy ${config.services.open-webui.proxy.server}:${server-port} {
+                        reverse_proxy ${config.services.open-webui.proxy.server}:${toString server-port} {
                             lb_try_duration 120s
                         }
                     }

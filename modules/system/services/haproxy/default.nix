@@ -15,6 +15,7 @@
         ];
         services.haproxy.config = ''
             global
+                external-check
                 log stdout format raw local0
             defaults
                 mode tcp

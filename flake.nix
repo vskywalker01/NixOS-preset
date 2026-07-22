@@ -57,7 +57,7 @@
                     services.filebrowser.enable=true;
                     services.filebrowser.proxy.enable = true;
                      
-                    services.open-webui-proxy = {
+                    services.open-webui.proxy = {
                         enable = true; 
                         server = "192.168.1.250";
                         server-mac = "40:B0:76:D9:79:E1";

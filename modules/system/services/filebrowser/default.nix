@@ -40,14 +40,14 @@ in {
             enable = true;
             virtualHosts."${config.services.filebrowser.proxy.domain}".extraConfig = ''
                 tls internal
-                reverse_proxy ${config.services.filebrowser.proxy.server}:5001
+                reverse_proxy ${config.services.filebrowser.proxy.server}:${toString server-port}
             ''
             + lib.optionalString config.services.filebrowser.proxy.enableWol ''
                 handle_errors {
                     @502 expression {err.status_code} == 502
                     handle @502 {
                         wake_on_lan ${config.services.filebrowser.proxy.server-mac}
-                        reverse_proxy ${config.services.filebrowser.proxy.server}:${server-port} {
+                        reverse_proxy ${config.services.filebrowser.proxy.server}:${toString server-port} {
                             lb_try_duration 120s
                         }
                     }
