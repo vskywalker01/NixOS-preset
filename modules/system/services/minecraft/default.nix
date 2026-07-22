@@ -53,47 +53,49 @@ in {
                 pkgs.mcron 
                 pkgs.lazymc 
             ];
-            etc."lazymc/config.toml".text = lib.mkIf (config.services.minecraft-server.proxy.enable) 
-            ''
-                [server]
-                directory = "."
-                command = "${wakecommand}" 
-                address = "${config.services.minecraft-server.proxy.server}:${toString server-port}"
+            etc."lazymc/config.toml" = lib.mkIf (config.services.minecraft-server.proxy.enable) {
+                text =
+                ''
+                    [server]
+                    directory = "."
+                    command = "${wakecommand}" 
+                    address = "${config.services.minecraft-server.proxy.server}:${toString server-port}"
 
-                [public]
-                bind = "0.0.0.0:25565"
-                
-                [motd]
-                sleeping = "Sfinfirinx poskys -> no"
-                starting = "Sfinfirinx poskys -> yes"
-                stopping = "sfinfirinx poskys -> forse"
-                from_server = false
+                    [public]
+                    bind = "0.0.0.0:25565"
+                    
+                    [motd]
+                    sleeping = "Sfinfirinx poskys -> no"
+                    starting = "Sfinfirinx poskys -> yes"
+                    stopping = "sfinfirinx poskys -> forse"
+                    from_server = false
 
-                [join]
-                methods = [   
-                    "hold",
-                ]
-                
-                [join.kick]
-                
-                [join.hold]
-                timeout = 25
-                
-                [join.forward]
+                    [join]
+                    methods = [   
+                        "hold",
+                    ]
+                    
+                    [join.kick]
+                    
+                    [join.hold]
+                    timeout = 25
+                    
+                    [join.forward]
 
-                [join.lobby]
+                    [join.lobby]
 
-                [lockout]
+                    [lockout]
 
-                [time]
+                    [time]
 
-                [rcon]
+                    [rcon]
 
-                [advanced]
+                    [advanced]
 
-                [config]
-                version = "0.2.11"
-            '';
+                    [config]
+                    version = "0.2.11"
+                '';
+            };
         };
         systemd.services.minecraft-suspend-lock = lib.mkIf (config.services.minecraft-server.enable) {
             description = "Disable suspend while Minecraft players are online";
