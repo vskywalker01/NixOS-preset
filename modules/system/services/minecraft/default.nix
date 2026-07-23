@@ -4,7 +4,34 @@ let
     rcon-port = 25251;
     rcon-pass = "supersecret-password";
     wakecommand = lib.optionalString config.services.minecraft-server.proxy.enableWol "${pkgs.wakeonlan}/bin/wakeonlan ${config.services.minecraft-server.proxy.server-mac}";
-    
+
+    inhibitScript = pkgs.writeShellScript "minecraft-inhibit" ''
+        set -eu
+
+        while true; do
+            players="$(
+                ${pkgs.mcrcon}/bin/mcrcon \
+                -H 127.0.0.1 \
+                -P ${toString rcon-port} \
+                -p ${rcon-pass} \
+                "list" 2>/dev/null || true
+            )"
+
+            if echo "$players" | grep -Eq "There are [1-9][0-9]*"; then
+                if ! ${pkgs.procps}/bin/pgrep -f "systemd-inhibit.*Minecraft" >/dev/null; then
+                    ${pkgs.systemd}/bin/systemd-inhibit \
+                    --what=sleep \
+                    --who="Minecraft" \
+                    --why="Minecraft players online" \
+                    ${pkgs.coreutils}/bin/sleep infinity &
+                fi
+            else
+                ${pkgs.procps}/bin/pkill -f "systemd-inhibit.*Minecraft" || true
+            fi
+
+            sleep 60
+        done
+    ''; 
 in {
     options.services.minecraft-server.proxy = {
         enable = lib.mkOption {
@@ -48,6 +75,22 @@ in {
             };
             jvmOpts = "-Xms2048M -Xmx2048M -Djava.net.preferIPv4Stack=true";
         };
+        systemd.services.minecraft-inhibit = {
+              description = "Minecraft sleep inhibitor";
+
+              wantedBy = [ "minecraft.service" ];
+
+              after = [
+                    "minecraft.service"
+              ];
+
+              serviceConfig = {
+                    User = "root";
+                    ExecStart = inhibitScript;
+                    Restart = "always";
+              };
+        };
+
         environment = lib.mkIf (config.services.minecraft-server.enable || config.services.minecraft-server.proxy.enable) { 
             systemPackages = [
                 pkgs.wakeonlan
@@ -66,9 +109,9 @@ in {
                     bind = "0.0.0.0:25565"
                     
                     [motd]
-                    sleeping = "Sfinfirinx poskys -> no"
-                    starting = "Sfinfirinx poskys -> forse"
-                    stopping = "sfinfirinx poskys -> no"
+                    sleeping = "Sfinfirinx no poskys"
+                    starting = "Sfinfirinx poskys?"
+                    stopping = "sfinfirinx poskys?"
                     from_server = false
 
                     [join]

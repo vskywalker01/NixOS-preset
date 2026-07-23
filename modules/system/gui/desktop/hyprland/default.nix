@@ -38,11 +38,15 @@ in {
             enable = true; 
             settings.Login = {
                IdleAction="suspend";
-               IdleActionSec="20min";
+               IdleActionSec="15min";
             };
         };
         systemd.sleep.settings.Sleep = {
             SuspendState = "mem";
+            AllowSuspend = "yes";
+            AllowHibernation = "yes";
+            AllowHybridSleep = "yes";
+            AllowSuspendThenHibernate = "no";
         };
         boot.kernelParams = ["mem_sleep_default=deep"];
 
