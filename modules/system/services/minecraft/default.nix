@@ -3,7 +3,7 @@ let
     server-port = 25250;
     rcon-port = 25251;
     rcon-pass = "supersecret-password";
-    wakecommand = lib.optionalString config.services.filebrowser.proxy.enableWol "wakeonlan ${config.services.minecraft-server.proxy.server-mac}";
+    wakecommand = lib.optionalString config.services.minecraft-server.proxy.enableWol "wakeonlan ${config.services.minecraft-server.proxy.server-mac}";
     
 in {
     options.services.minecraft-server.proxy = {
@@ -33,6 +33,7 @@ in {
             eula = true; 
             declarative = true;
             serverProperties = {
+
                 server-port = server-port;
                 difficulty = 3;
                 gamemode = 0;
@@ -66,8 +67,8 @@ in {
                     
                     [motd]
                     sleeping = "Sfinfirinx poskys -> no"
-                    starting = "Sfinfirinx poskys -> yes"
-                    stopping = "sfinfirinx poskys -> forse"
+                    starting = "Sfinfirinx poskys -> forse"
+                    stopping = "sfinfirinx poskys -> no"
                     from_server = false
 
                     [join]
@@ -89,58 +90,14 @@ in {
                     [time]
 
                     [rcon]
+                    address = "${config.services.minecraft-server.proxy.server}:${toString rcon-port}"
+                    password = "${rcon-pass}"
 
                     [advanced]
 
                     [config]
                     version = "0.2.11"
                 '';
-            };
-        };
-        systemd.services.minecraft-suspend-lock = lib.mkIf (config.services.minecraft-server.enable) {
-            description = "Disable suspend while Minecraft players are online";
-
-            wantedBy = [
-                "multi-user.target"
-            ];
-
-            after = [
-                "minecraft-server.service"
-            ];
-
-            serviceConfig = {
-                ExecStart = ''
-                    #!/bin/sh
-                    RCON_PASSWORD="${rcon-pass}"
-                    RCON_PORT=${toString rcon-port}
-
-                    while true; do
-                        PLAYERS=$(
-                            mcrcon \
-                              -H 127.0.0.1 \
-                              -P $RCON_PORT \
-                              -p "$RCON_PASSWORD" \
-                              "list" |
-                            grep -o '[0-9]\+ player' |
-                            cut -d' ' -f1
-                        )
-
-                        if [ "${PLAYERS:-0}" -gt 0 ]; then
-                            if ! systemd-inhibit --list | grep -q minecraft; then
-                                systemd-inhibit \
-                                  --what=sleep \
-                                  --mode=block \
-                                  --why="Minecraft player connected" \
-                                  &
-                            fi
-                        else
-                            pkill -f "systemd-inhibit.*Minecraft player"
-                        fi
-
-                        sleep 30
-                    done
-                '';
-                Restart = "always";
             };
         };
         systemd.tmpfiles.rules = lib.mkIf (config.services.minecraft-server.proxy.enable) [

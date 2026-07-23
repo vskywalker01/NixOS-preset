@@ -45,8 +45,7 @@ in {
 
         #enabling open-webui for chatbots
         services.open-webui = lib.mkIf (config.applications.ai.enable){
-
-            
+            host = "0.0.0.0";
             enable = true;
             port = server-port;
             environment = {

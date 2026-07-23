@@ -118,8 +118,6 @@ in {
         };
 
         networking.defaultGateway = "192.168.1.1";
-        networking.nameservers = [ "192.168.1.1" "8.8.8.8" ];
-        services.open-webui.openFirewall = true;
-        services.open-webui.host = "0.0.0.0";
+        networking.nameservers = [ "192.168.1.254" "192.168.1.1"];
     };
 }
