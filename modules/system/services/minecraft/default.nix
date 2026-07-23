@@ -3,7 +3,7 @@ let
     server-port = 25250;
     rcon-port = 25251;
     rcon-pass = "supersecret-password";
-    wakecommand = lib.optionalString config.services.minecraft-server.proxy.enableWol "wakeonlan ${config.services.minecraft-server.proxy.server-mac}";
+    wakecommand = lib.optionalString config.services.minecraft-server.proxy.enableWol "${pkgs.wakeonlan}/bin/wakeonlan ${config.services.minecraft-server.proxy.server-mac}";
     
 in {
     options.services.minecraft-server.proxy = {
@@ -79,7 +79,7 @@ in {
                     [join.kick]
                     
                     [join.hold]
-                    timeout = 25
+                    timeout = 180
                     
                     [join.forward]
 

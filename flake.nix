@@ -150,7 +150,7 @@
                     services.minecraft-server.enable = true; 
                     services.minecraft-server.openFirewall = true;
                     services.open-webui.openFirewall = true;
-                    services.minecraft-server.serverProperties.server-ip = "192.168.1.254";
+                    services.minecraft-server.serverProperties.server-ip = "0.0.0.0";
                     networking.firewall.allowedTCPPorts = [25250 25251];
                     applications.ai.enable = true;
 
