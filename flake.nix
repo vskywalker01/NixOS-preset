@@ -9,6 +9,7 @@
         };
         nix-flatpak.url = "github:gmodena/nix-flatpak";
         nix-minecraft.url = "github:Infinidoge/nix-minecraft";
+        nix-minecraft.inputs.nixpkgs.follows = "nixpkgs";
         nvf = {
             url = "github:NotAShelf/nvf";
             inputs.nixpkgs.follows = "nixpkgs";
@@ -146,7 +147,8 @@
                     virtualisation.virtualbox.host.enable=true;
 
                     virtualisation.libvirtd.enable=true;
-                    services.minecraft-servers.enable = true; 
+                    services.minecraft-servers.enable = true;
+                    services.minecraft-servers.servers.vanilla.enable = true;
                     services.open-webui.openFirewall = true;
                     networking.firewall.allowedTCPPorts = [8080 25250 25251];
                     applications.ai.enable = true;

@@ -57,6 +57,9 @@ in {
     };
     imports = [
         inputs.nix-minecraft.nixosModules.minecraft-servers
+          {
+            nixpkgs.overlays = [ inputs.nix-minecraft.overlay ];
+          }
     ];
     config = {
         services.minecraft-servers = lib.mkIf (config.services.minecraft-servers.enable) { 
@@ -64,6 +67,7 @@ in {
             #declarative = true;
             servers.vanilla = {
                 serverProperties = {
+                    autoStart = true;
                     server-ip = "0.0.0.0";
                     server-port = server-port;
                     difficulty = 2;
@@ -77,17 +81,17 @@ in {
                     "rcon.port" = rcon-port;
                     "rcon.password" = rcon-pass;
                 };
-                package = pkgs.vanillaServers.vanilla-26.2;
+                package = pkgs.vanillaServers.vanilla-26_2;
                 jvmOpts = "-Xms2048M -Xmx2048M -Djava.net.preferIPv4Stack=true";
             };
         };
         systemd.services.minecraft-inhibit = lib.mkIf (config.services.minecraft-servers.enable) {
               description = "Minecraft sleep inhibitor";
 
-              wantedBy = [ "minecraft.service" ];
+              wantedBy = [ "minecraft-server-vanilla.service" ];
 
               after = [
-                    "minecraft.service"
+                    "minecraft-server-vanilla.service"
               ];
 
               serviceConfig = {
@@ -129,7 +133,7 @@ in {
                     [join.kick]
                     
                     [join.hold]
-                    timeout = 180
+                    timeout = 300
                     
                     [join.forward]
 
