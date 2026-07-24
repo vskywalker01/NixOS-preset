@@ -34,13 +34,13 @@ in {
         security.rtkit.enable = true;
         programs.firefox.enable = true;
         
-        services.logind = {
-            enable = true; 
-            settings.Login = {
-               IdleAction="suspend";
-               IdleActionSec="15min";
-            };
-        };
+        #services.logind = {
+        #    enable = true; 
+        #    settings.Login = {
+        #       IdleAction="suspend";
+        #       IdleActionSec="5min";
+        #    };
+        #};
         systemd.sleep.settings.Sleep = {
             SuspendState = "mem";
             AllowSuspend = "yes";
@@ -50,7 +50,7 @@ in {
         };
         boot.kernelParams = ["mem_sleep_default=deep"];
 
-        systemd.services."awake-after-suspend-for-a-time" = {
+        systemd.services."hybernation-recovery-timer" = {
             description = "Sets up the suspend so that it'll wake for hibernation";
             wantedBy = [ "suspend.target" ];
             before = [ "systemd-suspend.service" ];

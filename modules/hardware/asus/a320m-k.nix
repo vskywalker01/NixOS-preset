@@ -78,15 +78,6 @@ in {
 
         # ----- Samba share ------
         services.samba.settings = lib.mkIf (config.services.samba.enable) {
-            "hdd" = {
-                "path" = "/srv/hddraid";
-                "browseable" = "yes";
-                "read only" = "no";
-                "guest ok" = "no";
-                "valid users" = [ "vittorio" ];
-                "create mask" = "0644";
-                "directory mask" = "0755";
-            };
             "printers" = {
                 "comment" = "Printers";
                 "path" = "/var/spool/samba";

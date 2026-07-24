@@ -101,7 +101,23 @@
             halign = center 
         }
         '';
+        systemd.user.services.hyprlock = lib.mkIf(systemConfig.services.displayManager.autoLogin.enable
+) {
+            Unit = {
+                Description = "Hyprlock screen locker";
+                After = [ "graphical-session.target" ];
+                PartOf = [ "graphical-session.target" ];
+            };
 
+            Service = {
+                ExecStart = "${pkgs.hyprlock}/bin/hyprlock";
+                Restart = "on-failure";
+            };
+
+            Install = {
+                WantedBy = [ "graphical-session.target" ];
+            };
+        };
 
     };
 

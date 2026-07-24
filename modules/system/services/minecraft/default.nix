@@ -1,4 +1,4 @@
-{config, lib, pkgs, ...}:
+{config, lib, pkgs,inputs, ...}:
 let 
     server-port = 25250;
     rcon-port = 25251;
@@ -55,27 +55,33 @@ in {
             description = "mac address of the server (for wake on lan)";
         };
     };
+    imports = [
+        inputs.nix-minecraft.nixosModules.minecraft-servers
+    ];
     config = {
-        services.minecraft-server = lib.mkIf (config.services.minecraft-server.enable) { 
+        services.minecraft-servers = lib.mkIf (config.services.minecraft-servers.enable) { 
             eula = true; 
-            declarative = true;
-            serverProperties = {
-
-                server-port = server-port;
-                difficulty = 3;
-                gamemode = 0;
-                max-players = 6;
-                motd = "Sfinfirinx poskys!";
-                white-list = false;
-                allow-cheats = true;
-                online-mode = false;
-                enable-rcon = true;
-                "rcon.port" = rcon-port;
-                "rcon.password" = rcon-pass;
+            #declarative = true;
+            servers.vanilla = {
+                serverProperties = {
+                    server-ip = "0.0.0.0";
+                    server-port = server-port;
+                    difficulty = 2;
+                    gamemode = 0;
+                    max-players = 6;
+                    motd = "Sfinfirinx poskys!";
+                    white-list = false;
+                    allow-cheats = true;
+                    online-mode = false;
+                    enable-rcon = true;
+                    "rcon.port" = rcon-port;
+                    "rcon.password" = rcon-pass;
+                };
+                package = pkgs.vanillaServers.vanilla-26.2;
+                jvmOpts = "-Xms2048M -Xmx2048M -Djava.net.preferIPv4Stack=true";
             };
-            jvmOpts = "-Xms2048M -Xmx2048M -Djava.net.preferIPv4Stack=true";
         };
-        systemd.services.minecraft-inhibit = {
+        systemd.services.minecraft-inhibit = lib.mkIf (config.services.minecraft-servers.enable) {
               description = "Minecraft sleep inhibitor";
 
               wantedBy = [ "minecraft.service" ];
@@ -91,7 +97,7 @@ in {
               };
         };
 
-        environment = lib.mkIf (config.services.minecraft-server.enable || config.services.minecraft-server.proxy.enable) { 
+        environment = lib.mkIf (config.services.minecraft-servers.enable || config.services.minecraft-server.proxy.enable) { 
             systemPackages = [
                 pkgs.wakeonlan
                 pkgs.mcron 
@@ -107,12 +113,13 @@ in {
 
                     [public]
                     bind = "0.0.0.0:25565"
+                    version = "26.2"
                     
                     [motd]
-                    sleeping = "Sfinfirinx no poskys"
-                    starting = "Sfinfirinx poskys?"
-                    stopping = "sfinfirinx poskys?"
-                    from_server = false
+                    sleeping = "Server inactive (join to wake up)"
+                    starting = "Starting server..."
+                    stopping = "Stopping server..."
+                    from_server = true
 
                     [join]
                     methods = [   

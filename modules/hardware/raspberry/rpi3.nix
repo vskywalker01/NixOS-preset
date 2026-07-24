@@ -8,9 +8,6 @@ in {
         default = false;
         description = "Enable hardware profile for raspberry pi 3";
     };
-    imports = [
-        inputs.ngrok.nixosModules.ngrok
-    ];
     config = lib.mkIf (config.hardware.raspberry.RPI3.enable) {
         # ----- Addition packages ------
         environment.systemPackages = with pkgs; [
@@ -83,17 +80,17 @@ in {
     
         # ----- Samba share ------
  
-        services.samba.settings = lib.mkIf (config.services.samba.enable) {
-            "hdd" = {
-                "path" = "/srv/hdd";
-                "browseable" = "yes";
-                "read only" = "no";
-                "guest ok" = "no";
-                "valid users" = [ "vittorio" ];
-                "create mask" = "0644";
-                "directory mask" = "0755";
-            };
-        };
+        #services.samba.settings = lib.mkIf (config.services.samba.enable) {
+        #    "hdd" = {
+        #        "path" = "/srv/hdd";
+        #        "browseable" = "yes";
+        #        "read only" = "no";
+        #        "guest ok" = "no";
+        #        "valid users" = [ "vittorio" ];
+        #        "create mask" = "0644";
+        #        "directory mask" = "0755";
+        #    };
+        #};
         services.tailscale = {
             enable = true;
             useRoutingFeatures = "server";

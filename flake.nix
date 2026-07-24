@@ -8,8 +8,7 @@
             inputs.nixpkgs.follows = "nixpkgs";
         };
         nix-flatpak.url = "github:gmodena/nix-flatpak";
-
-        ngrok.url = "github:ngrok/ngrok-nix";
+        nix-minecraft.url = "github:Infinidoge/nix-minecraft";
         nvf = {
             url = "github:NotAShelf/nvf";
             inputs.nixpkgs.follows = "nixpkgs";
@@ -34,7 +33,7 @@
             "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="    
         ];
     };
-    outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, nix-flatpak, nixos-hardware,cachix,ngrok,nvf,silentSDDM, lanzaboote}: {
+    outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, nix-flatpak, nixos-hardware,cachix,nix-minecraft,nvf,silentSDDM, lanzaboote}: {
         nixosConfigurations.skywalker-pi3 = nixpkgs.lib.nixosSystem {
             specialArgs = {
                 inherit inputs;
@@ -147,11 +146,9 @@
                     virtualisation.virtualbox.host.enable=true;
 
                     virtualisation.libvirtd.enable=true;
-                    services.minecraft-server.enable = true; 
-                    services.minecraft-server.openFirewall = true;
+                    services.minecraft-servers.enable = true; 
                     services.open-webui.openFirewall = true;
-                    services.minecraft-server.serverProperties.server-ip = "0.0.0.0";
-                    networking.firewall.allowedTCPPorts = [25250 25251];
+                    networking.firewall.allowedTCPPorts = [8080 25250 25251];
                     applications.ai.enable = true;
 
                     programs.hyprland.enable=true;
@@ -161,7 +158,10 @@
                     applications.gaming.enable = true; 
                     applications.cads.enable = true; 
                     applications.video-editing.enable = true; 
-                    applications.developing.enable = true; 
+                    applications.developing.enable = true;                    services.displayManager.autoLogin = {
+                        enable = true;
+                        user = "vittorio";
+                    }; 
                     
                 })
             ];
