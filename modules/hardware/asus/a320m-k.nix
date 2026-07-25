@@ -29,7 +29,7 @@ in {
             extraModulePackages = with config.boot.kernelPackages; [ it87 ];
             kernelParams = [ "acpi_enforce_resources=lax" ];
             kernelModules = [ "coretemp" "it87" ];
-
+            binfmt.emulatedSystems = [ "aarch64-linux" ];
         };
         hardware.cpu.amd.updateMicrocode = config.hardware.enableRedistributableFirmware;
 

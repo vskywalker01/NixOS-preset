@@ -22,7 +22,7 @@
     ./r2modman.nix
     ./rnote.nix
     ./termius.nix
-    #./tlauncher.nix
+    ./freesm.nix
     ./woeusb-ng.nix
     ./zoom.nix
     ./obs-studio.nix
