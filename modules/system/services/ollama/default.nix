@@ -2,6 +2,10 @@
 let 
     server-port = 8080; 
 in {
+
+    imports = [
+        ./proxy.nix
+    ];
     config = {
         services.ollama = lib.mkIf (config.applications.ai.enable) {
             enable = true;

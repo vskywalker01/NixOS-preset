@@ -7,7 +7,6 @@ in {
     ];
     config = {
         services.filebrowser = lib.mkIf (config.services.filebrowser.enable) {
-            package = pkgs.filebrowser-quantum;
             settings = {
                 root = "/srv/hdd";
                 address = "127.0.0.1";

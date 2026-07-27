@@ -7,12 +7,12 @@
             description = "Enable minecraft server reverse proxy";
         };
         spindown = lib.mkOption {
-            type = lib.types.integer; 
+            type = lib.types.int; 
             default = 360;
             description = "Default spindown time for mechanical hard disk";
         };
         apm = lib.mkOption {
-            type = lib.types.integer; 
+            type = lib.types.int; 
             default = 127;
             description = "Defaulkt apm value for mechanical hard disk";
         };
@@ -37,7 +37,7 @@
                 while read -r disk rota; do
                 if [ "$rota" = "1" ]; then
                     echo "Configuring /dev/$disk"
-                    ${pkgs.hdparm}/bin/hdparm -S ${config.services.hdparm.spindown} -B ${config.services.hdparm.apm} "/dev/$disk" || true
+                    ${pkgs.hdparm}/bin/hdparm -S ${toString config.services.hdparm.spindown} -B ${toString config.services.hdparm.apm} "/dev/$disk" || true
                 fi
                 done < <(${pkgs.util-linux}/bin/lsblk -d -n -o NAME,ROTA)
             '';
