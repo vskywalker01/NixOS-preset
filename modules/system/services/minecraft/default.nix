@@ -78,5 +78,11 @@ in {
         environment.systemPackages = [
             pkgs.mcron 
         ];
+
+        networking.firewall.allowedTCPPorts = [
+            server-port 
+            rcon-port 
+        ];
+
     };     
 }

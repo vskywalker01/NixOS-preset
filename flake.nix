@@ -202,7 +202,6 @@
                     services.minecraft-servers.enable = true;
                     services.minecraft-servers.servers.vanilla.enable = true;
                     services.open-webui.openFirewall = true;
-                    networking.firewall.allowedTCPPorts = [8080 25250 25251];
                     applications.ai.enable = true;
 
                     programs.hyprland.enable=true;
