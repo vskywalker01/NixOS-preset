@@ -20,7 +20,7 @@ let
         sleeping = "Server inactive (join to wake up)"
         starting = "Starting server..."
         stopping = "Stopping server..."
-        from_server = False
+        from_server = false
 
         [join]
         methods = [   
