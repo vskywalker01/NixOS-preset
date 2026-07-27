@@ -13,5 +13,6 @@
         ./haproxy
         ./minecraft
         ./caddy
+        ./hdparm
     ];
 }

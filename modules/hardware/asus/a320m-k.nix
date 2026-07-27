@@ -12,7 +12,6 @@ in {
     config = lib.mkIf (config.hardware.asus.A320M-K.enable) {
         # ----- Addition packages ------
         environment.systemPackages = with pkgs; [ 
-            lact
             ryzenadj
         ];
         # ----- Boot/system settings -----
@@ -38,23 +37,11 @@ in {
             device = "/swapfile";
             size = 16 * 1024; # 16GB
         }];
-        systemd.tmpfiles.rules = [
-          "d /srv/hddraid 0755 root root -"
-          "d /var/spool/samba 1777 root root -"
-        ];
-        #automatic mount of HDDs raid
-        fileSystems."/srv/hddraid" = {
-          device = "/dev/disk/by-uuid/a4a8fac9-9bbd-47b6-b984-0668f4ae4244";
-          fsType = "btrfs";
-          options = [
-            "defaults" 
-            "compress=zstd"
-          ];
-        };
-
+                
         # ----- AMDGPU -----
         hardware.amdgpu.opencl.enable = true;
-        hardware.amdgpu.overdrive.enable = false;
+        hardware.amdgpu.overdrive.enable = true;
+        services.lact.enable = true;
         hardware.graphics = {
             enable = true;
             enable32Bit = true;
@@ -75,40 +62,5 @@ in {
                 User = "root";
             };
         };
-
-        # ----- Samba share ------
-        services.samba.settings = lib.mkIf (config.services.samba.enable) {
-            "printers" = {
-                "comment" = "Printers";
-                "path" = "/var/spool/samba";
-                "public" = "yes";
-                "browseable" = "yes";
-                "guest ok" = "yes";
-                "writable" = "no";
-                "printable" = "yes";
-                "create mode" = 0700;
-            };
-        }; 
-        
-        # ----- Network settings -----
-        #assigning static IP for ethernet
-        networking = { 
-            firewall = {
-                allowedUDPPorts = [ 9 ];
-            };
-            interfaces.eth0 = {
-                useDHCP = false;
-                ipv4.addresses = [
-                    {
-                        address = "192.168.1.250";
-                        prefixLength = 24;
-                    }
-                ];
-                wakeOnLan.enable = true;
-            };
-        };
-
-        networking.defaultGateway = "192.168.1.1";
-        networking.nameservers = [ "192.168.1.254" "192.168.1.1"];
     };
 }

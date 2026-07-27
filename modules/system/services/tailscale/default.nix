@@ -8,7 +8,6 @@
         services.tailscale = {
             authKeyFile = "/secrets/tailscale_key";
         };
-    
         networking.firewall = { 
             trustedInterfaces = [ "tailscale0" ];
             allowedUDPPorts = [ config.services.tailscale.port ];

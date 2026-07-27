@@ -1,9 +1,8 @@
 {config, lib, pkgs,inputs, ...}:
 let 
-    server-port = 25250;
-    rcon-port = 25251;
+    server-port = 25564;
+    rcon-port = 25563;
     rcon-pass = "supersecret-password";
-    wakecommand = lib.optionalString config.services.minecraft-server.proxy.enableWol "${pkgs.wakeonlan}/bin/wakeonlan ${config.services.minecraft-server.proxy.server-mac}";
 
     inhibitScript = pkgs.writeShellScript "minecraft-inhibit" ''
         set -eu
@@ -32,39 +31,17 @@ let
             sleep 60
         done
     ''; 
-in {
-    options.services.minecraft-server.proxy = {
-        enable = lib.mkOption {
-            type = lib.types.bool; 
-            default = false;
-            description = "Enable minecraft server reverse proxy";
-        };
-        server = lib.mkOption {
-            type = lib.types.str; 
-            default = "127.0.0.1";
-            description = "ip address of the server";
-        };
-        enableWol = lib.mkOption {
-            type = lib.types.bool; 
-            default = false; 
-            description = "wake on lan when required";
-        };
-        server-mac = lib.mkOption {
-            type = lib.types.str; 
-            default = "00:00:00:00:00:00";
-            description = "mac address of the server (for wake on lan)";
-        };
-    };
+in { 
     imports = [
         inputs.nix-minecraft.nixosModules.minecraft-servers
           {
             nixpkgs.overlays = [ inputs.nix-minecraft.overlay ];
           }
+        ./lazymc.nix
     ];
-    config = {
-        services.minecraft-servers = lib.mkIf (config.services.minecraft-servers.enable) { 
+    config = lib.mkIf(config.services.minecraft-servers.enable) {
+        services.minecraft-servers = { 
             eula = true; 
-            #declarative = true;
             servers.vanilla = {
                 serverProperties = {
                     autoStart = true;
@@ -85,15 +62,12 @@ in {
                 jvmOpts = "-Xms2048M -Xmx2048M -Djava.net.preferIPv4Stack=true";
             };
         };
-        systemd.services.minecraft-inhibit = lib.mkIf (config.services.minecraft-servers.enable) {
+        systemd.services.minecraft-inhibit = {
               description = "Minecraft sleep inhibitor";
-
               wantedBy = [ "minecraft-server-vanilla.service" ];
-
               after = [
                     "minecraft-server-vanilla.service"
               ];
-
               serviceConfig = {
                     User = "root";
                     ExecStart = inhibitScript;
@@ -101,76 +75,8 @@ in {
               };
         };
 
-        environment = lib.mkIf (config.services.minecraft-servers.enable || config.services.minecraft-server.proxy.enable) { 
-            systemPackages = [
-                pkgs.wakeonlan
-                pkgs.mcron 
-                pkgs.lazymc 
-            ];
-            etc."lazymc/config.toml" = lib.mkIf (config.services.minecraft-server.proxy.enable) {
-                text =
-                ''
-                    [server]
-                    directory = "."
-                    command = "${wakecommand}" 
-                    address = "${config.services.minecraft-server.proxy.server}:${toString server-port}"
-
-                    [public]
-                    bind = "0.0.0.0:25565"
-                    version = "26.2"
-                    
-                    [motd]
-                    sleeping = "Server inactive (join to wake up)"
-                    starting = "Starting server..."
-                    stopping = "Stopping server..."
-                    from_server = true
-
-                    [join]
-                    methods = [   
-                        "hold",
-                    ]
-                    
-                    [join.kick]
-                    
-                    [join.hold]
-                    timeout = 300
-                    
-                    [join.forward]
-
-                    [join.lobby]
-
-                    [lockout]
-
-                    [time]
-
-                    [rcon]
-                    address = "${config.services.minecraft-server.proxy.server}:${toString rcon-port}"
-                    password = "${rcon-pass}"
-
-                    [advanced]
-
-                    [config]
-                    version = "0.2.11"
-                '';
-            };
-        };
-        systemd.tmpfiles.rules = lib.mkIf (config.services.minecraft-server.proxy.enable) [
-            "d /var/lib/lazymc 0750 root root -"
+        environment.systemPackages = [
+            pkgs.mcron 
         ];
-        systemd.services.lazymc =lib.mkIf (config.services.minecraft-server.proxy.enable) {
-            wantedBy = [ "multi-user.target" ];
-            after = [ "network.target" ];
-
-            serviceConfig = {
-                ExecStart = "${pkgs.lazymc}/bin/lazymc -c /etc/lazymc/config.toml";
-                WorkingDirectory = "/var/lib/lazymc";
-                Restart = "always";
-            };
-            
-        }; 
-        networking.firewall.allowedTCPPorts = lib.mkIf (config.services.minecraft-server.proxy.enable) [
-            25565
-        ];
-        
     };     
 }

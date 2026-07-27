@@ -21,15 +21,28 @@
                     "printing" = "cups";
                     "printcap name" = "cups";
                 };
+                "printers" = {
+                    "comment" = "Printers";
+                    "path" = "/var/spool/samba";
+                    "public" = "yes";
+                    "browseable" = "yes";
+                    "guest ok" = "no";
+                    "writable" = "no";
+                    "printable" = "yes";
+                    "create mode" = 0700;
+                };
             };
         };
-    services.samba-wsdd = {
-      enable = lib.mkForce true;
-      openFirewall = lib.mkForce true;
-    };
+        services.samba-wsdd = {
+            enable = lib.mkForce true;
+            openFirewall = lib.mkForce true;
+        };
+        systemd.tmpfiles.rules = [
+            "d /var/spool/samba 1777 root root -"
+        ];
 
-    networking.firewall.allowPing = lib.mkForce true;
-    networking.firewall.allowedTCPPorts = [ 139 445 ];
-    networking.firewall.allowedUDPPorts = [ 137 138 ];
-  };
+        networking.firewall.allowPing = lib.mkForce true;
+        networking.firewall.allowedTCPPorts = [ 139 445 ];
+        networking.firewall.allowedUDPPorts = [ 137 138 ];
+    };
 }

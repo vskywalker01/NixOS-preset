@@ -56,6 +56,7 @@
 
                     services.filebrowser.enable=true;
                     services.filebrowser.proxy.enable = true;
+                    services.filebrowser.settings.root = "/srv/hdd";
                      
                     services.open-webui.proxy = {
                         enable = true; 
@@ -69,8 +70,57 @@
                         server-mac = "40:B0:76:D9:79:E1";
                         enableWol = true;
                     };
-                    services.samba.enable=true;
-            
+                    networking.firewall.allowedTCPPorts = [80 443 53];
+                    networking.firewall.allowedUDPPorts = [53];
+
+                    networking = {
+                        interfaces.eth0 = {
+                            useDHCP = false;
+                            ipv4.addresses = [{
+                                address = "192.168.1.254";
+                                prefixLength = 24;
+                            }];
+
+                            wakeOnLan.enable = true;
+                        };
+                        defaultGateway = "192.168.1.1";
+                    };
+
+                    systemd.tmpfiles.rules = [
+                        "d /srv/hdd 0755 root root -"
+                    ];
+
+                    fileSystems."/srv/hdd" = {
+                        device = "/dev/sda1";
+                        fsType = "btrfs";
+                        options = [
+                            "defaults" 
+                            "compress=zstd"
+                        ];
+                    };
+
+                    services.dnsmasq = {
+                        enable = true;
+                        settings = {
+                            address = [
+                                "/skywalker.home/192.168.1.254"
+                            ];
+
+                            server = [
+                                "192.168.1.1"
+                                "8.8.8.8"
+                            ];
+                        };
+                    };
+
+                    services.tailscale = {
+                        enable = true;
+                        useRoutingFeatures = "server";
+                        extraUpFlags = [
+                            "--advertise-routes=192.168.1.254/32"
+                        ];
+                    };
+
                 })
             ];
         };
@@ -124,7 +174,9 @@
                     applications.gaming.enable = true; 
                     applications.cads.enable = true; 
                     applications.video-editing.enable = true; 
-                    applications.developing.enable = true; 
+                    applications.developing.enable = true;
+
+                    services.samba.enable = true;
                     
                 })
             ];
@@ -160,11 +212,35 @@
                     applications.gaming.enable = true; 
                     applications.cads.enable = true; 
                     applications.video-editing.enable = true; 
-                    applications.developing.enable = true;                    services.displayManager.autoLogin = {
+                    applications.developing.enable = true;                    
+                    services.displayManager.autoLogin = {
                         enable = true;
                         user = "vittorio";
                     }; 
-                    
+                    networking = {
+                        interfaces.eth0 = {
+                            useDHCP = false;
+                            ipv4.addresses = [{
+                                address = "192.168.1.250";
+                                prefixLength = 24;
+                            }];
+
+                            wakeOnLan.enable = true;
+                        };
+                        defaultGateway = "192.168.1.1";
+                        nameservers = [ "192.168.1.254" "192.168.1.1"];
+                    };
+                    fileSystems."/srv/hddraid" = {
+                        device = "/dev/disk/by-uuid/a4a8fac9-9bbd-47b6-b984-0668f4ae4244";
+                        fsType = "btrfs";
+                        options = [
+                            "defaults" 
+                            "compress=zstd"
+                        ];
+                    };
+                    systemd.tmpfiles.rules = [
+                        "d /srv/hddraid 0755 root root -"
+                    ];
                 })
             ];
         };
