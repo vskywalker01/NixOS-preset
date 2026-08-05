@@ -14,9 +14,10 @@
             };
             globalConfig = ''
                 order wake_on_lan before respond
+                acme_ca https://ca.home/acme/caddy/directory
             '';
         };
-        networking.firewall.allowedTCPPorts = [ 80 443 53];
+        networking.firewall.allowedTCPPorts = [ 80 443 53 9000];
         networking.firewall.allowedUDPPorts = [53];
     };
 }

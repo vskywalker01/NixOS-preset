@@ -52,7 +52,7 @@ fi
 
 if [[ -n "$REMOTE_HOST" ]]; then
     echo "Building remotely on $REMOTE_HOST" 
-    nixos-rebuild switch --target-host "$REMOTE_HOST" --build-host localhost --sudo --ask-sudo-password
+    nixos-rebuild switch --build-host "$REMOTE_HOST" --target-host localhost --sudo --ask-sudo-password
 else
     sudo nixos-rebuild switch
 fi

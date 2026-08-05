@@ -177,6 +177,11 @@
                     applications.developing.enable = true;
 
                     services.samba.enable = true;
+
+                    services.displayManager.autoLogin = {
+                        enable = true;
+                        user = "vittorio";
+                    };
                     
                 })
             ];

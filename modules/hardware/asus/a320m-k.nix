@@ -26,7 +26,7 @@ in {
             lanzaboote.enable = true;
             kernelPackages = pkgs.linuxPackages_6_18;
             extraModulePackages = with config.boot.kernelPackages; [ it87 ];
-            kernelParams = [ "acpi_enforce_resources=lax" ];
+            kernelParams = [ "mem_sleep_default=deep" "acpi_enforce_resources=lax" ];
             kernelModules = [ "coretemp" "it87" ];
             binfmt.emulatedSystems = [ "aarch64-linux" ];
         };
@@ -62,5 +62,17 @@ in {
                 User = "root";
             };
         };
+
+        services.logind = {
+            enable = true; 
+        };
+        systemd.sleep.settings.Sleep = {
+            SuspendState = "mem";
+            AllowSuspend = "yes";
+            AllowHibernation = "yes";
+            AllowHybridSleep = "yes";
+            AllowSuspendThenHibernate = "no";
+        };
+
     };
 }

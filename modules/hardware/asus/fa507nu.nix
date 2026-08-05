@@ -50,7 +50,7 @@ in {
             };
             lanzaboote.enable = true;
             kernelPackages = pkgs.linuxPackages_latest;
-            kernelParams = ["amd_pstate=active" "usbcore.autosuspend=1"];
+            kernelParams = ["mem_sleep_default=deep" "amd_pstate=active" "usbcore.autosuspend=1"];
         };
 
         powerManagement.enable = true;

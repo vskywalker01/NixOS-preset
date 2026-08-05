@@ -34,21 +34,17 @@ in {
         security.rtkit.enable = true;
         programs.firefox.enable = true;
         
-        #services.logind = {
-        #    enable = true; 
-        #    settings.Login = {
-        #       IdleAction="suspend";
-        #       IdleActionSec="5min";
-        #    };
-        #};
-        systemd.sleep.settings.Sleep = {
-            SuspendState = "mem";
-            AllowSuspend = "yes";
-            AllowHibernation = "yes";
-            AllowHybridSleep = "yes";
-            AllowSuspendThenHibernate = "no";
+        services.logind = {
+            enable = true; 
         };
-        boot.kernelParams = ["mem_sleep_default=deep"];
+        #systemd.sleep.settings.Sleep = {
+        #    SuspendState = "mem";
+        #    AllowSuspend = "yes";
+        #    AllowHibernation = "yes";
+        #    AllowHybridSleep = "yes";
+        #    AllowSuspendThenHibernate = "no";
+        #};
+        #boot.kernelParams = ["mem_sleep_default=deep"];
 
         systemd.services."hybernation-recovery-timer" = {
             description = "Sets up the suspend so that it'll wake for hibernation";
