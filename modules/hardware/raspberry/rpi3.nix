@@ -42,5 +42,10 @@ in {
             dates = "weekly";
             options = "--delete-older-than 7d";
         };
+
+        powerManagement = {
+            enable = true;
+            cpuFreqGovernor = "ondemand";
+        };
     };
 }

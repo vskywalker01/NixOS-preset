@@ -46,7 +46,6 @@ in {
             wantedBy = [ "exit.target" ];
         };
 
-
         services.searx = lib.mkIf (config.applications.ai.enable){
             enable = true;
             redisCreateLocally = true;
