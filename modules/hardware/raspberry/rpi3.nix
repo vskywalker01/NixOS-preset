@@ -45,7 +45,7 @@ in {
 
         powerManagement = {
             enable = true;
-            cpuFreqGovernor = "ondemand";
+            cpuFreqGovernor = "shedutil";
         };
     };
 }
