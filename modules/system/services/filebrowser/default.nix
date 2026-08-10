@@ -1,6 +1,6 @@
-{config, lib, pkgs, ...}:
+{config, lib, pkgs, inputs,...}:
 let 
-    server-port = 8000; 
+    server-port = 8334; 
 in {
     imports = [
         ./proxy.nix

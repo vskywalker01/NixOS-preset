@@ -1,6 +1,6 @@
 {config, lib, pkgs, ...}:
 let 
-    server-port = 8000; 
+    server-port = 8334; 
 in {
     options.services.filebrowser.proxy = {
         enable = lib.mkOption {
