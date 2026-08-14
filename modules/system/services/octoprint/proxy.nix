@@ -1,6 +1,7 @@
 {config, lib, pkgs, ...}:
 let 
-    server-port = 5000; 
+    server-port = 5000;
+    webcam-port = 5001;
 in {
     options.services.octoprint.proxy = {
         enable = lib.mkOption {
@@ -50,6 +51,11 @@ in {
                             lb_try_duration 120s
                         }
                     }
+                }
+            ''
+            + lib.optionalString config.services.octoprint.webcam.enable ''
+                handle_path /webcam/* {
+                    reverse_proxy ${config.services.octoprint.proxy.server}:${toString webcam-port}
                 }
             '';
         };

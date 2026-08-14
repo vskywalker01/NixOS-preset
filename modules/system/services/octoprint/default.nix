@@ -1,7 +1,31 @@
 {config, lib, pkgs, ...}:
 let 
-    server-port = 5000; 
+    server-port = 5000;
+    webcam-port = 5001;
 in {
+    options.services.octoprint.webcam = {
+        enable = lib.mkOption {
+            type = lib.types.bool; 
+            default = false;
+            description = "Enable octoprint webcam capabilities";
+        };
+        resolution = lib.mkOption {
+            type = lib.types.str; 
+            default = "640x480";
+            description = "webcam resolution";
+        };
+        device = lib.mkOption {
+            type = lib.types.str; 
+            default = "/dev/video0"; 
+            description = "webcam resolution";
+        };
+        framerate = lib.mkOption {
+            type = lib.types.str; 
+            default = "15";
+            description = "webcam framerate";
+        };
+    };
+
     imports = [
         ./proxy.nix
     ];
@@ -11,5 +35,32 @@ in {
                 themeify 
             ];
         };
+        environment.systemPackages = with pkgs; [
+            mjpg-streamer
+        ];
+        users.users.mjpg-streamer = {
+            isSystemUser = true;
+            group = "video";
+        };
+        systemd.services.mjpg-streamer = lib.mkIf(config.services.octoprint.webcam.enable){
+            description = "MJPEG Streamer";
+            wantedBy = [ "multi-user.target" ];
+            after = [ "network.target" ];
+
+            serviceConfig = {
+                User = "mjpg-streamer";
+                Group = "video";
+
+                ExecStart = ''
+                    ${pkgs.mjpg-streamer}/bin/mjpg_streamer \
+                    -i "${pkgs.mjpg-streamer}/lib/mjpg-streamer/input_uvc.so -d ${config.services.octoprint.webcam.device} -r ${config.services.octoprint.webcam.resolution} -f ${config.services.octoprint.webcam.framerate}" \
+                    -o "${pkgs.mjpg-streamer}/lib/mjpg-streamer/output_http.so -w ${pkgs.mjpg-streamer}/share/mjpg-streamer/www -p ${toString webcam-port}"
+                '';
+
+                Restart = "always";
+                RestartSec = 5;
+            };
+        };
+
     };
 }

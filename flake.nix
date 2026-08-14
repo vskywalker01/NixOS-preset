@@ -51,9 +51,12 @@
                     services.flatpak.enable=false;
                     #virtualisation.docker.enable=true;
           
-                    services.octoprint.enable=true;
-                    services.octoprint.proxy.enable = true;
-
+                    services.octoprint = {
+                        enable=true;
+                        proxy.enable = true;
+                        webcam.enable = true;
+                        webcam.resolution = "1280x720";
+                    };
                     services.filebrowser.enable=true;
                     services.filebrowser.proxy.enable = true;
                     services.filebrowser.settings.root = "/srv/hdd";
