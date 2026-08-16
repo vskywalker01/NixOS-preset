@@ -57,10 +57,13 @@
                         webcam.enable = true;
                         webcam.resolution = "1280x720";
                     };
-                    services.filebrowser.enable=true;
-                    services.filebrowser.proxy.enable = true;
-                    services.filebrowser.settings.root = "/srv/hdd";
-                     
+                    services.filebrowser = {
+                        enable=true;
+                        proxy = {
+                            enable = true;
+                        };
+                        settings.root = "/srv/hdd";
+                    };
                     services.open-webui.proxy = {
                         enable = true; 
                         server = "192.168.1.250";
@@ -73,7 +76,7 @@
                         server-mac = "40:B0:76:D9:79:E1";
                         enableWol = true;
                     };
-                    networking.firewall.allowedTCPPorts = [80 443 53];
+                    networking.firewall.allowedTCPPorts = [80 443 53 25565];
                     networking.firewall.allowedUDPPorts = [53];
 
                     networking = {
@@ -207,8 +210,22 @@
                     virtualisation.virtualbox.host.enable=true;
 
                     virtualisation.libvirtd.enable=true;
-                    services.minecraft-servers.enable = true;
-                    services.minecraft-servers.servers.vanilla.enable = true;
+                    services.minecraft-servers = {
+                        enable = true;
+                        dataDir = "/srv/hddraid/minecraft";
+                        servers.default = {
+                            enable = true;
+                            serverProperties = {
+                                "rcon-pass" = "supersecret-password";
+                                "rcon-port" = 25564;
+                            };
+                        };
+                    };
+                    networking.firewall.allowedTCPPorts = [
+                        config.services.minecraft-servers.servers.default.serverProperties."rcon-port"
+                    ];
+
+
                     services.open-webui.openFirewall = true;
                     applications.ai.enable = true;
 
@@ -246,7 +263,7 @@
                         ];
                     };
                     systemd.tmpfiles.rules = [
-                        "d /srv/hddraid 0755 root root -"
+                        "d /srv/hddraid 0777 root root -"
                     ];
                 })
             ];

@@ -1,13 +1,10 @@
 {config, pkgs, lib, inputs, ...}:
-let 
-    server-port = 8080; 
-in {
-
+{
     imports = [
         ./proxy.nix
     ];
-    config = {
-        services.ollama = lib.mkIf (config.applications.ai.enable) {
+    config = lib.mkIf (config.applications.ai.enable) {
+        services.ollama = {
             enable = true;
             environmentVariables = {
                 OLLAMA_KEEP_ALIVE = "5m";
@@ -22,10 +19,9 @@ in {
         };
 
         #enabling open-webui for chatbots
-        services.open-webui = lib.mkIf (config.applications.ai.enable){
+        services.open-webui = {
             host = "0.0.0.0";
             enable = true;
-            port = server-port;
             environment = {
                 ENABLE_WEB_SEARCH = "True";
                 WEB_SEARCH_ENGINE = "searxng";
@@ -37,7 +33,7 @@ in {
 
         #automatic unload of ollama models before the logout. 
         #This service fixes problems encoutered with supergfxctl during the logout process for changing GPU profile
-        systemd.user.services.ollama-unload = lib.mkIf (config.applications.ai.enable){
+        systemd.user.services.ollama-unload = {
             description = "Unload Ollama models on logout";
             serviceConfig = {
                 Type = "oneshot";
@@ -46,7 +42,7 @@ in {
             wantedBy = [ "exit.target" ];
         };
 
-        services.searx = lib.mkIf (config.applications.ai.enable){
+        services.searx = {
             enable = true;
             redisCreateLocally = true;
             settings = {

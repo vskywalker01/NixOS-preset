@@ -1,7 +1,5 @@
 {config, lib, pkgs, ...}:
-let 
-    server-port = 8334; 
-in {
+{
     options.services.filebrowser.proxy = {
         enable = lib.mkOption {
             type = lib.types.bool; 
@@ -12,6 +10,11 @@ in {
             type = lib.types.str; 
             default = "127.0.0.1";
             description = "ip address of the server";
+        };
+        port = lib.mkOption {
+            type = lib.types.int; 
+            default = config.services.filebrowser.settings.port;
+            description = "port of the server";
         };
         domain = lib.mkOption {
             type = lib.types.str; 
@@ -33,14 +36,14 @@ in {
             enable = true;
             virtualHosts."${config.services.filebrowser.proxy.domain}".extraConfig = ''
                 tls internal
-                reverse_proxy ${config.services.filebrowser.proxy.server}:${toString server-port}
+                reverse_proxy ${config.services.filebrowser.proxy.server}:${toString config.services.filebrowser.proxy.port}
             ''
             + lib.optionalString config.services.filebrowser.proxy.enableWol ''
                 handle_errors {
                     @502 expression {err.status_code} == 502
                     handle @502 {
                         wake_on_lan ${config.services.filebrowser.proxy.server-mac}
-                        reverse_proxy ${config.services.filebrowser.proxy.server}:${toString server-port} {
+                        reverse_proxy ${config.services.filebrowser.proxy.server}:${toString config.services.filebrowser.proxy.port} {
                             lb_try_duration 120s
                         }
                     }

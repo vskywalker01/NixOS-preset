@@ -1,8 +1,5 @@
 {config, lib, pkgs, ...}:
-let 
-    server-port = 5000;
-    webcam-port = 5001;
-in {
+{
     options.services.octoprint.webcam = {
         enable = lib.mkOption {
             type = lib.types.bool; 
@@ -23,6 +20,11 @@ in {
             type = lib.types.str; 
             default = "15";
             description = "webcam framerate";
+        };
+        port = lib.mkOption {
+            type = lib.types.int; 
+            default = "5001"; 
+            description = "port of the webcam server";
         };
     };
 
@@ -54,7 +56,7 @@ in {
                 ExecStart = ''
                     ${pkgs.mjpg-streamer}/bin/mjpg_streamer \
                     -i "${pkgs.mjpg-streamer}/lib/mjpg-streamer/input_uvc.so -d ${config.services.octoprint.webcam.device} -r ${config.services.octoprint.webcam.resolution} -f ${config.services.octoprint.webcam.framerate}" \
-                    -o "${pkgs.mjpg-streamer}/lib/mjpg-streamer/output_http.so -w ${pkgs.mjpg-streamer}/share/mjpg-streamer/www -p ${toString webcam-port}"
+                    -o "${pkgs.mjpg-streamer}/lib/mjpg-streamer/output_http.so -w ${pkgs.mjpg-streamer}/share/mjpg-streamer/www -p ${config.services.octoprint.webcam.port}"
                 '';
 
                 Restart = "always";

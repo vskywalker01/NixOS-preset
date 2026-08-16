@@ -10,7 +10,6 @@
         ./tailscale
         ./octoprint
         ./filebrowser
-        ./haproxy
         ./minecraft
         ./caddy
         ./hdparm

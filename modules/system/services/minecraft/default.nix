@@ -1,9 +1,5 @@
 {config, lib, pkgs,inputs, ...}:
 let 
-    server-port = 25564;
-    rcon-port = 25563;
-    rcon-pass = "supersecret-password";
-
     inhibitScript = pkgs.writeShellScript "minecraft-inhibit" ''
         set -eu
 
@@ -11,8 +7,8 @@ let
             players="$(
                 ${pkgs.mcrcon}/bin/mcrcon \
                 -H 127.0.0.1 \
-                -P ${toString rcon-port} \
-                -p ${rcon-pass} \
+                -P ${toString config.services.minecraft-servers.servers.default.serverProperties."rcon-port"} \
+                -p ${toString config.services.minecraft-servers.servers.default.serverProperties."rcon-pass"} \
                 "list" 2>/dev/null || true
             )"
 
@@ -31,7 +27,7 @@ let
             sleep 60
         done
     ''; 
-in { 
+in {
     imports = [
         inputs.nix-minecraft.nixosModules.minecraft-servers
           {
@@ -42,11 +38,10 @@ in {
     config = lib.mkIf(config.services.minecraft-servers.enable) {
         services.minecraft-servers = { 
             eula = true; 
-            servers.vanilla = {
+            servers.default = {
                 serverProperties = {
                     autoStart = true;
                     server-ip = "0.0.0.0";
-                    server-port = server-port;
                     difficulty = 2;
                     gamemode = 0;
                     max-players = 6;
@@ -55,8 +50,6 @@ in {
                     allow-cheats = true;
                     online-mode = false;
                     enable-rcon = true;
-                    "rcon.port" = rcon-port;
-                    "rcon.password" = rcon-pass;
                 };
                 package = pkgs.vanillaServers.vanilla-26_2;
                 jvmOpts = "-Xms2048M -Xmx2048M -Djava.net.preferIPv4Stack=true";
@@ -64,9 +57,9 @@ in {
         };
         systemd.services.minecraft-inhibit = {
               description = "Minecraft sleep inhibitor";
-              wantedBy = [ "minecraft-server-vanilla.service" ];
+              wantedBy = [ "minecraft-server-default.service" ];
               after = [
-                    "minecraft-server-vanilla.service"
+                    "minecraft-server-default.service"
               ];
               serviceConfig = {
                     User = "root";
@@ -78,11 +71,5 @@ in {
         environment.systemPackages = [
             pkgs.mcron 
         ];
-
-        networking.firewall.allowedTCPPorts = [
-            server-port 
-            rcon-port 
-        ];
-
     };     
 }

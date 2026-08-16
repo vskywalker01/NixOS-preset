@@ -1,16 +1,12 @@
 {config, lib, pkgs,inputs, ...}:
 let 
-    server-port = 25564;
-    rcon-port = 25563;
-    rcon-pass = "supersecret-password";
-
     wakecommand = lib.optionalString config.services.minecraft-server.proxy.enableWol "${pkgs.wakeonlan}/bin/wakeonlan ${config.services.minecraft-server.proxy.server-mac}";
  
     lazymcConfig= ''
         [server]
         directory = "."
         command = "${wakecommand}" 
-        address = "${config.services.minecraft-server.proxy.server}:${toString server-port}"
+        address = "${toString config.services.minecraft-server.proxy.server}:${toString config.services.minecraft-server.proxy.port}"
 
         [public]
         bind = "0.0.0.0:25565"
@@ -33,22 +29,8 @@ let
         stopping = "The server is going to sleep...\n\nPlease try to reconnect after few minutes to wake it again."
 
         [join.hold]
-        timeout = 300
+        timeout = 600
         
-        [join.forward]
-
-        [join.lobby]
-
-        [lockout]
-
-        [time]
-
-        [rcon]
-        address = "${config.services.minecraft-server.proxy.server}:${toString rcon-port}"
-        password = "${rcon-pass}"
-
-        [advanced]
-
         [config]
         version = "0.2.11"
     '';
@@ -65,6 +47,11 @@ in {
             default = "127.0.0.1";
             description = "ip address of the server";
         };
+        port = lib.mkOption {
+            type = lib.types.int; 
+            default = 25565;
+            description = "port of the server";
+        };
         enableWol = lib.mkOption {
             type = lib.types.bool; 
             default = false; 
@@ -80,8 +67,8 @@ in {
         environment = { 
             systemPackages = [
                 pkgs.wakeonlan
-                pkgs.mcron 
-                pkgs.lazymc 
+                pkgs.lazymc
+                pkgs.mcron
             ];
             etc."lazymc/config.toml".text = lazymcConfig;
         };
@@ -99,8 +86,6 @@ in {
             };
             
         }; 
-        networking.firewall.allowedTCPPorts = [
-            25565
-        ];
+        
     };     
 }
