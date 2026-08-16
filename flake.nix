@@ -227,7 +227,7 @@
                     };
                     networking.firewall.allowedTCPPorts = [
                         config.services.minecraft-servers.servers.default.serverProperties."rcon-port"
-                        25565;
+                        25565
                     ];
 
 
