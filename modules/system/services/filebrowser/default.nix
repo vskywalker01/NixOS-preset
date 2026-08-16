@@ -1,7 +1,5 @@
 {config, lib, pkgs, inputs,...}:
-let 
-    server-port = 8334; 
-in {
+{
     imports = [
         ./proxy.nix
     ];
@@ -10,7 +8,6 @@ in {
             settings = {
                 root = "/srv/hdd";
                 address = "127.0.0.1";
-                port = server-port;
             };
         };
     };

@@ -23,7 +23,7 @@
         };
         port = lib.mkOption {
             type = lib.types.int; 
-            default = "5001"; 
+            default = 5001; 
             description = "port of the webcam server";
         };
     };
@@ -56,7 +56,7 @@
                 ExecStart = ''
                     ${pkgs.mjpg-streamer}/bin/mjpg_streamer \
                     -i "${pkgs.mjpg-streamer}/lib/mjpg-streamer/input_uvc.so -d ${config.services.octoprint.webcam.device} -r ${config.services.octoprint.webcam.resolution} -f ${config.services.octoprint.webcam.framerate}" \
-                    -o "${pkgs.mjpg-streamer}/lib/mjpg-streamer/output_http.so -w ${pkgs.mjpg-streamer}/share/mjpg-streamer/www -p ${config.services.octoprint.webcam.port}"
+                    -o "${pkgs.mjpg-streamer}/lib/mjpg-streamer/output_http.so -w ${pkgs.mjpg-streamer}/share/mjpg-streamer/www -p ${toString config.services.octoprint.webcam.port}"
                 '';
 
                 Restart = "always";

@@ -62,7 +62,10 @@
                         proxy = {
                             enable = true;
                         };
-                        settings.root = "/srv/hdd";
+                        settings = {
+                            root = "/srv/hdd";
+                            port = 8334;
+                        };
                     };
                     services.open-webui.proxy = {
                         enable = true; 
@@ -216,6 +219,7 @@
                         servers.default = {
                             enable = true;
                             serverProperties = {
+                                port = 25565;
                                 "rcon-pass" = "supersecret-password";
                                 "rcon-port" = 25564;
                             };
@@ -223,6 +227,7 @@
                     };
                     networking.firewall.allowedTCPPorts = [
                         config.services.minecraft-servers.servers.default.serverProperties."rcon-port"
+                        25565;
                     ];
 
 
