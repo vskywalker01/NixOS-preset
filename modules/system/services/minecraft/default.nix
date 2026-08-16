@@ -7,8 +7,8 @@ let
             players="$(
                 ${pkgs.mcrcon}/bin/mcrcon \
                 -H 127.0.0.1 \
-                -P ${toString config.services.minecraft-servers.servers.default.serverProperties."rcon-port"} \
-                -p ${toString config.services.minecraft-servers.servers.default.serverProperties."rcon-pass"} \
+                -P ${toString config.services.minecraft-servers.servers.default.serverProperties."rcon.port"} \
+                -p ${toString config.services.minecraft-servers.servers.default.serverProperties."rcon.password"} \
                 "list" 2>/dev/null || true
             )"
 
@@ -69,7 +69,7 @@ in {
         };
 
         environment.systemPackages = [
-            pkgs.mcron 
+            pkgs.mcrcon 
         ];
     };     
 }

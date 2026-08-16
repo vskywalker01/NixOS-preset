@@ -68,7 +68,7 @@ in {
             systemPackages = [
                 pkgs.wakeonlan
                 pkgs.lazymc
-                pkgs.mcron
+                pkgs.mcrcon
             ];
             etc."lazymc/config.toml".text = lazymcConfig;
         };
