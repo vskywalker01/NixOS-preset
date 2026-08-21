@@ -215,18 +215,17 @@
                     virtualisation.libvirtd.enable=true;
                     services.minecraft-servers = {
                         enable = true;
-                        dataDir = "/srv/hddraid/minecraft";
+                        #dataDir = "/srv/hddraid/minecraft";
                         servers.default = {
                             enable = true;
                             serverProperties = {
                                 port = 25565;
                                 "rcon.password" = "supersecret-password";
-                                "rcon.port" = 25564;
+                                "rcon.port" = 25575;
                             };
                         };
                     };
-                    networking.firewall.allowedTCPPorts = [
-                        25564 
+                    networking.firewall.allowedTCPPorts = [ 
                         25565
                     ];
 

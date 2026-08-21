@@ -7,6 +7,9 @@ let
         directory = "."
         command = "${wakecommand}" 
         address = "${toString config.services.minecraft-server.proxy.server}:${toString config.services.minecraft-server.proxy.port}"
+        start_timeout = 300
+        stop_timeout = 300
+
 
         [public]
         bind = "0.0.0.0:25565"
@@ -23,14 +26,18 @@ let
             "hold",
             "kick",
         ]
+
+        [time]
+        sleep_after = 120
         
+        [join.hold]
+        timeout = 600
+
         [join.kick]
         starting = "The server is starting...\n\nPlease try to reconnect after few minutes."
         stopping = "The server is going to sleep...\n\nPlease try to reconnect after few minutes to wake it again."
 
-        [join.hold]
-        timeout = 600
-        
+                
         [config]
         version = "0.2.11"
     '';
