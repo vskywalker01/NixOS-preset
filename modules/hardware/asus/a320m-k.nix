@@ -24,7 +24,7 @@ in {
                 efi.canTouchEfiVariables = true;
             };
             lanzaboote.enable = true;
-            kernelPackages = pkgs.linuxPackages_6_18;
+            kernelPackages = pkgs.linuxPackages_latest;
             extraModulePackages = with config.boot.kernelPackages; [ it87 ];
             kernelParams = [ "mem_sleep_default=deep" "acpi_enforce_resources=lax" ];
             kernelModules = [ "coretemp" "it87" ];
