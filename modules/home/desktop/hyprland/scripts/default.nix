@@ -24,8 +24,8 @@
         source = ./get-fan-speeds.sh;
         executable = true;
     };
-     xdg.configFile."hypr/scripts/suspend.sh" = {
-        source = ./suspend.sh;
+     xdg.configFile."hypr/scripts/can-suspend.sh" = {
+        source = ./can-suspend.sh;
         executable = true;
     };
     
