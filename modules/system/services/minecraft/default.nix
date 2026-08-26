@@ -52,7 +52,7 @@ in {
                     enable-rcon = true;
                 };
                 package = pkgs.vanillaServers.vanilla-26_2;
-                jvmOpts = "-Xms4096M -Xmx4096M -Djava.net.preferIPv4Stack=true";
+                jvmOpts = "-Xms2048M -Xmx2048M -Djava.net.preferIPv4Stack=true";
             };
         };
         systemd.services.minecraft-inhibit = {
