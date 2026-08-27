@@ -33,7 +33,8 @@ in {
           {
             nixpkgs.overlays = [ inputs.nix-minecraft.overlay ];
           }
-        ./lazymc.nix
+        #./lazymc.nix
+        ./velocity.nix
     ];
     config = lib.mkIf(config.services.minecraft-servers.enable) {
         services.minecraft-servers = { 

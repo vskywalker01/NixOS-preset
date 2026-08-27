@@ -79,8 +79,8 @@
                         server-mac = "40:B0:76:D9:79:E1";
                         enableWol = true;
                     };
-                    networking.firewall.allowedTCPPorts = [80 443 53 25565];
-                    networking.firewall.allowedUDPPorts = [53];
+                    networking.firewall.allowedTCPPorts = [80 443 53 25565 19132];
+                    networking.firewall.allowedUDPPorts = [53 19132];
 
                     networking = {
                         interfaces.eth0 = {
@@ -228,7 +228,6 @@
                     networking.firewall.allowedTCPPorts = [ 
                         25565
                     ];
-
 
                     services.open-webui.openFirewall = true;
                     applications.ai.enable = true;
