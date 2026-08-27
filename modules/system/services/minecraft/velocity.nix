@@ -56,8 +56,10 @@ let
 
         servers:
           default:
-            virtual_host: play.example.com 
-            start_command: '${wakecommand}' 
+            virtual_host: minecraft.skywalker.home
+            control_api:
+              type: 'shell'
+              start_command: '${wakecommand}' 
 
         rules:
           start_on_connection:
@@ -73,12 +75,14 @@ let
             servers: [default]  # List of server names to handle (maps to virtual_hosts from servers section)
             offline:
               use_cached_motd: false
+              use_backend_motd: false
               motd: "Server inactive (join to wake up)"
               version_name: "<blue>◉ Sleeping"
               protocol_version: -1
               #icon: "/path/to/offline-icon.png"
             online:
               use_cached_motd: false
+              use_backend_motd: true
               motd: "Server online"
               version_name: ""
               protocol_version: 772
