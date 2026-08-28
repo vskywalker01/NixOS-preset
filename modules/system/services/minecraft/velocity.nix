@@ -18,7 +18,7 @@ let
             cp $src $out/share/velocity/plugins/AutoStartStop.jar
         '';
     };
-
+     
     velocity-geyser = pkgs.stdenvNoCC.mkDerivation {
         pname = "velocity-geyser";
         version = "1233";
@@ -48,7 +48,7 @@ let
             control_api:
               type: 'shell' 
             ping:
-              timeout: 30s
+              timeout: 240s
               method: velocity
             startup_timer:
               expected_startup_time: 240s
@@ -67,35 +67,15 @@ let
             template: start_on_connection
             servers: [default]  # List of server names to monitor
             mode: hold  
-
-          # Customize ping/MOTD responses based on server status
-          respond_ping:
-            enabled: true
-            template: respond_ping
-            servers: [minecraft.skywalker.home]  # List of server names to handle (maps to virtual_hosts from servers section)
-            offline:
-              use_cached_motd: false
-              use_backend_motd: false
-              motd: "Server inactive (join to wake up)"
-              version_name: "<blue>◉ Sleeping"
-              protocol_version: -1
-              #icon: "/path/to/offline-icon.png"
-            online:
-              use_cached_motd: false
-              use_backend_motd: true
-              motd: "Server online"
-              version_name: ""
-              protocol_version: 772
-              #icon: "/path/to/online-icon.png"
-
     '';
+    
 
     velocityConfig= ''
         config-version = "2.8"
         bind = "0.0.0.0:25565"
 
         motd = "Sfinfirinx poskys!"
-        show-max-players = 6
+        show-max-players = 30
         online-mode = false
         force-key-authentication = true
         prevent-client-proxy-connections = false
@@ -198,8 +178,6 @@ in {
                 velocity-autostartstop
                 velocity-geyser
             ];
-            etc."velocity-debug".text =
-  "${unstable.velocity}\n${unstable.velocity.version}\n";
         };
         systemd.tmpfiles.rules = [
             "d /var/lib/velocity 0750 root root -"
@@ -208,6 +186,7 @@ in {
 
             "L+ /var/lib/velocity/plugins/AutoStartStop.jar - - - - ${velocity-autostartstop}/share/velocity/plugins/AutoStartStop.jar"
             "L+ /var/lib/velocity/plugins/Geyser.jar - - - - ${velocity-geyser}/share/velocity/plugins/Geyser.jar"
+
             "L+ /var/lib/velocity/velocity.toml - - - - ${velocityToml}"
             "L+ /var/lib/velocity/plugins/autostartstop/config.yml - - - - ${autoStartStopYml}"
         ];

@@ -33,7 +33,6 @@ in {
           {
             nixpkgs.overlays = [ inputs.nix-minecraft.overlay ];
           }
-        #./lazymc.nix
         ./velocity.nix
     ];
     config = lib.mkIf(config.services.minecraft-servers.enable) {
@@ -45,14 +44,14 @@ in {
                     server-ip = "0.0.0.0";
                     difficulty = 2;
                     gamemode = 0;
-                    max-players = 6;
+                    max-players = 30;
                     motd = "Sfinfirinx poskys!";
                     white-list = false;
                     allow-cheats = true;
                     online-mode = false;
                     enable-rcon = true;
                 };
-                package = pkgs.vanillaServers.vanilla-26_2;
+                package = pkgs.paperServers.paper-26_2;
                 jvmOpts = "-Xms2048M -Xmx2048M -Djava.net.preferIPv4Stack=true";
             };
         };
