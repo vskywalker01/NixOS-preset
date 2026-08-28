@@ -51,8 +51,8 @@ let
               timeout: 30s
               method: velocity
             startup_timer:
-              expected_startup_time: 60s
-              auto_calculate_expected_startup_time: true
+              expected_startup_time: 240s
+              auto_calculate_expected_startup_time: false
 
         servers:
           default:
@@ -72,7 +72,7 @@ let
           respond_ping:
             enabled: true
             template: respond_ping
-            servers: [default]  # List of server names to handle (maps to virtual_hosts from servers section)
+            servers: [minecraft.skywalker.home]  # List of server names to handle (maps to virtual_hosts from servers section)
             offline:
               use_cached_motd: false
               use_backend_motd: false
@@ -214,7 +214,10 @@ in {
         systemd.services.velocity = {
             wantedBy = [ "multi-user.target" ];
             after = [ "network.target" ];
-
+            path = with pkgs; [
+                bash
+                coreutils
+            ];
             serviceConfig = {
                 ExecStart = "${unstable.velocity}/bin/velocity ";
                 WorkingDirectory = "/var/lib/velocity";
