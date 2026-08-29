@@ -1,39 +1,7 @@
 {config, lib, pkgs,inputs, ...}:
 let 
-    unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
-
     wakecommand = lib.optionalString config.services.minecraft-server.proxy.enableWol "${pkgs.wakeonlan}/bin/wakeonlan ${config.services.minecraft-server.proxy.server-mac}";
     
-    velocity-autostartstop = pkgs.stdenvNoCC.mkDerivation {
-        pname = "velocity-autostartstop";
-        version = "1.1.0-beta";
-
-        src = pkgs.fetchurl {
-            url = "https://github.com/beyenilmez/autostartstop/releases/download/v${velocity-autostartstop.version}/AutoStartStop-${velocity-autostartstop.version}.jar";
-            hash = "sha256-gOgyxVMFFiyxwYpE7q9oJVYn8xs+W9SN8q3Mv1mCYYs=";
-        };
-        dontUnpack = true;
-        installPhase = ''
-            mkdir -p $out/share/velocity/plugins
-            cp $src $out/share/velocity/plugins/AutoStartStop.jar
-        '';
-    };
-     
-    velocity-geyser = pkgs.stdenvNoCC.mkDerivation {
-        pname = "velocity-geyser";
-        version = "1233";
-
-        src = pkgs.fetchurl {
-            url = "https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/velocity";
-            hash = "sha256-iy5KYOibJU0nLcJN0FLTBS9q/CxFn5B/3Seg132rGKA=";
-        };
-        dontUnpack = true;
-        installPhase = ''
-            mkdir -p $out/share/velocity/plugins
-            cp $src $out/share/velocity/plugins/Geyser.jar
-        '';
-    };
-
 
     autoStartStopConfig = ''
         version: 1
@@ -79,7 +47,7 @@ let
         online-mode = false
         force-key-authentication = true
         prevent-client-proxy-connections = false
-        player-info-forwarding-mode = "NONE"
+        player-info-forwarding-mode = "MODERN"
         forwarding-secret-file = "forwarding.secret"
 
         announce-forge = false
@@ -169,41 +137,48 @@ in {
             description = "mac address of the server (for wake on lan)";
         };
     };
+    imports = [
+        inputs.nix-minecraft.nixosModules.minecraft-servers
+          {
+            nixpkgs.overlays = [ inputs.nix-minecraft.overlay ];
+          }
+    ];
     config = lib.mkIf(config.services.minecraft-server.proxy.enable){ 
         environment = { 
             systemPackages = [
                 pkgs.wakeonlan
-                unstable.velocity
                 pkgs.mcrcon
-                velocity-autostartstop
-                velocity-geyser
+
             ];
         };
-        systemd.tmpfiles.rules = [
-            "d /var/lib/velocity 0750 root root -"
-            "d /var/lib/velocity/plugins 0750 root root -"
-            "d /var/lib/velocity/plugins/autostartstop 0750 root root -"
 
-            "L+ /var/lib/velocity/plugins/AutoStartStop.jar - - - - ${velocity-autostartstop}/share/velocity/plugins/AutoStartStop.jar"
-            "L+ /var/lib/velocity/plugins/Geyser.jar - - - - ${velocity-geyser}/share/velocity/plugins/Geyser.jar"
-
-            "L+ /var/lib/velocity/velocity.toml - - - - ${velocityToml}"
-            "L+ /var/lib/velocity/plugins/autostartstop/config.yml - - - - ${autoStartStopYml}"
-        ];
-        systemd.services.velocity = {
-            wantedBy = [ "multi-user.target" ];
-            after = [ "network.target" ];
-            path = with pkgs; [
-                bash
-                coreutils
-            ];
-            serviceConfig = {
-                ExecStart = "${unstable.velocity}/bin/velocity ";
-                WorkingDirectory = "/var/lib/velocity";
-                Restart = "always";
+        services.minecraft-servers = {
+            enable = true;
+            eula = true;
+            servers.velocity = {
+                enable = true;
+                serverProperties.autoStart = true;
+                package = pkgs.velocityServers.velocity.override {
+                    jre_headless = pkgs.jdk25;
+                };
+                jvmOpts = "-Xms256M -Xmx256M -Djava.net.preferIPv4Stack=true";
+                symlinks = {
+                    "velocity.toml" = velocityToml;
+                    "plugins/autostartstop/config.yml" = autoStartStopYml; 
+                    "plugins/AutoStartStop.jar" = pkgs.fetchurl { 
+                        url = "https://github.com/beyenilmez/autostartstop/releases/download/v1.1.0-beta/AutoStartStop-1.1.0-beta.jar"; 
+                        sha256 = "80e832c55305162cb1c18a44eeaf68255627f31b3e5bd48df2adccbf5982618b"; 
+                    };
+                    "plugins/GeyserMC.jar" = pkgs.fetchurl { 
+                        url = "https://cdn.modrinth.com/data/wKkoqHrH/versions/vj2QhrSS/Geyser-Velocity.jar?mr_download_reason=standalone"; 
+                        sha256 = "sha256-iy5KYOibJU0nLcJN0FLTBS9q/CxFn5B/3Seg132rGKA="; 
+                    };
+                    "plugins/SkinRestorer.jar" = pkgs.fetchurl {
+                        url = "https://cdn.modrinth.com/data/TsLS8Py5/versions/wXS6bHiC/SkinsRestorer.jar?mr_download_reason=standalone";
+                        sha256 = "sha256-vxP/7pu0iBQbfsmWA+vIq6xomTPXLbFeZk/rC03u/GA=";
+                    };
+                };
             };
-            
-        }; 
-        
+        };
     };     
 }

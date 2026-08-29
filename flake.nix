@@ -191,7 +191,6 @@
                         enable = true;
                         user = "vittorio";
                     };
-                    
                 })
             ];
         };
@@ -213,17 +212,11 @@
                     virtualisation.virtualbox.host.enable=true;
 
                     virtualisation.libvirtd.enable=true;
-                    services.minecraft-servers = {
+                    services.minecraft-server.backend = {
                         enable = true;
-                        #dataDir = "/srv/hddraid/minecraft";
-                        servers.default = {
-                            enable = true;
-                            serverProperties = {
-                                port = 25565;
-                                "rcon.password" = "supersecret-password";
-                                "rcon.port" = 25575;
-                            };
-                        };
+                        port = 25565; 
+                        rconPort = 25575;
+                        rconPass = "supersecret-password";
                     };
                     networking.firewall.allowedTCPPorts = [ 
                         25565
