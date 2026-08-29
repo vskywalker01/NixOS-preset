@@ -26,7 +26,7 @@ let
 
             sleep 60
         done
-    ''; 
+    '';
 in {
 
     options.services.minecraft-server.backend = {
@@ -65,6 +65,7 @@ in {
             enable = true;
             eula = true; 
             servers.default = {
+                enable = true;
                 serverProperties = {
                     autoStart = true;
                     server-ip = "0.0.0.0";
@@ -81,12 +82,13 @@ in {
                     "rcon.port" = config.services.minecraft-server.backend.rconPort;
 
                 };
-                package = pkgs.neoForgeServers.neoForge-26_2;
+                package = pkgs.paperServers.paper-26_2;
+
                 jvmOpts = "-Xms2048M -Xmx2048M -Djava.net.preferIPv4Stack=true";
                 symlinks = {
-                    "mods/SkinsRestorer.jar" = pkgs.fetchurl { 
-                        url = "https://cdn.modrinth.com/data/TsLS8Py5/versions/IVzK51WC/SkinsRestorer-Mod-NeoForge-15.12.5.jar?mr_download_reason=standalone"; 
-                        sha256 = "80e832c55305162cb1c18a44eeaf68255627f31b3e5bd48df2adccbf5982618b"; 
+                    "plugins/SkinsRestorer.jar" = pkgs.fetchurl { 
+                        url = "https://cdn.modrinth.com/data/TsLS8Py5/versions/wXS6bHiC/SkinsRestorer.jar?mr_download_reason=standalone"; 
+                        sha256 = "sha256-vxP/7pu0iBQbfsmWA+vIq6xomTPXLbFeZk/rC03u/GA="; 
                     };
                 };
             };
