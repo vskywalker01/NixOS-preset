@@ -178,6 +178,10 @@ in {
                         sha256 = "sha256-vxP/7pu0iBQbfsmWA+vIq6xomTPXLbFeZk/rC03u/GA=";
                     };
                 };
+                path = [
+                    pkgs.coreutils
+                    pkgs.bash
+                ];
             };
         };
     };     
