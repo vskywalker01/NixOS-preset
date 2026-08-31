@@ -24,7 +24,7 @@ let
                 ${pkgs.procps}/bin/pkill -f "systemd-inhibit.*Minecraft" || true
             fi
 
-            sleep 60
+            sleep 240
         done
     '';
 

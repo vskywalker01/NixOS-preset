@@ -1,14 +1,33 @@
 {config, lib, pkgs, inputs, ...}:
 let 
-  unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
-  hibernateEnvironment = {
-        HIBERNATE_SECONDS = "3600";
+    unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+    hibernateEnvironment = {
+        HIBERNATE_SECONDS = "${toString config.hibernation_after_suspend.seconds}";
         HIBERNATE_LOCK = "/var/run/autohibernate.lock";
-  };
+    };
 in {
-  config = lib.mkIf (config.programs.hyprland.enable) {
+    options.hibernation_after_suspend = {
+        enable = lib.mkOption {
+            type = lib.types.bool; 
+            default = false;
+            description = "Enable gaming application stock";
+        };
+        action = lib.mkOption {
+            type = lib.types.str; 
+            default = "hibernate";
+            description = "Systemd action to achieve after long suspension periods";
+        };
+        seconds = lib.mkOption {
+            type = lib.types.int; 
+            default = 3600;
+            description = "time before taking an action after suspension";
+        };
+
+    };
+
+    config = lib.mkIf (config.programs.hyprland.enable) {
         programs.firefox.package = pkgs.firefox-bin;
-   
+        hibernation_after_suspend.enable = true;
         #enabling xwayland for x11 support
         programs.xwayland.enable = true;
         services.xserver.enable = lib.mkDefault true;
@@ -37,14 +56,6 @@ in {
         services.logind = {
             enable = true; 
         };
-        #systemd.sleep.settings.Sleep = {
-        #    SuspendState = "mem";
-        #    AllowSuspend = "yes";
-        #    AllowHibernation = "yes";
-        #    AllowHybridSleep = "yes";
-        #    AllowSuspendThenHibernate = "no";
-        #};
-        #boot.kernelParams = ["mem_sleep_default=deep"];
 
         systemd.services."hybernation-recovery-timer" = {
             description = "Sets up the suspend so that it'll wake for hibernation";
@@ -69,7 +80,7 @@ in {
               sustime=$(cat $HIBERNATE_LOCK)
               rm $HIBERNATE_LOCK
               if [ $(($curtime - $sustime)) -ge $HIBERNATE_SECONDS ] ; then
-                systemctl hibernate
+                systemctl ${config.hibernation_after_suspend.action};
               else
                 ${pkgs.utillinux}/bin/rtcwake -m no -s 1
               fi

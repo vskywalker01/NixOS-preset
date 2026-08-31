@@ -80,7 +80,7 @@
                         enableWol = true;
                         autowake = {
                             enable = true; 
-                            time = "*-*-* 02:52:00";
+                            time = "*-*-* 02:55:00";
                         };
                     };
                     networking.firewall.allowedTCPPorts = [80 443 53 25565 19132];
@@ -237,7 +237,7 @@
                     applications.ai.enable = true;
 
                     programs.hyprland.enable=true;
- 
+                    hibernation_after_suspend.action="shutdown"; 
                     applications.tools.enable = true;
                     applications.office.enable = true;
                     applications.gaming.enable = true; 

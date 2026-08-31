@@ -196,7 +196,7 @@ in {
                 ];
             };
         };
-        systemd.services.wake-on-lan = {
+        systemd.services.minecraft-server-wakeup = {
             description = "Send Wake-on-LAN packet";
 
             serviceConfig = {
@@ -210,8 +210,8 @@ in {
             };
         };
 
-        systemd.timers.wake-on-lan = lib.mkIf (config.services.minecraft-server.proxy.autowake.enable) {
-            description = "Scheduled Wake-on-LAN";
+        systemd.timers.minecraft-server-wakeup = lib.mkIf (config.services.minecraft-server.proxy.autowake.enable) {
+            description = "Scheduled wakeup for minecraft server backend";
 
             wantedBy = [ "timers.target" ];
 
