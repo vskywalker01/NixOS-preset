@@ -78,6 +78,10 @@
                         server = "192.168.1.250";
                         server-mac = "40:B0:76:D9:79:E1";
                         enableWol = true;
+                        autowake = {
+                            enable = true; 
+                            time = "*-*-* 02:52:00";
+                        };
                     };
                     networking.firewall.allowedTCPPorts = [80 443 53 25565 19132];
                     networking.firewall.allowedUDPPorts = [53 19132];
@@ -217,6 +221,13 @@
                         port = 25565; 
                         rconPort = 25575;
                         rconPass = "supersecret-password";
+                        backups = {
+                            enable = true; 
+                            address = "192.168.1.254";
+                            user = "vittorio";
+                            key = "/srv/minecraft/keys/backuper_rsa";
+                            path = "/srv/hdd/minecraft";
+                        };
                     };
                     networking.firewall.allowedTCPPorts = [ 
                         25565

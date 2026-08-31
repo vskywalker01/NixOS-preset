@@ -1,5 +1,7 @@
-{config, lib, pkgs, systemConfig ? {} , ...}:
-{
+{config, lib, pkgs, flake-inputs, systemConfig ? {} , ...}:
+let 
+    unstable = flake-inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+in {
     config = lib.mkIf (systemConfig.programs.hyprland.enable) {
         xdg.configFile."hypr/hypridle.conf".source = ./hypridle.conf;
         systemd.user.services.hypridle = {
@@ -11,7 +13,7 @@
               };
 
               Service = {
-                    ExecStart = "${pkgs.hypridle}/bin/hypridle";
+                    ExecStart = "${unstable.hypridle}/bin/hypridle";
                     Restart = "on-failure";
               };
         };

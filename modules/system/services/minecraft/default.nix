@@ -27,8 +27,60 @@ let
             sleep 60
         done
     '';
-in {
 
+    backuperYml = pkgs.writeText "backuper.yml" ''
+        # DO NOT CHANGE
+        configVersion: 14.0
+        lastBackup: 0
+        lastChange: 0
+
+        backup:
+          autoBackup: true
+          autoBackupPeriod: 1440
+          autoBackupCron: '${config.services.minecraft-server.backend.backups.schedule}'
+          backupFileNameFormat: dd-MM-yyyy HH-mm-ss
+          addDirectoryToBackup: []
+          excludeDirectoryFromBackup: []
+          deleteBrokenBackups: true
+          skipDuplicateBackup: true
+          afterBackup: NOTHING
+          setWorldsReadOnly: false
+
+        server:
+          alertTimeBeforeRestart: 60
+          alertOnlyServerRestart: true
+          alertBackupMessage: Backup in %d second(s)
+          alertBackupRestartMessage: Server restart in %d second(s)
+  
+          sizeCacheFile: ./plugins/Backuper/sizeCache.json
+          threadNumber: 0
+          checkUpdates: false
+          betterLogging: true
+
+        storages:
+          sftp:
+            type: sftp
+            enabled: ${if config.services.minecraft-server.backend.backups.enable == true then "true" else "false"}
+            autoBackup: true
+            backupsFolder: ${config.services.minecraft-server.backend.backups.path}
+            pathSeparatorSymbol: /
+            maxBackupsNumber: 5
+            maxBackupsWeight: 0
+            zipArchive: true
+            zipCompressionLevel: 5
+    
+            auth:
+              address: '${config.services.minecraft-server.backend.backups.address}'
+              port: 22
+              authType: key
+              username: '${config.services.minecraft-server.backend.backups.user}'
+              keyFilePath: '${config.services.minecraft-server.backend.backups.key}'
+              useKnownHostsFile: false
+    
+            debug:
+              protocolLogging: true
+    '';
+in {
     options.services.minecraft-server.backend = {
         enable = lib.mkOption {
             type = lib.types.bool; 
@@ -49,6 +101,40 @@ in {
             type = lib.types.int; 
             default = 25575; 
             description = "wake on lan when required";
+        };
+    
+        backups = {
+            enable = lib.mkOption {
+                type = lib.types.bool;
+                default = false; 
+                description = "SFTP world backup";
+            };
+            address = lib.mkOption {
+                type = lib.types.str; 
+                default = "127.0.0.1"; 
+                description = "SSH server address to be used for backups";
+            };
+            user = lib.mkOption {
+                type = lib.types.str; 
+                default = "minecraft"; 
+                description = "user to use for SSH connection";
+            };
+            key = lib.mkOption {
+                type = lib.types.str; 
+                default = "./";
+                description = "path of the ssh provate key to use for autentications";
+            };
+            path = lib.mkOption {
+                type = lib.types.str; 
+                default = "./"; 
+                description = "absolute path to use for backups in the remote server";
+            };
+            schedule = lib.mkOption {
+                type = lib.types.str; 
+                default = "0 0 3 ? * MON,TUE,WED,THU,FRI,SAT,SUN *";
+                description = "cron schedule for automatic backups";
+            };
+
         };
     };
 
@@ -90,7 +176,20 @@ in {
                         url = "https://cdn.modrinth.com/data/TsLS8Py5/versions/wXS6bHiC/SkinsRestorer.jar?mr_download_reason=standalone"; 
                         sha256 = "sha256-vxP/7pu0iBQbfsmWA+vIq6xomTPXLbFeZk/rC03u/GA="; 
                     };
+                    "plugins/Backuper.jar" = pkgs.fetchurl {
+                        url = "https://github.com/DVDishka/Backuper/releases/download/4.1.0/Backuper-4.1.0.jar";
+                        sha256 = "fb6e57162022bf49c7a11371373cb0c50ebbd406be10441b6dd407c3d4d61c68";
+                    };
                 };
+                files = {
+                    "plugins/Backuper/config.yml" = backuperYml;
+                };
+                path = [
+                    pkgs.coreutils
+                    pkgs.bash
+                    pkgs.cron 
+                    pkgs.openssh
+                ];
             };
         };
         systemd.services.minecraft-inhibit = {

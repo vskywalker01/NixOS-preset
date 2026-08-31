@@ -110,7 +110,7 @@ in {
             pkgs.awww
             pkgs.waypaper
             pkgs.mako
-            pkgs.hypridle
+            unstable.hypridle
             pkgs.swayosd
             pkgs.libnotify
             pkgs.mission-center

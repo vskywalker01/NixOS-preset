@@ -136,6 +136,18 @@ in {
             default = "00:00:00:00:00:00";
             description = "mac address of the server (for wake on lan)";
         };
+        autowake = {
+            enable = lib.mkOption {
+                type = lib.types.bool; 
+                default = false;
+                description = "Enable programmed wakeup of the backend server";
+            };
+            time = lib.mkOption {
+                type = lib.types.str; 
+                default = "";
+                description = "programmed wakeup period in systemd timer format for backend server";
+            };
+        };
     };
     imports = [
         inputs.nix-minecraft.nixosModules.minecraft-servers
@@ -182,6 +194,30 @@ in {
                     pkgs.coreutils
                     pkgs.bash
                 ];
+            };
+        };
+        systemd.services.wake-on-lan = {
+            description = "Send Wake-on-LAN packet";
+
+            serviceConfig = {
+                Type = "oneshot";
+                ExecStart = wakecommand;
+                path = [
+                    pkgs.coreutils
+                    pkgs.bash 
+                    pkgs.wakeonlan
+                ];
+            };
+        };
+
+        systemd.timers.wake-on-lan = lib.mkIf (config.services.minecraft-server.proxy.autowake.enable) {
+            description = "Scheduled Wake-on-LAN";
+
+            wantedBy = [ "timers.target" ];
+
+            timerConfig = {
+                OnCalendar = "${config.services.minecraft-server.proxy.autowake.time}";
+                Persistent = true;
             };
         };
     };     
