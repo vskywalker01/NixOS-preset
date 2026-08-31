@@ -7,6 +7,7 @@
     ./gui
     ./services
     ./tools
+    ./sleep
 ];
 
   config = {

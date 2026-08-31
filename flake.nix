@@ -195,6 +195,12 @@
                         enable = true;
                         user = "vittorio";
                     };
+
+                    sleep.autoshutdown = {
+                        enable = true;
+                        action="hibernate";
+                        seconds = 3600;
+                    };
                 })
             ];
         };
@@ -237,7 +243,11 @@
                     applications.ai.enable = true;
 
                     programs.hyprland.enable=true;
-                    hibernation_after_suspend.action="shutdown"; 
+                    sleep.autoshutdown = {
+                        enable = true;
+                        action="poweroff";
+                        seconds = 3600;
+                    };
                     applications.tools.enable = true;
                     applications.office.enable = true;
                     applications.gaming.enable = true; 
@@ -304,6 +314,12 @@
                     applications.video-editing.enable = false; 
                     applications.developing.enable = true; 
                     
+                    sleep.autoshutdown = {
+                        enable = true;
+                        action="poweroff";
+                        seconds = 3600;
+                    };
+
                 })
             ];
         };
