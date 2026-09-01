@@ -44,7 +44,7 @@ let
           deleteBrokenBackups: true
           skipDuplicateBackup: true
           afterBackup: NOTHING
-          setWorldsReadOnly: false
+          setWorldsReadOnly: true
 
         server:
           alertTimeBeforeRestart: 60
@@ -64,8 +64,8 @@ let
             autoBackup: true
             backupsFolder: ${config.services.minecraft-server.backend.backups.path}
             pathSeparatorSymbol: /
-            maxBackupsNumber: 5
-            maxBackupsWeight: 0
+            maxBackupsNumber: 0
+            maxBackupsWeight: 5120
             zipArchive: true
             zipCompressionLevel: 5
     
