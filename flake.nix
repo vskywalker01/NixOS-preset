@@ -50,7 +50,8 @@
                     services.openssh.enable=true;
                     services.flatpak.enable=false;
                     #virtualisation.docker.enable=true;
-          
+                    time.timeZone = "Europe/Rome";  
+                    time.hardwareClockInLocalTime = true;
                     services.octoprint = {
                         enable=true;
                         proxy.enable = true;
@@ -80,7 +81,7 @@
                         enableWol = true;
                         autowake = {
                             enable = true; 
-                            time = "*-*-* 02:55:00";
+                            time = "*-*-* 09:27:00";
                         };
                     };
                     networking.firewall.allowedTCPPorts = [80 443 53 25565 19132];
@@ -201,6 +202,8 @@
                         action="hibernate";
                         seconds = 3600;
                     };
+                    time.timeZone = "Europe/Rome";  
+                    time.hardwareClockInLocalTime = true;
                 })
             ];
         };
@@ -233,6 +236,7 @@
                             user = "vittorio";
                             key = "/srv/minecraft/keys/backuper_rsa";
                             path = "/srv/hdd/minecraft";
+                            schedule = "0 30 9 1/1 * ? *";
                         };
                     };
                     networking.firewall.allowedTCPPorts = [ 
@@ -282,6 +286,8 @@
                     systemd.tmpfiles.rules = [
                         "d /srv/hddraid 0777 root root -"
                     ];
+                    time.timeZone = "Europe/Rome";  
+                    time.hardwareClockInLocalTime = true;
                 })
             ];
         };
@@ -319,7 +325,8 @@
                         action="poweroff";
                         seconds = 3600;
                     };
-
+                    time.timeZone = "Europe/Rome";  
+                    time.hardwareClockInLocalTime = true;
                 })
             ];
         };
