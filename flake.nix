@@ -81,7 +81,7 @@
                         enableWol = true;
                         autowake = {
                             enable = true; 
-                            time = "*-*-* 04:56:00";
+                            time = "Mon,Wed,Fri,Sun 23:55:00";
                         };
                     };
                     networking.firewall.allowedTCPPorts = [80 443 53 25565 19132];
@@ -236,7 +236,7 @@
                             user = "vittorio";
                             key = "/srv/minecraft/keys/backuper_rsa";
                             path = "/srv/hdd/minecraft";
-                            schedule = "0 0 5 1/1 * ? *";
+                            schedule = "0 0 0 ? * MON,WED,FRI,SUN *";
                         };
                     };
                     networking.firewall.allowedTCPPorts = [ 
