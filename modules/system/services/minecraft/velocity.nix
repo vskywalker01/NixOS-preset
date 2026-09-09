@@ -173,7 +173,7 @@ in {
                 package = pkgs.velocityServers.velocity.override {
                     jre_headless = pkgs.jdk25;
                 };
-                jvmOpts = "-Xms256M -Xmx256M -Djava.net.preferIPv4Stack=true";
+                jvmOpts = "-Xms256M -Xmx256M -Djava.net.preferIPv4Stack=true -XX:+UseG1GC -XX:G1HeapRegionSize=4M -XX:+UnlockExperimentalVMOptions -XX:+ParallelRefProcEnabled -XX:+AlwaysPreTouch -XX:MaxInlineLevel=15";
                 symlinks = {
                     "velocity.toml" = velocityToml;
                     "plugins/autostartstop/config.yml" = autoStartStopYml; 

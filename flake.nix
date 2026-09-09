@@ -236,7 +236,7 @@
                             user = "vittorio";
                             key = "/srv/minecraft/keys/backuper_rsa";
                             path = "/srv/hdd/minecraft";
-                            schedule = "0 0 0 ? * MON,WED,FRI,SUN *";
+                            schedule = "0 5 0 ? * MON,WED,FRI,SUN *";
                         };
                     };
                     networking.firewall.allowedTCPPorts = [ 
