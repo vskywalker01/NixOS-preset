@@ -36,8 +36,7 @@ let
 
         backup:
           autoBackup: true
-          autoBackupPeriod: 1440
-          autoBackupCron: '${config.services.minecraft-server.backend.backups.schedule}'
+          autoBackupPeriod: ${toString config.services.minecraft-server.backend.backups.period}
           backupFileNameFormat: dd-MM-yyyy HH-mm-ss
           addDirectoryToBackup: []
           excludeDirectoryFromBackup: []
@@ -129,10 +128,10 @@ in {
                 default = "./"; 
                 description = "absolute path to use for backups in the remote server";
             };
-            schedule = lib.mkOption {
-                type = lib.types.str; 
-                default = "0 0 3 ? * MON,TUE,WED,THU,FRI,SAT,SUN *";
-                description = "cron schedule for automatic backups";
+            period = lib.mkOption {
+                type = lib.types.int; 
+                default = 1330;
+                description = "period for automatic backups";
             };
 
         };
