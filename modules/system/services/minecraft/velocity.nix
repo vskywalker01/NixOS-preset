@@ -39,22 +39,27 @@ let
     
 
     velocityConfig= ''
-        config-version = "2.8"
+        config-version = "2.9"
         bind = "0.0.0.0:25565"
-
         motd = "Sfinfirinx poskys!"
+
         show-max-players = 30
         online-mode = false
         force-key-authentication = true
         prevent-client-proxy-connections = false
-        player-info-forwarding-mode = "MODERN"
+        player-info-forwarding-mode = "modern"
         forwarding-secret-file = "forwarding.secret"
-
         announce-forge = false
-        kick-existing-players = true
-        ping-passthrough = "ALL"
+        kick-existing-players = false
         sample-players-in-ping = false
         enable-player-address-logging = true
+
+        [ping-passthrough]
+        version = true
+        players = true
+        description = true
+        favicon = true
+        modinfo = true
 
         [packet-limiter]
         interval = 7
@@ -76,8 +81,8 @@ let
 
         [advanced]
         compression-threshold = 256
-        compression-level = -1
 
+        compression-level = -1
         login-ratelimit = 3000
         connection-timeout = 5000
         read-timeout = 30000
@@ -85,13 +90,10 @@ let
         tcp-fast-open = false
         bungee-plugin-message-channel = false
         show-ping-requests = false
-        
         failover-on-unexpected-server-disconnect = true
         announce-proxy-commands = true
-
         log-command-executions = false
         log-player-connections = true
-
         accepts-transfers = false
         enable-reuse-port = false
         command-rate-limit = 50
