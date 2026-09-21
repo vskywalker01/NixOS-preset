@@ -167,17 +167,17 @@ in {
                     "rcon.port" = config.services.minecraft-server.backend.rconPort;
 
                 };
-                package = pkgs.paperServers.paper-26_2;
+                package = pkgs.paperServers.paper-26_3;
 
                 jvmOpts = "-Xms2048M -Xmx2048M -Djava.net.preferIPv4Stack=true";
                 symlinks = {
                     "plugins/SkinsRestorer.jar" = pkgs.fetchurl { 
-                        url = "https://cdn.modrinth.com/data/TsLS8Py5/versions/wXS6bHiC/SkinsRestorer.jar?mr_download_reason=standalone"; 
+                        url = "https://cdn.modrinth.com/data/TsLS8Py5/versions/ziIzW16f/SkinsRestorer.jar?mr_download_reason=standalone"; 
                         sha256 = "sha256-vxP/7pu0iBQbfsmWA+vIq6xomTPXLbFeZk/rC03u/GA="; 
                     };
                     "plugins/Backuper.jar" = pkgs.fetchurl {
-                        url = "https://github.com/DVDishka/Backuper/releases/download/4.1.0/Backuper-4.1.0.jar";
-                        sha256 = "fb6e57162022bf49c7a11371373cb0c50ebbd406be10441b6dd407c3d4d61c68";
+                        url = "https://cdn.modrinth.com/data/7cMAqMND/versions/z7hw76uE/Backuper-4.1.1.jar?mr_download_reason=standalone";
+                        sha256 = "sha256-7tknks6YiQ5k7AcGPHH53V0sMIiHTHytZWA2oKC5AC4=";
                     };
                 };
                 files = {
