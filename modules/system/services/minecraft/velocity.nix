@@ -34,7 +34,8 @@ let
             enabled: true
             template: start_on_connection
             servers: [default]  # List of server names to monitor
-            mode: hold  
+            mode: disconnect
+            disconnect_message: "The server is starting.\n Try again in a few seconds." 
     '';
     
 
