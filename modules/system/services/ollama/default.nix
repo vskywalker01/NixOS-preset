@@ -28,14 +28,6 @@
                 "1"
             ];
             modelsPreset = {
-                "MiniCPM5-2B" = {
-                    hf-repo = "openbmb/MiniCPM5-2B-GGUF";
-                    hf-file = "MiniCPM5-2B-Q4_K_M.gguf";
-                    temp = "1.0";
-                    repeat-penalty = "1.05";
-                    top-p = "0.95";
-                    min-p = "0.0";
-                };
                 "Ornith-1.5-9B" = {
                     hf-repo = "ornith-ai/Ornith-1.5-9B-GGUF";
                     hf-file = "Ornith-1.5-9B-Q4_K_M.gguf";
@@ -48,7 +40,7 @@
                 };
                 "Qwen3.5-4B" = {
                     hf-repo = "unsloth/Qwen3.5-4B-GGUF";
-                    hf-file = "Qwen3.5-4B-UD-Q8_K_XL.gguf";
+                    hf-file = "Qwen3.5-4B-Q4_K_M.gguf";
                     temp = "1.0";
                     repeat-penalty = "1.0";
                     top-p = "0.95";
