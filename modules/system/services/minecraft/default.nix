@@ -179,6 +179,16 @@ in {
                         url = "https://cdn.modrinth.com/data/7cMAqMND/versions/z7hw76uE/Backuper-4.1.1.jar?mr_download_reason=standalone";
                         sha256 = "sha256-7tknks6YiQ5k7AcGPHH53V0sMIiHTHytZWA2oKC5AC4=";
                     };
+                    "plugins/SimpleDeathChest.jar" = pkgs.fetchurl {
+                        url = "https://cdn.modrinth.com/data/kdfRxKkQ/versions/JGqC8enJ/chest-1.5.9.jar?mr_download_reason=standalone";
+                        sha256 = "sha256-3HclBVqh3z2VFrJEwfAhofe0HpBTy/YWx3uWz4c06ZM=";
+                    };
+                    "plugins/CommandAPI.jar" = pkgs.fetchurl {
+                        url = "https://cdn.modrinth.com/data/ExxvCi0y/versions/Niu5FiSP/CommandAPI-12.1.0-Paper.jar?mr_download_reason=standalone";
+                        sha256 = "sha256-q0jlX9BiZN0jnPAVtQGTbLUOtsONln+//KbJGkgGQEk=";
+                    };
+
+
                 };
                 files = {
                     "plugins/Backuper/config.yml" = backuperYml;
