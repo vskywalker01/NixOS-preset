@@ -1,7 +1,7 @@
 {config, lib, pkgs, ...}:
 {
     imports = [
-        ./ollama
+        ./llama
         ./printers
         ./samba
         ./sshd

@@ -1,26 +1,15 @@
 {config, pkgs, lib, inputs, ...}:
-{
+let 
+   llama-port = 8008;
+in {
     imports = [
         ./proxy.nix
     ];
     config = lib.mkIf (config.applications.ai.enable) {
-        #services.ollama = {
-        #    enable = true;
-        #    environmentVariables = {
-        #        OLLAMA_KEEP_ALIVE = "5m";
-        #    };
-
-            #choosing ollama-vulkan version to avoid conflicts for different GPU manufacters
-        #    package = pkgs.ollama-vulkan;
-        #    loadModels = [
-                #common chat model 
-        #        "qwen3.5:4b"
-        #    ];
-        #};
         services.llama-cpp = {
             enable = true;
             package = pkgs.llama-cpp-vulkan;
-            port = 8081;
+            port = llama-port;
             extraFlags = [
                 "--sleep-idle-seconds" 
                 "300"
@@ -63,20 +52,57 @@
             environment = {
                 ENABLE_OLLAMA_API="false";
 
-                OPENAI_API_BASE_URL="http://127.0.0.1:8081/v1";
+                OPENAI_API_BASE_URL="http://127.0.0.1:${toString llama-port}/v1";
                 OPENAI_API_KEY="";
                 OPENAI_API_CONFIGS="{'0':{'enable':true,'prefix_id':'llama.cpp','connection_type':'external'}}";
 
                 ENABLE_PERSISTENT_CONFIG="false";
                 
-                ENABLE_WEB_SEARCH = "True";
-                WEB_SEARCH_ENGINE = "searxng";
-                WEB_SEARCH_RESULT_COUNT = "3";
-                WEB_SEARCH_CONCURRENT_REQUESTS = "10";
-                SEARXNG_QUERY_URL = "http://localhost:8079/search?q=<query>";
+                ENABLE_WEB_SEARCH = "False";
             };
         };
+        systemd.user.services.llama-cpp-unload = {
+            description = "Unload all llama.cpp models on logout";
 
+            serviceConfig = {
+                Type = "oneshot";
+
+                ExecStart = pkgs.writeShellScript "llama-cpp-unload" ''
+                    set -u
+                    LLAMA_URL="http://127.0.0.1:${toString llama-port}"
+    
+                    models=$(
+                        ${pkgs.curl}/bin/curl -fsS "$LLAMA_URL/models" |
+                        ${pkgs.jq}/bin/jq -r '
+                        .data[]
+                        | select(
+                            .status.value == "loaded" or
+                            .status.value == "sleeping"
+                        )
+                        | .id
+                        '
+                    ) || exit 0
+
+                    [ -n "$models" ] || exit 0
+
+                    while IFS= read -r model; do
+                        [ -n "$model" ] || continue
+
+                        echo "Unloading llama.cpp model: $model"
+
+                        ${pkgs.curl}/bin/curl -fsS \
+                        -X POST \
+                        -H "Content-Type: application/json" \
+                        -d "$(${pkgs.jq}/bin/jq -n --arg model "$model" \
+                            '{model: $model}')" \
+                            "$LLAMA_URL/models/unload" \
+                        >/dev/null || true
+
+                    done <<< "$models"
+                '';
+            };
+            wantedBy = [ "exit.target" ];
+        };
         #automatic unload of ollama models before the logout. 
         #This service fixes problems encoutered with supergfxctl during the logout process for changing GPU profile
         #systemd.user.services.ollama-unload = {
@@ -87,25 +113,5 @@
         #    };
         #    wantedBy = [ "exit.target" ];
         #};
-
-        services.searx = {
-            enable = true;
-            redisCreateLocally = true;
-            settings = {
-                server = {
-                    bind_address = "127.0.0.1";
-                    port = 8079;
-                    secret_key = "notsosecretkey";
-                };
-                search = {
-                    safesearch = 0;
-                    formats = [
-                        "html"
-                        "json" 
-                    ];
-
-                };
-            };
-        };
     };
 }
