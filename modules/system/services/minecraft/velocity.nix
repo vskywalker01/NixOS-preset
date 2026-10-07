@@ -83,7 +83,7 @@ let
         [advanced]
         compression-threshold = 256
 
-        compression-level = 128
+        compression-level = 8
         login-ratelimit = 3000
         connection-timeout = 5000
         read-timeout = 30000
