@@ -173,22 +173,16 @@ in {
                 symlinks = {
                     "plugins/SkinsRestorer.jar" = pkgs.fetchurl { 
                         url = "https://cdn.modrinth.com/data/TsLS8Py5/versions/ziIzW16f/SkinsRestorer.jar?mr_download_reason=standalone"; 
-                        sha256 = "sha256-vxP/7pu0iBQbfsmWA+vIq6xomTPXLbFeZk/rC03u/GA="; 
+                        sha256 = "a85b4a370f988741c9a38f4d0498262edacbf3220314790ac1c127461996359c"; 
                     };
                     "plugins/Backuper.jar" = pkgs.fetchurl {
-                        url = "https://cdn.modrinth.com/data/7cMAqMND/versions/z7hw76uE/Backuper-4.1.1.jar?mr_download_reason=standalone";
-                        sha256 = "sha256-7tknks6YiQ5k7AcGPHH53V0sMIiHTHytZWA2oKC5AC4=";
+                        url = "https://cdn.modrinth.com/data/7cMAqMND/versions/PQ6Njsb2/Backuper-4.1.2.jar?mr_download_reason=standalone";
+                        sha256 = "796ca5ddb7802235f040f7dd81943329ca55b240e8e07728e557dc04f9032081";
                     };
                     "plugins/SimpleDeathChest.jar" = pkgs.fetchurl {
                         url = "https://cdn.modrinth.com/data/kdfRxKkQ/versions/JGqC8enJ/chest-1.5.9.jar?mr_download_reason=standalone";
                         sha256 = "sha256-3HclBVqh3z2VFrJEwfAhofe0HpBTy/YWx3uWz4c06ZM=";
                     };
-                    "plugins/CommandAPI.jar" = pkgs.fetchurl {
-                        url = "https://cdn.modrinth.com/data/ExxvCi0y/versions/Niu5FiSP/CommandAPI-12.1.0-Paper.jar?mr_download_reason=standalone";
-                        sha256 = "sha256-q0jlX9BiZN0jnPAVtQGTbLUOtsONln+//KbJGkgGQEk=";
-                    };
-
-
                 };
                 files = {
                     "plugins/Backuper/config.yml" = backuperYml;

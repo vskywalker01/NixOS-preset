@@ -83,7 +83,7 @@ let
         [advanced]
         compression-threshold = 256
 
-        compression-level = -1
+        compression-level = 128
         login-ratelimit = 3000
         connection-timeout = 5000
         read-timeout = 30000
@@ -184,13 +184,9 @@ in {
                         url = "https://github.com/beyenilmez/autostartstop/releases/download/v1.1.0-beta/AutoStartStop-1.1.0-beta.jar"; 
                         sha256 = "80e832c55305162cb1c18a44eeaf68255627f31b3e5bd48df2adccbf5982618b"; 
                     };
-                    #"plugins/GeyserMC.jar" = pkgs.fetchurl { 
-                    #    url = "https://cdn.modrinth.com/data/wKkoqHrH/versions/vj2QhrSS/Geyser-Velocity.jar?mr_download_reason=standalone"; 
-                    #    sha256 = "sha256-iy5KYOibJU0nLcJN0FLTBS9q/CxFn5B/3Seg132rGKA="; 
-                    #};
                     "plugins/SkinRestorer.jar" = pkgs.fetchurl {
                         url = "https://cdn.modrinth.com/data/TsLS8Py5/versions/ziIzW16f/SkinsRestorer.jar?mr_download_reason=standalone";
-                        sha256 = "sha256-vxP/7pu0iBQbfsmWA+vIq6xomTPXLbFeZk/rC03u/GA=";
+                        sha256 = "a85b4a370f988741c9a38f4d0498262edacbf3220314790ac1c127461996359c";
                     };
                 };
                 path = [
