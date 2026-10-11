@@ -22,6 +22,10 @@
             url = "github:nix-community/lanzaboote/v1.0.0";
             inputs.nixpkgs.follows = "nixpkgs";
         };
+        cardwire = {
+            url = "github:opengamingcollective/cardwire";
+            inputs.nixpkgs.follows = "nixpkgs-unstable";
+        };
     };
     nixConfig = {
         extra-substituters = [
@@ -34,7 +38,7 @@
             "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="    
         ];
     };
-    outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, nix-flatpak, nixos-hardware,cachix,nix-minecraft,nvf,silentSDDM, lanzaboote}: {
+    outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, nix-flatpak, nixos-hardware,cachix,nix-minecraft,nvf,silentSDDM, lanzaboote, cardwire}: {
         nixosConfigurations.skywalker-pi3 = nixpkgs.lib.nixosSystem {
             specialArgs = {
                 inherit inputs;

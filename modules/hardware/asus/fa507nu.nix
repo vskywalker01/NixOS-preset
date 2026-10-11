@@ -29,6 +29,7 @@ in {
     };
     imports = [
         ./asusd
+        inputs.cardwire.nixosModules.default
     ];
     
     config = lib.mkIf (config.hardware.asus.FA507NU.enable) {
@@ -38,6 +39,8 @@ in {
             pkgs.nvtopPackages.full
             pkgs.supergfxctl
             batteryDynamic
+            pkgs.lsof 
+            pkgs.pciutils
         ];
 
         # ----- Boot/system settings -----
@@ -50,7 +53,7 @@ in {
             };
             lanzaboote.enable = true;
             kernelPackages = pkgs.linuxPackages_latest;
-            kernelParams = ["mem_sleep_default=deep" "amd_pstate=active" "usbcore.autosuspend=1"];
+            kernelParams = ["mem_sleep_default=deep" "amd_pstate=active" "usbcore.autosuspend=1" "lsm=landlock,lockdown,yama,integrity,apparmor,bpf"];
         };
 
         powerManagement.enable = true;
@@ -94,18 +97,30 @@ in {
 
         # ----- Nvidia drivers -----
         #Sets the correct PCI ID for the AMD GPU
-        services.supergfxd.enable = true;
-        systemd.services.supergfxd-restart = {
-          description = "Restart supergfxd after suspend";
-          wantedBy = [ "suspend.target" ];
-          after = [ "suspend.target" ];
+        services.supergfxd.enable = false;
+        #systemd.services.supergfxd-restart = {
+        #  description = "Restart supergfxd after suspend";
+        #  wantedBy = [ "suspend.target" ];
+        #  after = [ "suspend.target" ];
 
-          serviceConfig = {
-            Type = "oneshot";
-            ExecStart = "${pkgs.systemd}/bin/systemctl restart supergfxd.service";
-          };
+        #  serviceConfig = {
+        #    Type = "oneshot";
+        #    ExecStart = "${pkgs.systemd}/bin/systemctl restart supergfxd.service";
+        #  };
+        #};
+
+
+        services.cardwire = {
+            enable = true;
+            package = unstable.cardwire;
+            settings = {
+                auto_apply_gpu_state = true;
+                experimental_nvidia_block = true;
+                battery_auto_switch = true;
+                battery_auto_switch_mode = "hybrid";
+                external_display_auto_switch = true;
+            };
         };
-
         #Using nvidia drivers + optimus 
         services.xserver.videoDrivers = [ "nvidia" ];
         boot.kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
@@ -137,10 +152,17 @@ in {
             cdi= lib.mkForce true;
         };
         
+        systemd.services.supergfxd = {
+            path = [
+                pkgs.lsof
+                pkgs.pciutils
+            ];
+        };
 
         # ----- Thermal control ------
         # Set limit temperature to avoid CPU overheating using ryzenadj
         services.asusd.enable = true;
+        services.power-profiles-daemon.enable = lib.mkForce false;
         systemd.services.ryzenadj = {
           description = "RyzenAdj";
           after = [ "sysinit.target" ]; 
