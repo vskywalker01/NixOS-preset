@@ -15,6 +15,10 @@
             checkReversePath = "loose";
         };
         services.tailscale.permitCertUid = lib.mkIf (config.services.caddy.enable) "caddy";
-
+        services.tailscale.extraDaemonFlags = ["--no-logs-no-support"];
+        services.tailscale.extraUpFlags = ["--accept-routes"];
+        services.tailscale.useRoutingFeatures = lib.mkDefault "both";
+        services.resolved.enable = true;
+        networking.networkmanager.dns = "systemd-resolved";
     };
 }

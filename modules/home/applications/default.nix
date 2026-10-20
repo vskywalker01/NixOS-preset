@@ -2,8 +2,8 @@
 {
   imports = [
     ./rclone.nix
-    #./rog-control-center.nix
     ./arduino.nix
+    ./ardour.nix
     ./blender.nix
     ./bottles.nix
     ./calibre.nix
@@ -22,7 +22,7 @@
     ./r2modman.nix
     ./rnote.nix
     ./termius.nix
-    ./freesm.nix
+    ./prismlauncher.nix
     ./woeusb-ng.nix
     ./zoom.nix
     ./obs-studio.nix

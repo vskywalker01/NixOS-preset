@@ -177,7 +177,6 @@ in {
         networking.networkmanager.wifi.powersave = true;
         services.tailscale = {
             enable = true;
-            useRoutingFeatures = "client";
         };
 
     };
