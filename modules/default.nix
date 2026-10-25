@@ -35,6 +35,11 @@
         default = false;
         description = "Enable ai application stock";
     };
+    options.applications.vnc.enable = lib.mkOption {
+        type = lib.types.bool; 
+        default = false; 
+        description = "enable VNC server for desktop environments";
+    };
 
 
     imports = [

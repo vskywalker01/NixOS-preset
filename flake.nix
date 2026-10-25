@@ -189,7 +189,7 @@
                     applications.cads.enable = true; 
                     applications.video-editing.enable = true; 
                     applications.developing.enable = true;
-
+                    applications.vnc.enable = true;
                     services.samba.enable = true;
 
                     services.displayManager.autoLogin = {
@@ -241,6 +241,7 @@
                     };
                     networking.firewall.allowedTCPPorts = [ 
                         25565
+                        5901
                     ];
 
                     services.open-webui.openFirewall = true;
@@ -257,7 +258,9 @@
                     applications.gaming.enable = true; 
                     applications.cads.enable = true; 
                     applications.video-editing.enable = true; 
-                    applications.developing.enable = true;                    
+                    applications.developing.enable = true;       
+
+
                     services.displayManager.autoLogin = {
                         enable = true;
                         user = "vittorio";

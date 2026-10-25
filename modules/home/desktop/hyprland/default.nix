@@ -44,6 +44,16 @@ in {
             name = "WhiteSur-cursors";
             size = 16;
         }; 
+        
+        services.wayvnc = lib.mkIf (systemConfig.applications.vnc.enable) {
+            enable = true;
+            autoStart = true; 
+            settings = {
+                address = "0.0.0.0";
+                port = 5901;
+            };
+        };
+
 
         #gtk theming
         gtk = {

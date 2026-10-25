@@ -29,6 +29,7 @@
     ./handbrake.nix
     ./audacity.nix
     ./shotcut.nix
+    ./remmina.nix
   ];
     config = {
 

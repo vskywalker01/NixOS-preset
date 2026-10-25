@@ -125,6 +125,7 @@ in {
         services.displayManager.sessionPackages = [pkgs.hyprland];
         services.displayManager.defaultSession = "hyprland-uwsm";
         programs.hyprland.withUWSM = true;
+
     };
 }
 
