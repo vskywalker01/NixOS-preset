@@ -258,7 +258,8 @@
                     applications.gaming.enable = true; 
                     applications.cads.enable = true; 
                     applications.video-editing.enable = true; 
-                    applications.developing.enable = true;       
+                    applications.developing.enable = true; 
+                    applications.vnc.enable = true;
 
 
                     services.displayManager.autoLogin = {
