@@ -37,6 +37,19 @@ in {
                     min-p = "0.0";
                     presence-penalty = "1.5";
                 };
+                "Saluki-27B" = {
+                    hf-repo = "ConwayResearch/Underdog-Saluki-27B-1.0";
+                    hf-file = "Underdog-Saluki-27B-1.0-IQ2-mix.gguf";
+                    temp = "0.6";
+                    repeat-penalty = "0.95";
+                    top-p = "0.95";
+                    top-k = "20";
+                
+                    presence-penalty = "1.5";
+                    jinja = "true"; 
+                    n-gpu-layers = "99";
+                    flash-attn = "on";
+                };
             };
         };
         systemd.services.llama-cpp = {
