@@ -1,6 +1,7 @@
 {config, pkgs, lib, inputs, ...}:
 let 
    llama-port = 8008;
+    unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in {
     imports = [
         ./proxy.nix
@@ -8,7 +9,7 @@ in {
     config = lib.mkIf (config.applications.ai.enable) {
         services.llama-cpp = {
             enable = true;
-            package = pkgs.llama-cpp-vulkan;
+            package = unstable.llama-cpp-vulkan;
             port = llama-port;
             extraFlags = [
                 "--sleep-idle-seconds" 
@@ -21,6 +22,8 @@ in {
                     hf-repo = "ornith-ai/Ornith-1.5-9B-GGUF";
                     hf-file = "Ornith-1.5-9B-Q4_K_M.gguf";
                     temp = "1.0";
+                    ctx-size = "32768";
+
                     repeat-penalty = "1.0";
                     presence-penalty = "1.5";
                     top-p = "0.95";
@@ -30,6 +33,8 @@ in {
                 "Qwen3.5-4B" = {
                     hf-repo = "unsloth/Qwen3.5-4B-GGUF";
                     hf-file = "Qwen3.5-4B-Q4_K_M.gguf";
+                    ctx-size = "32768";
+
                     temp = "1.0";
                     repeat-penalty = "1.0";
                     top-p = "0.95";
@@ -37,18 +42,17 @@ in {
                     min-p = "0.0";
                     presence-penalty = "1.5";
                 };
-                "Saluki-27B" = {
-                    hf-repo = "ConwayResearch/Underdog-Saluki-27B-1.0";
-                    hf-file = "Underdog-Saluki-27B-1.0-IQ2-mix.gguf";
-                    temp = "0.6";
-                    repeat-penalty = "0.95";
+                "miniCPM5-2B" = {
+                    hf-repo = "openbmb/MiniCPM5-2B-GGUF";
+                    hf-file = " MiniCPM5-2B-Q8_0.gguf ";
+                    ctx-size = "32768";
+
+                    temp = "1.0";
                     top-p = "0.95";
-                    top-k = "20";
-                
-                    presence-penalty = "1.5";
-                    jinja = "true"; 
-                    n-gpu-layers = "99";
-                    flash-attn = "on";
+                    min-p = "0.0";
+                    jinja = "true";
+
+                    
                 };
             };
         };
