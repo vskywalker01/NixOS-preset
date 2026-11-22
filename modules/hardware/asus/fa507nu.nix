@@ -36,7 +36,6 @@ in {
         # ----- Addition packages ------
         environment.systemPackages = [
             pkgs.ryzenadj
-            pkgs.nvtopPackages.full
             pkgs.supergfxctl
             batteryDynamic
             pkgs.lsof 
@@ -98,18 +97,7 @@ in {
         # ----- Nvidia drivers -----
         #Sets the correct PCI ID for the AMD GPU
         services.supergfxd.enable = false;
-        #systemd.services.supergfxd-restart = {
-        #  description = "Restart supergfxd after suspend";
-        #  wantedBy = [ "suspend.target" ];
-        #  after = [ "suspend.target" ];
-
-        #  serviceConfig = {
-        #    Type = "oneshot";
-        #    ExecStart = "${pkgs.systemd}/bin/systemctl restart supergfxd.service";
-        #  };
-        #};
-
-
+        
         services.cardwire = {
             enable = true;
             package = unstable.cardwire;
@@ -152,13 +140,6 @@ in {
             cdi= lib.mkForce true;
         };
         
-        systemd.services.supergfxd = {
-            path = [
-                pkgs.lsof
-                pkgs.pciutils
-            ];
-        };
-
         # ----- Thermal control ------
         # Set limit temperature to avoid CPU overheating using ryzenadj
         services.asusd.enable = true;

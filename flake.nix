@@ -42,13 +42,14 @@
         nixosConfigurations.skywalker-pi3 = nixpkgs.lib.nixosSystem {
             specialArgs = {
                 inherit inputs;
+                pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.x86_64-linux;
             };
             system = "aarch64-linux";
             modules = [ 
                 ./modules
                 ./configuration.nix
 
-                ({config,lib,...}:
+                ({config,lib,pkgs, pkgs-unstable,...}:
                     {
                     hardware.raspberry.RPI3.enable=true;
                     services.openssh.enable=true;
@@ -59,19 +60,25 @@
                     services.octoprint = {
                         enable=true;
                         proxy.enable = true;
-                        webcam.enable = true;
+                        webcam.enable = false;
                         webcam.resolution = "1280x720";
                     };
-                    services.filebrowser = {
-                        enable=true;
-                        proxy = {
-                            enable = true;
-                        };
+
+                    services.filebrowser-quantum = {
+                        enable = true; 
+                        proxy.enable = true;
+                        package = pkgs-unstable.filebrowser-quantum;
                         settings = {
-                            root = "/srv/hdd";
-                            port = 8334;
+                            http.port = 8334;
+                            server.sources = [
+                                {
+                                path = "/srv/hdd";
+                                config.defaultEnabled = true;
+                                }
+                            ];
                         };
                     };
+
                     services.open-webui.proxy = {
                         enable = true; 
                         server = "192.168.1.250";
@@ -141,6 +148,7 @@
         nixosConfigurations.skywalker-vm = nixpkgs.lib.nixosSystem {
             specialArgs = {
                 inherit inputs;
+                pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.x86_64-linux;
             };
             system = "x86_64-linux";
             modules = [ 
@@ -165,14 +173,15 @@
         nixosConfigurations.skywalker-tuf = nixpkgs.lib.nixosSystem {
             specialArgs = {
                 inherit inputs;
+                pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.x86_64-linux;
             };
             system = "x86_64-linux";
             modules = [ 
                 ./modules
                 ./configuration.nix
 
-                ({config,lib,...}:
-                    {
+                ({config,lib,pkgs,pkgs-unstable, ...}:
+                {
                     hardware.asus.FA507NU.enable=true;
 
                     services.openssh.enable=true;
@@ -203,13 +212,14 @@
                         seconds = 3600;
                     };
                     time.timeZone = "Europe/Rome";  
-                    time.hardwareClockInLocalTime = true;
+                    time.hardwareClockInLocalTime = false;
                 })
             ];
         };
         nixosConfigurations.skywalker-r5 = nixpkgs.lib.nixosSystem {
             specialArgs = {
                 inherit inputs;
+                pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.x86_64-linux;
             };
             system = "x86_64-linux";
             modules = [ 
@@ -291,13 +301,14 @@
                         "d /srv/hddraid 0777 root root -"
                     ];
                     time.timeZone = "Europe/Rome";  
-                    time.hardwareClockInLocalTime = true;
+                    time.hardwareClockInLocalTime = false;
                 })
             ];
         };
         nixosConfigurations.skywalker-i3 = nixpkgs.lib.nixosSystem {
             specialArgs = {
                 inherit inputs;
+                pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.x86_64-linux;
             };
             system = "x86_64-linux";
             modules = [ 
@@ -330,7 +341,7 @@
                         seconds = 3600;
                     };
                     time.timeZone = "Europe/Rome";  
-                    time.hardwareClockInLocalTime = true;
+                    time.hardwareClockInLocalTime = false;
                 })
             ];
         };

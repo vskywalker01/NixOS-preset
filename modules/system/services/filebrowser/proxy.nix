@@ -13,7 +13,7 @@
         };
         port = lib.mkOption {
             type = lib.types.int; 
-            default = config.services.filebrowser.settings.port;
+            default = config.services.filebrowser-quantum.settings.http.port;
             description = "port of the server";
         };
         domain = lib.mkOption {

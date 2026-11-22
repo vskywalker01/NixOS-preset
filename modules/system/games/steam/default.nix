@@ -8,7 +8,7 @@ let
 
         elif command -v powerprofilesctl >/dev/null 2>&1; then
             powerprofilesctl set performance
-            notify-send "PPD Profile automatically changed to 'Performance'" 
+            notify-send "PPD Profile automatically changed to Performance" 
         fi 
     '';
     endScript = pkgs.writeShellScript "gamemode-end" ''
