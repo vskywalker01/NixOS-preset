@@ -1,6 +1,6 @@
 {config, lib, pkgs, ...}:
 {
-    options.services.filebrowser.proxy = {
+    options.services.filebrowser-quantum.proxy = {
         enable = lib.mkOption {
             type = lib.types.bool; 
             default = false;
@@ -31,19 +31,19 @@
             description = "mac address of the server (for wake on lan)";
         };
     };
-    config = lib.mkIf (config.services.filebrowser.proxy.enable) {
+    config = lib.mkIf (config.services.filebrowser-quantum.proxy.enable) {
         services.caddy =  {
             enable = true;
-            virtualHosts."${config.services.filebrowser.proxy.domain}".extraConfig = ''
+            virtualHosts."${config.services.filebrowser-quantum.proxy.domain}".extraConfig = ''
                 tls internal
-                reverse_proxy ${config.services.filebrowser.proxy.server}:${toString config.services.filebrowser.proxy.port}
+                reverse_proxy ${config.services.filebrowser-quantum.proxy.server}:${toString config.services.filebrowser-quantum.proxy.port}
             ''
-            + lib.optionalString config.services.filebrowser.proxy.enableWol ''
+            + lib.optionalString config.services.filebrowser-quantum.proxy.enableWol ''
                 handle_errors {
                     @502 expression {err.status_code} == 502
                     handle @502 {
-                        wake_on_lan ${config.services.filebrowser.proxy.server-mac}
-                        reverse_proxy ${config.services.filebrowser.proxy.server}:${toString config.services.filebrowser.proxy.port} {
+                        wake_on_lan ${config.services.filebrowser-quantum.proxy.server-mac}
+                        reverse_proxy ${config.services.filebrowser-quantum.proxy.server}:${toString config.services.filebrowser-quantum.proxy.port} {
                             lb_try_duration 120s
                         }
                     }

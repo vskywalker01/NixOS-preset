@@ -42,7 +42,7 @@
         nixosConfigurations.skywalker-pi3 = nixpkgs.lib.nixosSystem {
             specialArgs = {
                 inherit inputs;
-                pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.x86_64-linux;
+                pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.aarch64-linux;
             };
             system = "aarch64-linux";
             modules = [ 
@@ -119,7 +119,12 @@
                             "compress=zstd"
                         ];
                     };
-
+                    services.resolved = {
+                        enable = true;
+                        settings.Resolve = {
+                            DNSStubListener = "no";
+                        };
+                    };
                     services.dnsmasq = {
                         enable = true;
                         settings = {

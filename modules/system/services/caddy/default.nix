@@ -10,7 +10,7 @@
                 plugins = [
                     "github.com/dulli/caddy-wol@v1.0.0"
                 ];
-                hash = "sha256-Wgi75Q/TaCDspsrRLpGj/ySjJDto3cfO2AYB/kHbHpQ=";
+                hash = "sha256-JS/Q032ugYiIoWC6+/R6YQWu074QXPOkjBz1Ew00raY=";
             };
             globalConfig = ''
                 order wake_on_lan before respond
